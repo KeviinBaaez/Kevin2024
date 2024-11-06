@@ -3,15 +3,6 @@ using Kevin2024.Entidades.Enumeraciones;
 using Kevin2024.Servicios.Interfaces;
 using Kevin2024.Windows.Helpers;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Kevin2024.Windows.Formularios
 {
@@ -36,6 +27,9 @@ namespace Kevin2024.Windows.Formularios
 
         //Orden
         private Orden orden = Orden.Ninguno;
+
+        //Tipo para busqueda
+        Tipos tipo = Tipos.Categoria;
 
         public frmCategoria(IServiceProvider? serviceProvider)
         {
@@ -103,7 +97,7 @@ namespace Kevin2024.Windows.Formularios
 
         private void tsbNuevo_Click(object sender, EventArgs e)
         {
-            frmCategoriasAE frm = new frmCategoriasAE(_serviceProvider) { Text = "Nueva Marca" };
+            frmNuevoTipoAE frm = new frmNuevoTipoAE(_serviceProvider, tipo) { Text = "Nueva Marca" };
             DialogResult dr = frm.ShowDialog(this);
             if (dr == DialogResult.Cancel) return;
             try
@@ -204,7 +198,7 @@ namespace Kevin2024.Windows.Formularios
             var r = dgvDatos.SelectedRows[0];
             if (r.Tag is null) return;
             Categorias? categoria = (Categorias)r.Tag;
-            frmCategoriasAE frm = new frmCategoriasAE(_serviceProvider) { Text = "Editar Marca" };
+            frmNuevoTipoAE frm = new frmNuevoTipoAE(_serviceProvider, tipo) { Text = "Editar Marca" };
             frm.SetCategoria(categoria);
             DialogResult dr = frm.ShowDialog(this);
             if (dr == DialogResult.Cancel) return;
@@ -240,7 +234,7 @@ namespace Kevin2024.Windows.Formularios
 
         private void busquedaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmFiltroTexto frm = new frmFiltroTexto() { Text = "Ingresar texto para buscar..." };
+            frmFiltro frm = new frmFiltro(tipo) { Text = "Ingresar texto para buscar..." };
             DialogResult dr = frm.ShowDialog(this);
             try
             {
@@ -253,7 +247,6 @@ namespace Kevin2024.Windows.Formularios
                 {
                     totalPages = (int)Math.Ceiling((decimal)totalRecords / pageSize);
                     tsbFiltrar.Enabled = false;
-                    tsbFiltrar.BackColor = Color.DeepSkyBlue;
                     LoadData(filter);
                 }
                 else
@@ -278,7 +271,6 @@ namespace Kevin2024.Windows.Formularios
             orden = Orden.Ninguno;
             currentPage = 1;
             tsbFiltrar.Enabled = true;
-            tsbFiltrar.BackColor = SystemColors.Control;
             RecargarGrilla();
         }
         private void btnPrimero_Click(object sender, EventArgs e)

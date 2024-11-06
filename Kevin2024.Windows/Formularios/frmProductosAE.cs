@@ -4,11 +4,11 @@ using Kevin2024.Windows.Helpers;
 
 namespace Kevin2024.Windows.Formularios
 {
-    public partial class frmPostresAE : Form
+    public partial class frmProductosAE : Form
     {
         private readonly IServiceProvider? _serviceProvider;
         private Productos? producto;
-        public frmPostresAE(IServiceProvider? serviceProvider)
+        public frmProductosAE(IServiceProvider? serviceProvider)
         {
             InitializeComponent();
             _serviceProvider = serviceProvider;
@@ -76,11 +76,19 @@ namespace Kevin2024.Windows.Formularios
                 valido = false;
                 errorProvider1.SetError(cboCategorias, "Ingrese la categoria del producto");
             }
-            if(nupPrecioCosto.Value == 0)
+            if (cboMarca.SelectedIndex == 0)
             {
-                MessageBox.Show("El precio costo es Cero, ¿Deseas dejarlo así?",
+                valido = false;
+                errorProvider1.SetError(cboMarca, "Ingrese la marca del producto");
+            }
+            if (nupPrecioCosto.Value == 0)
+            {
+                DialogResult dr = MessageBox.Show("El precio costo es Cero, ¿Deseas dejarlo así?",
                     "Advertencia", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
-                
+                if(dr == DialogResult.No)
+                {
+                    valido = false;
+                }
             }
             return valido;
         }
@@ -117,9 +125,10 @@ namespace Kevin2024.Windows.Formularios
 
 
 
-        public void SetPostre(Productos producto)
+        public void SetProducto(Productos producto)
         {
             this.producto = producto;
         }
+
     }
 }

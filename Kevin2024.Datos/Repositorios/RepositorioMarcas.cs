@@ -53,7 +53,7 @@ namespace Kevin2024.Datos.Repositorios
 
         public bool EstaRelacionado(SqlConnection conn, int marcaId)
         {
-            string selectQuery = @"SELECT COUNT(*) FROM Bebidas 
+            string selectQuery = @"SELECT COUNT(*) FROM Productos 
                                     WHERE MarcaId=@marcaId";
             return conn.QuerySingle<int>(selectQuery, new {marcaId}) > 0;   
         }

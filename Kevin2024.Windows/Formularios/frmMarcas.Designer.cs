@@ -28,11 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMarcas));
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             panel1 = new Panel();
             panel4 = new Panel();
             dgvDatos = new DataGridView();
-            ColMarcaId = new DataGridViewTextBoxColumn();
-            ColMarca = new DataGridViewTextBoxColumn();
             panel3 = new Panel();
             btnUltimo = new Button();
             btnSiguiente = new Button();
@@ -47,15 +47,16 @@
             tsbEditar = new ToolStripButton();
             tsbBorrar = new ToolStripButton();
             toolStripSeparator1 = new ToolStripSeparator();
-            tsbFiltrar = new ToolStripDropDownButton();
-            busquedaToolStripMenuItem = new ToolStripMenuItem();
+            tsbFiltrar = new ToolStripButton();
             tsbActualizar = new ToolStripButton();
             toolStripSeparator2 = new ToolStripSeparator();
             toolStripButton7 = new ToolStripDropDownButton();
-            ordenAZToolStripMenuItem = new ToolStripMenuItem();
+            ordenToolStripMenuItem = new ToolStripMenuItem();
             ordenZAToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator3 = new ToolStripSeparator();
             tsbSalir = new ToolStripButton();
+            ColMarcaId = new DataGridViewTextBoxColumn();
+            ColMarca = new DataGridViewTextBoxColumn();
             panel1.SuspendLayout();
             panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvDatos).BeginInit();
@@ -72,22 +73,23 @@
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(506, 450);
+            panel1.Size = new Size(900, 475);
             panel1.TabIndex = 3;
             // 
             // panel4
             // 
             panel4.Controls.Add(dgvDatos);
             panel4.Dock = DockStyle.Fill;
-            panel4.Location = new Point(0, 59);
+            panel4.Location = new Point(0, 0);
             panel4.Name = "panel4";
-            panel4.Size = new Size(506, 327);
+            panel4.Size = new Size(678, 411);
             panel4.TabIndex = 6;
             // 
             // dgvDatos
             // 
             dgvDatos.AllowUserToAddRows = false;
             dgvDatos.AllowUserToDeleteRows = false;
+            dgvDatos.BorderStyle = BorderStyle.None;
             dgvDatos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvDatos.Columns.AddRange(new DataGridViewColumn[] { ColMarcaId, ColMarca });
             dgvDatos.Dock = DockStyle.Fill;
@@ -97,23 +99,8 @@
             dgvDatos.ReadOnly = true;
             dgvDatos.RowHeadersVisible = false;
             dgvDatos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvDatos.Size = new Size(506, 327);
+            dgvDatos.Size = new Size(678, 411);
             dgvDatos.TabIndex = 0;
-            // 
-            // ColMarcaId
-            // 
-            ColMarcaId.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            ColMarcaId.HeaderText = "MarcaId";
-            ColMarcaId.Name = "ColMarcaId";
-            ColMarcaId.ReadOnly = true;
-            ColMarcaId.Width = 150;
-            // 
-            // ColMarca
-            // 
-            ColMarca.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            ColMarca.HeaderText = "Marca";
-            ColMarca.Name = "ColMarca";
-            ColMarca.ReadOnly = true;
             // 
             // panel3
             // 
@@ -125,16 +112,16 @@
             panel3.Controls.Add(cboPaginas);
             panel3.Controls.Add(txtPaginas);
             panel3.Dock = DockStyle.Bottom;
-            panel3.Location = new Point(0, 386);
+            panel3.Location = new Point(0, 411);
             panel3.Name = "panel3";
-            panel3.Size = new Size(506, 64);
+            panel3.Size = new Size(678, 64);
             panel3.TabIndex = 5;
             // 
             // btnUltimo
             // 
             btnUltimo.FlatStyle = FlatStyle.Flat;
             btnUltimo.Image = Properties.Resources.angulo_doble_derecha__1_;
-            btnUltimo.Location = new Point(434, 7);
+            btnUltimo.Location = new Point(592, 6);
             btnUltimo.Name = "btnUltimo";
             btnUltimo.Size = new Size(49, 49);
             btnUltimo.TabIndex = 3;
@@ -145,7 +132,7 @@
             // 
             btnSiguiente.FlatStyle = FlatStyle.Flat;
             btnSiguiente.Image = Properties.Resources.angulo_pequeno_derecho__1_;
-            btnSiguiente.Location = new Point(377, 9);
+            btnSiguiente.Location = new Point(535, 8);
             btnSiguiente.Name = "btnSiguiente";
             btnSiguiente.Size = new Size(51, 44);
             btnSiguiente.TabIndex = 3;
@@ -156,7 +143,7 @@
             // 
             btnAnterior.FlatStyle = FlatStyle.Flat;
             btnAnterior.Image = Properties.Resources.angulo_pequeno_izquierdo__1_;
-            btnAnterior.Location = new Point(320, 9);
+            btnAnterior.Location = new Point(478, 8);
             btnAnterior.Name = "btnAnterior";
             btnAnterior.Size = new Size(51, 44);
             btnAnterior.TabIndex = 3;
@@ -167,7 +154,7 @@
             // 
             btnPrimero.FlatStyle = FlatStyle.Flat;
             btnPrimero.Image = Properties.Resources.angulo_doble_izquierda__1_;
-            btnPrimero.Location = new Point(265, 8);
+            btnPrimero.Location = new Point(423, 7);
             btnPrimero.Name = "btnPrimero";
             btnPrimero.Size = new Size(49, 47);
             btnPrimero.TabIndex = 3;
@@ -205,30 +192,40 @@
             // 
             // panel2
             // 
+            panel2.BackColor = Color.FromArgb(1, 95, 168);
             panel2.Controls.Add(toolStrip1);
-            panel2.Dock = DockStyle.Top;
-            panel2.Location = new Point(0, 0);
+            panel2.Dock = DockStyle.Right;
+            panel2.Location = new Point(678, 0);
             panel2.Name = "panel2";
-            panel2.Size = new Size(506, 59);
+            panel2.Size = new Size(222, 475);
             panel2.TabIndex = 4;
             // 
             // toolStrip1
             // 
+            toolStrip1.BackColor = Color.FromArgb(1, 95, 168);
             toolStrip1.Dock = DockStyle.Fill;
+            toolStrip1.Font = new Font("Constantia", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            toolStrip1.GripStyle = ToolStripGripStyle.Hidden;
             toolStrip1.Items.AddRange(new ToolStripItem[] { tsbNuevo, tsbEditar, tsbBorrar, toolStripSeparator1, tsbFiltrar, tsbActualizar, toolStripSeparator2, toolStripButton7, toolStripSeparator3, tsbSalir });
+            toolStrip1.LayoutStyle = ToolStripLayoutStyle.VerticalStackWithOverflow;
             toolStrip1.Location = new Point(0, 0);
             toolStrip1.Name = "toolStrip1";
-            toolStrip1.Size = new Size(506, 59);
-            toolStrip1.TabIndex = 0;
+            toolStrip1.RenderMode = ToolStripRenderMode.System;
+            toolStrip1.Size = new Size(222, 475);
+            toolStrip1.TabIndex = 1;
             toolStrip1.Text = "toolStrip1";
             // 
             // tsbNuevo
             // 
+            tsbNuevo.AutoSize = false;
+            tsbNuevo.DisplayStyle = ToolStripItemDisplayStyle.Image;
             tsbNuevo.Font = new Font("Constantia", 11.25F);
-            tsbNuevo.Image = Properties.Resources.agregar_documento__1_;
+            tsbNuevo.Image = Properties.Resources.boton_agregar_a_la_cola;
+            tsbNuevo.ImageScaling = ToolStripItemImageScaling.None;
             tsbNuevo.ImageTransparentColor = Color.Magenta;
+            tsbNuevo.Margin = new Padding(0, 25, 0, 2);
             tsbNuevo.Name = "tsbNuevo";
-            tsbNuevo.Size = new Size(54, 56);
+            tsbNuevo.Size = new Size(220, 50);
             tsbNuevo.Text = "Nuevo";
             tsbNuevo.TextAlign = ContentAlignment.BottomCenter;
             tsbNuevo.TextImageRelation = TextImageRelation.Overlay;
@@ -236,11 +233,14 @@
             // 
             // tsbEditar
             // 
+            tsbEditar.AutoSize = false;
+            tsbEditar.DisplayStyle = ToolStripItemDisplayStyle.Image;
             tsbEditar.Font = new Font("Constantia", 11.25F);
-            tsbEditar.Image = Properties.Resources.editar;
+            tsbEditar.Image = Properties.Resources.boton_subrayado;
+            tsbEditar.ImageScaling = ToolStripItemImageScaling.None;
             tsbEditar.ImageTransparentColor = Color.Magenta;
             tsbEditar.Name = "tsbEditar";
-            tsbEditar.Size = new Size(52, 56);
+            tsbEditar.Size = new Size(220, 50);
             tsbEditar.Text = "Editar";
             tsbEditar.TextAlign = ContentAlignment.BottomCenter;
             tsbEditar.TextImageRelation = TextImageRelation.Overlay;
@@ -248,11 +248,14 @@
             // 
             // tsbBorrar
             // 
+            tsbBorrar.AutoSize = false;
+            tsbBorrar.DisplayStyle = ToolStripItemDisplayStyle.Image;
             tsbBorrar.Font = new Font("Constantia", 11.25F);
-            tsbBorrar.Image = Properties.Resources.borrar;
+            tsbBorrar.Image = (Image)resources.GetObject("tsbBorrar.Image");
+            tsbBorrar.ImageScaling = ToolStripItemImageScaling.None;
             tsbBorrar.ImageTransparentColor = Color.Magenta;
             tsbBorrar.Name = "tsbBorrar";
-            tsbBorrar.Size = new Size(54, 56);
+            tsbBorrar.Size = new Size(220, 50);
             tsbBorrar.Text = "Borrar";
             tsbBorrar.TextAlign = ContentAlignment.BottomCenter;
             tsbBorrar.TextImageRelation = TextImageRelation.Overlay;
@@ -261,62 +264,63 @@
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(6, 59);
+            toolStripSeparator1.Size = new Size(220, 6);
             // 
             // tsbFiltrar
             // 
-            tsbFiltrar.DropDownItems.AddRange(new ToolStripItem[] { busquedaToolStripMenuItem });
+            tsbFiltrar.AutoSize = false;
+            tsbFiltrar.DisplayStyle = ToolStripItemDisplayStyle.Image;
             tsbFiltrar.Font = new Font("Constantia", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            tsbFiltrar.Image = Properties.Resources.lista;
+            tsbFiltrar.Image = Properties.Resources.buscando_lupa;
+            tsbFiltrar.ImageScaling = ToolStripItemImageScaling.None;
             tsbFiltrar.ImageTransparentColor = Color.Magenta;
             tsbFiltrar.Name = "tsbFiltrar";
-            tsbFiltrar.Size = new Size(77, 56);
+            tsbFiltrar.Size = new Size(220, 50);
             tsbFiltrar.Text = "Filtrar";
-            // 
-            // busquedaToolStripMenuItem
-            // 
-            busquedaToolStripMenuItem.Image = Properties.Resources.busqueda;
-            busquedaToolStripMenuItem.Name = "busquedaToolStripMenuItem";
-            busquedaToolStripMenuItem.Size = new Size(180, 22);
-            busquedaToolStripMenuItem.Text = "Busqueda";
-            busquedaToolStripMenuItem.Click += busquedaToolStripMenuItem_Click;
+            tsbFiltrar.Click += busquedaToolStripMenuItem_Click;
             // 
             // tsbActualizar
             // 
+            tsbActualizar.AutoSize = false;
+            tsbActualizar.DisplayStyle = ToolStripItemDisplayStyle.Image;
             tsbActualizar.Font = new Font("Constantia", 11.25F);
             tsbActualizar.Image = Properties.Resources.actualizar;
+            tsbActualizar.ImageScaling = ToolStripItemImageScaling.None;
             tsbActualizar.ImageTransparentColor = Color.Magenta;
             tsbActualizar.Name = "tsbActualizar";
-            tsbActualizar.Size = new Size(94, 56);
+            tsbActualizar.Size = new Size(220, 50);
             tsbActualizar.Text = "Actualizar";
             tsbActualizar.Click += tsbActualizar_Click;
             // 
             // toolStripSeparator2
             // 
             toolStripSeparator2.Name = "toolStripSeparator2";
-            toolStripSeparator2.Size = new Size(6, 59);
+            toolStripSeparator2.Size = new Size(220, 6);
             // 
             // toolStripButton7
             // 
-            toolStripButton7.DropDownItems.AddRange(new ToolStripItem[] { ordenAZToolStripMenuItem, ordenZAToolStripMenuItem });
+            toolStripButton7.AutoSize = false;
+            toolStripButton7.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButton7.DropDownItems.AddRange(new ToolStripItem[] { ordenToolStripMenuItem, ordenZAToolStripMenuItem });
             toolStripButton7.Font = new Font("Constantia", 11.25F);
             toolStripButton7.Image = Properties.Resources.ordenar_alt;
+            toolStripButton7.ImageScaling = ToolStripItemImageScaling.None;
             toolStripButton7.ImageTransparentColor = Color.Magenta;
             toolStripButton7.Name = "toolStripButton7";
-            toolStripButton7.Size = new Size(93, 56);
+            toolStripButton7.Size = new Size(220, 50);
             toolStripButton7.Text = "Ordenar";
             // 
-            // ordenAZToolStripMenuItem
+            // ordenToolStripMenuItem
             // 
-            ordenAZToolStripMenuItem.Image = Properties.Resources.ordenar_alfa_arriba;
-            ordenAZToolStripMenuItem.Name = "ordenAZToolStripMenuItem";
-            ordenAZToolStripMenuItem.Size = new Size(155, 22);
-            ordenAZToolStripMenuItem.Text = "Orden(A-Z)";
-            ordenAZToolStripMenuItem.Click += ordenAZToolStripMenuItem_Click;
+            ordenToolStripMenuItem.Image = (Image)resources.GetObject("ordenToolStripMenuItem.Image");
+            ordenToolStripMenuItem.Name = "ordenToolStripMenuItem";
+            ordenToolStripMenuItem.Size = new Size(155, 22);
+            ordenToolStripMenuItem.Text = "Orden(A-Z)";
+            ordenToolStripMenuItem.Click += ordenAZToolStripMenuItem_Click;
             // 
             // ordenZAToolStripMenuItem
             // 
-            ordenZAToolStripMenuItem.Image = Properties.Resources.ordenar_alfa_abajo_alt;
+            ordenZAToolStripMenuItem.Image = (Image)resources.GetObject("ordenZAToolStripMenuItem.Image");
             ordenZAToolStripMenuItem.Name = "ordenZAToolStripMenuItem";
             ordenZAToolStripMenuItem.Size = new Size(155, 22);
             ordenZAToolStripMenuItem.Text = "Orden(Z-A)";
@@ -325,26 +329,49 @@
             // toolStripSeparator3
             // 
             toolStripSeparator3.Name = "toolStripSeparator3";
-            toolStripSeparator3.Size = new Size(6, 59);
+            toolStripSeparator3.Size = new Size(220, 6);
             // 
             // tsbSalir
             // 
+            tsbSalir.AutoSize = false;
+            tsbSalir.DisplayStyle = ToolStripItemDisplayStyle.Image;
             tsbSalir.Font = new Font("Constantia", 11.25F);
-            tsbSalir.Image = Properties.Resources.salir_alt;
+            tsbSalir.Image = Properties.Resources.boton_de_inicio;
+            tsbSalir.ImageScaling = ToolStripItemImageScaling.None;
             tsbSalir.ImageTransparentColor = Color.Magenta;
             tsbSalir.Name = "tsbSalir";
-            tsbSalir.Size = new Size(41, 56);
+            tsbSalir.Size = new Size(220, 50);
             tsbSalir.Text = "Salir";
             tsbSalir.TextAlign = ContentAlignment.BottomCenter;
             tsbSalir.TextImageRelation = TextImageRelation.Overlay;
             tsbSalir.Click += tsbSalir_Click;
             // 
+            // ColMarcaId
+            // 
+            ColMarcaId.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            ColMarcaId.HeaderText = "MarcaId";
+            ColMarcaId.Name = "ColMarcaId";
+            ColMarcaId.ReadOnly = true;
+            ColMarcaId.Visible = false;
+            ColMarcaId.Width = 150;
+            // 
+            // ColMarca
+            // 
+            ColMarca.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle1.Font = new Font("Constantia", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            ColMarca.DefaultCellStyle = dataGridViewCellStyle1;
+            ColMarca.HeaderText = "Marca";
+            ColMarca.Name = "ColMarca";
+            ColMarca.ReadOnly = true;
+            // 
             // frmMarcas
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(506, 450);
+            BackColor = Color.FromArgb(1, 95, 168);
+            ClientSize = new Size(900, 475);
             Controls.Add(panel1);
+            FormBorderStyle = FormBorderStyle.None;
             Name = "frmMarcas";
             Text = "frmMarcas";
             Load += frmMarcas_Load;
@@ -370,24 +397,23 @@
         private Label label1;
         private ComboBox cboPaginas;
         private TextBox txtPaginas;
+        private Panel panel4;
+        private DataGridView dgvDatos;
         private Panel panel2;
         private ToolStrip toolStrip1;
         private ToolStripButton tsbNuevo;
         private ToolStripButton tsbEditar;
         private ToolStripButton tsbBorrar;
         private ToolStripSeparator toolStripSeparator1;
-        private ToolStripDropDownButton tsbFiltrar;
+        private ToolStripButton tsbFiltrar;
         private ToolStripButton tsbActualizar;
         private ToolStripSeparator toolStripSeparator2;
+        private ToolStripDropDownButton toolStripButton7;
+        private ToolStripMenuItem ordenToolStripMenuItem;
+        private ToolStripMenuItem ordenZAToolStripMenuItem;
         private ToolStripSeparator toolStripSeparator3;
         private ToolStripButton tsbSalir;
-        private Panel panel4;
-        private DataGridView dgvDatos;
         private DataGridViewTextBoxColumn ColMarcaId;
         private DataGridViewTextBoxColumn ColMarca;
-        private ToolStripMenuItem busquedaToolStripMenuItem;
-        private ToolStripDropDownButton toolStripButton7;
-        private ToolStripMenuItem ordenAZToolStripMenuItem;
-        private ToolStripMenuItem ordenZAToolStripMenuItem;
     }
 }

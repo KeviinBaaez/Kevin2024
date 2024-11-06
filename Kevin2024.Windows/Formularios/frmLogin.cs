@@ -29,7 +29,7 @@ namespace Kevin2024.Windows.Formularios
                     //    "Inicio Perfecto",
                     //    MessageBoxButtons.OK,
                     //    MessageBoxIcon.Information);
-                    frmBebidas frm = new frmBebidas(_serviceProvider);
+                    frmProductos frm = new frmProductos(_serviceProvider);
                     frm.ShowDialog(this);
                 }
                 else

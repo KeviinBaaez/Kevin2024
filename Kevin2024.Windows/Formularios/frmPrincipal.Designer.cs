@@ -40,10 +40,6 @@
             flowLayoutPanel1 = new FlowLayoutPanel();
             panel4 = new Panel();
             PanelProductos = new Panel();
-            toolStrip2 = new ToolStrip();
-            btnComidas = new ToolStripButton();
-            btnBebidas = new ToolStripButton();
-            btnPostres = new ToolStripButton();
             btnProductos = new Button();
             PanelVentas = new Panel();
             btnVentas = new Button();
@@ -81,7 +77,6 @@
             panel9.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
             PanelProductos.SuspendLayout();
-            toolStrip2.SuspendLayout();
             PanelVentas.SuspendLayout();
             panel6.SuspendLayout();
             panelEmpleados.SuspendLayout();
@@ -129,9 +124,9 @@
             panel9.Controls.Add(panel10);
             panel9.Controls.Add(panel7);
             panel9.Dock = DockStyle.Fill;
-            panel9.Location = new Point(0, 75);
+            panel9.Location = new Point(0, 72);
             panel9.Name = "panel9";
-            panel9.Size = new Size(1036, 559);
+            panel9.Size = new Size(1036, 562);
             panel9.TabIndex = 8;
             // 
             // panelFormularios
@@ -140,13 +135,13 @@
             panelFormularios.Dock = DockStyle.Fill;
             panelFormularios.Location = new Point(68, 42);
             panelFormularios.Name = "panelFormularios";
-            panelFormularios.Size = new Size(900, 475);
+            panelFormularios.Size = new Size(900, 478);
             panelFormularios.TabIndex = 5;
             // 
             // panelk
             // 
             panelk.Dock = DockStyle.Bottom;
-            panelk.Location = new Point(68, 517);
+            panelk.Location = new Point(68, 520);
             panelk.Name = "panelk";
             panelk.Size = new Size(900, 42);
             panelk.TabIndex = 7;
@@ -165,7 +160,7 @@
             panel10.Dock = DockStyle.Left;
             panel10.Location = new Point(0, 0);
             panel10.Name = "panel10";
-            panel10.Size = new Size(68, 559);
+            panel10.Size = new Size(68, 562);
             panel10.TabIndex = 9;
             // 
             // panel7
@@ -174,7 +169,7 @@
             panel7.Dock = DockStyle.Right;
             panel7.Location = new Point(968, 0);
             panel7.Name = "panel7";
-            panel7.Size = new Size(68, 559);
+            panel7.Size = new Size(68, 562);
             panel7.TabIndex = 6;
             // 
             // flowLayoutPanel1
@@ -188,7 +183,7 @@
             flowLayoutPanel1.Dock = DockStyle.Top;
             flowLayoutPanel1.Location = new Point(0, 0);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(1036, 75);
+            flowLayoutPanel1.Size = new Size(1036, 72);
             flowLayoutPanel1.TabIndex = 4;
             // 
             // panel4
@@ -201,61 +196,11 @@
             // PanelProductos
             // 
             PanelProductos.BackColor = Color.FromArgb(0, 59, 103);
-            PanelProductos.Controls.Add(toolStrip2);
             PanelProductos.Controls.Add(btnProductos);
             PanelProductos.Location = new Point(22, 3);
             PanelProductos.Name = "PanelProductos";
-            PanelProductos.Size = new Size(165, 195);
+            PanelProductos.Size = new Size(165, 65);
             PanelProductos.TabIndex = 3;
-            // 
-            // toolStrip2
-            // 
-            toolStrip2.AllowMerge = false;
-            toolStrip2.BackColor = Color.FromArgb(0, 59, 103);
-            toolStrip2.Dock = DockStyle.Fill;
-            toolStrip2.GripStyle = ToolStripGripStyle.Hidden;
-            toolStrip2.Items.AddRange(new ToolStripItem[] { btnComidas, btnBebidas, btnPostres });
-            toolStrip2.LayoutStyle = ToolStripLayoutStyle.VerticalStackWithOverflow;
-            toolStrip2.Location = new Point(0, 65);
-            toolStrip2.Name = "toolStrip2";
-            toolStrip2.RenderMode = ToolStripRenderMode.System;
-            toolStrip2.Size = new Size(165, 130);
-            toolStrip2.TabIndex = 0;
-            // 
-            // btnComidas
-            // 
-            btnComidas.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            btnComidas.Font = new Font("Constantia", 12F, FontStyle.Bold);
-            btnComidas.Image = (Image)resources.GetObject("btnComidas.Image");
-            btnComidas.ImageTransparentColor = Color.Magenta;
-            btnComidas.Margin = new Padding(0, 15, 0, 2);
-            btnComidas.Name = "btnComidas";
-            btnComidas.Size = new Size(163, 23);
-            btnComidas.Text = "Comidas";
-            // 
-            // btnBebidas
-            // 
-            btnBebidas.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            btnBebidas.Font = new Font("Constantia", 12F, FontStyle.Bold);
-            btnBebidas.Image = (Image)resources.GetObject("btnBebidas.Image");
-            btnBebidas.ImageTransparentColor = Color.Magenta;
-            btnBebidas.Margin = new Padding(0, 15, 0, 2);
-            btnBebidas.Name = "btnBebidas";
-            btnBebidas.Size = new Size(163, 23);
-            btnBebidas.Text = "Bebidas";
-            btnBebidas.Click += tsbBebidas_Click;
-            // 
-            // btnPostres
-            // 
-            btnPostres.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            btnPostres.Font = new Font("Constantia", 12F, FontStyle.Bold);
-            btnPostres.Image = (Image)resources.GetObject("btnPostres.Image");
-            btnPostres.ImageTransparentColor = Color.Magenta;
-            btnPostres.Margin = new Padding(0, 15, 0, 2);
-            btnPostres.Name = "btnPostres";
-            btnPostres.Size = new Size(163, 23);
-            btnPostres.Text = "Postres";
-            btnPostres.Click += tsbPostres_Click;
             // 
             // btnProductos
             // 
@@ -297,7 +242,6 @@
             btnVentas.Text = "Ventas";
             btnVentas.TextAlign = ContentAlignment.BottomCenter;
             btnVentas.UseVisualStyleBackColor = true;
-            btnVentas.Click += btnProductos_Click;
             // 
             // panel6
             // 
@@ -347,7 +291,7 @@
             btnEmpleados.Text = "Empleados";
             btnEmpleados.TextAlign = ContentAlignment.BottomCenter;
             btnEmpleados.UseVisualStyleBackColor = true;
-            btnEmpleados.Click += btnProductos_Click;
+            btnEmpleados.Click += btnEmpleados_Click;
             // 
             // panelOtros
             // 
@@ -646,9 +590,6 @@
             panel9.ResumeLayout(false);
             flowLayoutPanel1.ResumeLayout(false);
             PanelProductos.ResumeLayout(false);
-            PanelProductos.PerformLayout();
-            toolStrip2.ResumeLayout(false);
-            toolStrip2.PerformLayout();
             PanelVentas.ResumeLayout(false);
             panel6.ResumeLayout(false);
             panelEmpleados.ResumeLayout(false);
@@ -687,10 +628,6 @@
         private ToolStripSeparator toolStripSeparator1;
         private ToolStripButton toolStripButton5;
         private ToolStripSeparator toolStripSeparator2;
-        private ToolStrip toolStrip2;
-        private ToolStripButton btnComidas;
-        private ToolStripButton btnBebidas;
-        private ToolStripButton btnPostres;
         private ToolStripSeparator toolStripSeparator3;
         private Button btnProductos;
         private Panel panelDesplegar;

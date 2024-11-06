@@ -13,14 +13,13 @@ namespace Kevin2024.Datos.Repositorios
 
         public void Agregar(SqlConnection conn, Tamanio tamanio, SqlTransaction tran)
         {
-            string insertQuery = @"INSERT INTO Tamaños (Descripcion, Cantidad) 
-                                    VALUES (@Descripcion, @Cantidad);
+            string insertQuery = @"INSERT INTO Tamaños (Descripcion) 
+                                    VALUES (@Descripcion);
                                     SELECT CAST(SCOPE_IDENTITY() AS INT)";
             int primaryKey = conn.QuerySingle<int>(insertQuery, new
             {
                 TamanioId = tamanio.TamanioId,
                 Descripcion = tamanio.Descripcion,
-                Cantidad = tamanio.Cantidad
             }, tran);
             if(primaryKey > 0)
             {
@@ -43,7 +42,7 @@ namespace Kevin2024.Datos.Repositorios
 
         public void Editar(SqlConnection conn, Tamanio tamanio, SqlTransaction tran)
         {
-            string updateQuery = @"UPDATE Tamaños SET Descripcion=@Descripcion, Cantidad=@Cantidad 
+            string updateQuery = @"UPDATE Tamaños SET Descripcion=@Descripcion 
                                     WHERE TamanioId=@TamanioId";
             int registrosAfectados = conn.Execute(updateQuery, tamanio, tran);
             if (registrosAfectados == 0)
@@ -54,7 +53,7 @@ namespace Kevin2024.Datos.Repositorios
 
         public bool EstaRelacionado(SqlConnection conn, int tamanioId)
         {
-            string selectQuery = @"SELECT COUNT(*) FROM Bebidas 
+            string selectQuery = @"SELECT COUNT(*) FROM Productos 
                                     WHERE TamanioId=@TamanioId";
             return conn.QuerySingle<int>(selectQuery, new { tamanioId }) > 0;
         }
@@ -80,7 +79,7 @@ namespace Kevin2024.Datos.Repositorios
         {
             var lista = new List<Tamanio>();
             string selectQuery = @"SELECT TamanioId AS TamanioId, 
-                                    Descripcion, Cantidad FROM Tamaños";
+                                    Descripcion FROM Tamaños";
             var listaTamanios = conn.Query<Tamanio>(selectQuery).ToList();
             lista.AddRange(listaTamanios);
             if(filter != null)
@@ -96,7 +95,7 @@ namespace Kevin2024.Datos.Repositorios
             string finalQuery = string.Empty;
             string ordenQuery = string.Empty;
             string selectQuery = @"SELECT TamanioId AS TamanioId, 
-                                    Descripcion, Cantidad From Tamaños";
+                                    Descripcion From Tamaños";
             if(orden == Orden.OrdenAZ)
             {
                 ordenQuery = " ORDER BY Descripcion";
@@ -119,7 +118,7 @@ namespace Kevin2024.Datos.Repositorios
         {
             var lista = new List<Tamanio>();
             string selectQuery = @"SELECT TamanioId AS TamanioId, 
-                                    Descripcion, Cantidad 
+                                    Descripcion 
                                     FROM Tamaños";
             var listaTamanios = conn.Query<Tamanio>(selectQuery).ToList();
             lista.AddRange(listaTamanios);

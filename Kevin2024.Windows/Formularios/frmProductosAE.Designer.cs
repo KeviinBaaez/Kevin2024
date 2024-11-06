@@ -1,6 +1,6 @@
 ﻿namespace Kevin2024.Windows.Formularios
 {
-    partial class frmPostresAE
+    partial class frmProductosAE
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmPostresAE));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmProductosAE));
             cboMarca = new ComboBox();
             btnCancelar = new Button();
             btnAceptar = new Button();
@@ -57,7 +57,10 @@
             cboCategorias = new ComboBox();
             groupBox1 = new GroupBox();
             groupBox2 = new GroupBox();
+            panel4 = new Panel();
             panel3 = new Panel();
+            label13 = new Label();
+            txtDescripcion = new TextBox();
             groupBox3 = new GroupBox();
             picImagen = new PictureBox();
             btnBuscar = new Button();
@@ -65,9 +68,6 @@
             panel2 = new Panel();
             panel1 = new Panel();
             errorProvider1 = new ErrorProvider(components);
-            txtDescripcion = new TextBox();
-            label13 = new Label();
-            panel4 = new Panel();
             ((System.ComponentModel.ISupportInitialize)nupNivelReposicion).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nupStock).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nupPrecioVenta).BeginInit();
@@ -89,7 +89,7 @@
             cboMarca.Margin = new Padding(4);
             cboMarca.Name = "cboMarca";
             cboMarca.Size = new Size(291, 27);
-            cboMarca.TabIndex = 3;
+            cboMarca.TabIndex = 6;
             // 
             // btnCancelar
             // 
@@ -100,7 +100,7 @@
             btnCancelar.Margin = new Padding(4);
             btnCancelar.Name = "btnCancelar";
             btnCancelar.Size = new Size(276, 68);
-            btnCancelar.TabIndex = 13;
+            btnCancelar.TabIndex = 18;
             btnCancelar.Text = "Cancelar";
             btnCancelar.TextAlign = ContentAlignment.MiddleRight;
             btnCancelar.TextImageRelation = TextImageRelation.ImageBeforeText;
@@ -116,7 +116,7 @@
             btnAceptar.Margin = new Padding(4);
             btnAceptar.Name = "btnAceptar";
             btnAceptar.Size = new Size(276, 68);
-            btnAceptar.TabIndex = 12;
+            btnAceptar.TabIndex = 17;
             btnAceptar.Text = "Aceptar";
             btnAceptar.TextAlign = ContentAlignment.MiddleRight;
             btnAceptar.TextImageRelation = TextImageRelation.ImageBeforeText;
@@ -132,7 +132,7 @@
             nupNivelReposicion.Maximum = new decimal(new int[] { 10000000, 0, 0, 0 });
             nupNivelReposicion.Name = "nupNivelReposicion";
             nupNivelReposicion.Size = new Size(138, 26);
-            nupNivelReposicion.TabIndex = 9;
+            nupNivelReposicion.TabIndex = 13;
             // 
             // nupStock
             // 
@@ -143,7 +143,7 @@
             nupStock.Maximum = new decimal(new int[] { 10000000, 0, 0, 0 });
             nupStock.Name = "nupStock";
             nupStock.Size = new Size(111, 26);
-            nupStock.TabIndex = 8;
+            nupStock.TabIndex = 12;
             // 
             // nupPrecioVenta
             // 
@@ -155,7 +155,7 @@
             nupPrecioVenta.Maximum = new decimal(new int[] { 10000000, 0, 0, 0 });
             nupPrecioVenta.Name = "nupPrecioVenta";
             nupPrecioVenta.Size = new Size(144, 26);
-            nupPrecioVenta.TabIndex = 7;
+            nupPrecioVenta.TabIndex = 11;
             // 
             // nupPrecioCosto
             // 
@@ -167,7 +167,7 @@
             nupPrecioCosto.Maximum = new decimal(new int[] { 10000000, 0, 0, 0 });
             nupPrecioCosto.Name = "nupPrecioCosto";
             nupPrecioCosto.Size = new Size(144, 26);
-            nupPrecioCosto.TabIndex = 6;
+            nupPrecioCosto.TabIndex = 10;
             // 
             // cboTamanio
             // 
@@ -187,7 +187,7 @@
             checkBox1.Margin = new Padding(4);
             checkBox1.Name = "checkBox1";
             checkBox1.Size = new Size(15, 14);
-            checkBox1.TabIndex = 10;
+            checkBox1.TabIndex = 14;
             checkBox1.UseVisualStyleBackColor = true;
             // 
             // txtSabor
@@ -199,7 +199,7 @@
             txtSabor.Name = "txtSabor";
             txtSabor.PlaceholderText = "Sabor";
             txtSabor.Size = new Size(293, 20);
-            txtSabor.TabIndex = 5;
+            txtSabor.TabIndex = 8;
             txtSabor.TextAlign = HorizontalAlignment.Center;
             // 
             // label10
@@ -323,7 +323,7 @@
             txtNombre.Name = "txtNombre";
             txtNombre.PlaceholderText = "Nombre";
             txtNombre.Size = new Size(304, 20);
-            txtNombre.TabIndex = 0;
+            txtNombre.TabIndex = 1;
             txtNombre.TextAlign = HorizontalAlignment.Center;
             // 
             // label11
@@ -348,7 +348,7 @@
             txtCodigoBarras.Name = "txtCodigoBarras";
             txtCodigoBarras.PlaceholderText = "0123456789";
             txtCodigoBarras.Size = new Size(304, 19);
-            txtCodigoBarras.TabIndex = 1;
+            txtCodigoBarras.TabIndex = 2;
             txtCodigoBarras.TextAlign = HorizontalAlignment.Center;
             // 
             // label12
@@ -370,7 +370,7 @@
             cboCategorias.Margin = new Padding(4);
             cboCategorias.Name = "cboCategorias";
             cboCategorias.Size = new Size(303, 27);
-            cboCategorias.TabIndex = 2;
+            cboCategorias.TabIndex = 3;
             // 
             // groupBox1
             // 
@@ -383,7 +383,7 @@
             groupBox1.Name = "groupBox1";
             groupBox1.Padding = new Padding(4);
             groupBox1.Size = new Size(636, 90);
-            groupBox1.TabIndex = 31;
+            groupBox1.TabIndex = 9;
             groupBox1.TabStop = false;
             groupBox1.Text = "Precios";
             // 
@@ -402,9 +402,18 @@
             groupBox2.Name = "groupBox2";
             groupBox2.Padding = new Padding(4);
             groupBox2.Size = new Size(464, 171);
-            groupBox2.TabIndex = 32;
+            groupBox2.TabIndex = 5;
             groupBox2.TabStop = false;
             groupBox2.Text = "Datos (NULL)";
+            // 
+            // panel4
+            // 
+            panel4.BackColor = SystemColors.ControlDarkDark;
+            panel4.Location = new Point(135, 110);
+            panel4.Margin = new Padding(4);
+            panel4.Name = "panel4";
+            panel4.Size = new Size(293, 1);
+            panel4.TabIndex = 24;
             // 
             // panel3
             // 
@@ -415,6 +424,29 @@
             panel3.Size = new Size(293, 1);
             panel3.TabIndex = 24;
             // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.Font = new Font("Constantia", 12F, FontStyle.Bold);
+            label13.Location = new Point(11, 82);
+            label13.Margin = new Padding(4, 0, 4, 0);
+            label13.Name = "label13";
+            label13.Size = new Size(105, 19);
+            label13.TabIndex = 14;
+            label13.Text = "Descripción ";
+            // 
+            // txtDescripcion
+            // 
+            txtDescripcion.BackColor = Color.FromArgb(0, 59, 103);
+            txtDescripcion.BorderStyle = BorderStyle.None;
+            txtDescripcion.Location = new Point(135, 82);
+            txtDescripcion.Margin = new Padding(4);
+            txtDescripcion.Name = "txtDescripcion";
+            txtDescripcion.PlaceholderText = "Descripción";
+            txtDescripcion.Size = new Size(293, 20);
+            txtDescripcion.TabIndex = 7;
+            txtDescripcion.TextAlign = HorizontalAlignment.Center;
+            // 
             // groupBox3
             // 
             groupBox3.Controls.Add(picImagen);
@@ -423,7 +455,7 @@
             groupBox3.Name = "groupBox3";
             groupBox3.Padding = new Padding(4);
             groupBox3.Size = new Size(261, 218);
-            groupBox3.TabIndex = 33;
+            groupBox3.TabIndex = 14;
             groupBox3.TabStop = false;
             groupBox3.Text = "Imagen";
             // 
@@ -445,7 +477,7 @@
             btnBuscar.Margin = new Padding(4);
             btnBuscar.Name = "btnBuscar";
             btnBuscar.Size = new Size(261, 54);
-            btnBuscar.TabIndex = 11;
+            btnBuscar.TabIndex = 16;
             btnBuscar.Text = "Buscar";
             btnBuscar.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnBuscar.UseVisualStyleBackColor = false;
@@ -467,7 +499,7 @@
             groupBox4.Name = "groupBox4";
             groupBox4.Padding = new Padding(4);
             groupBox4.Size = new Size(489, 215);
-            groupBox4.TabIndex = 35;
+            groupBox4.TabIndex = 0;
             groupBox4.TabStop = false;
             groupBox4.Text = "Datos";
             // 
@@ -493,38 +525,6 @@
             // 
             errorProvider1.ContainerControl = this;
             // 
-            // txtDescripcion
-            // 
-            txtDescripcion.BackColor = Color.FromArgb(0, 59, 103);
-            txtDescripcion.BorderStyle = BorderStyle.None;
-            txtDescripcion.Location = new Point(135, 82);
-            txtDescripcion.Margin = new Padding(4);
-            txtDescripcion.Name = "txtDescripcion";
-            txtDescripcion.PlaceholderText = "Descripción";
-            txtDescripcion.Size = new Size(293, 20);
-            txtDescripcion.TabIndex = 5;
-            txtDescripcion.TextAlign = HorizontalAlignment.Center;
-            // 
-            // label13
-            // 
-            label13.AutoSize = true;
-            label13.Font = new Font("Constantia", 12F, FontStyle.Bold);
-            label13.Location = new Point(11, 82);
-            label13.Margin = new Padding(4, 0, 4, 0);
-            label13.Name = "label13";
-            label13.Size = new Size(105, 19);
-            label13.TabIndex = 14;
-            label13.Text = "Descripción ";
-            // 
-            // panel4
-            // 
-            panel4.BackColor = SystemColors.ControlDarkDark;
-            panel4.Location = new Point(135, 110);
-            panel4.Margin = new Padding(4);
-            panel4.Name = "panel4";
-            panel4.Size = new Size(293, 1);
-            panel4.TabIndex = 24;
-            // 
             // frmPostresAE
             // 
             AutoScaleDimensions = new SizeF(10F, 19F);
@@ -549,7 +549,7 @@
             Margin = new Padding(4);
             Name = "frmPostresAE";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "frmPostresAE";
+            Text = "Nuevo Producto";
             Load += frmPostresAE_Load;
             ((System.ComponentModel.ISupportInitialize)nupNivelReposicion).EndInit();
             ((System.ComponentModel.ISupportInitialize)nupStock).EndInit();

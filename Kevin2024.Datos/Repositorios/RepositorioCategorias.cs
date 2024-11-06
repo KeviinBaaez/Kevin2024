@@ -51,7 +51,7 @@ namespace Kevin2024.Datos.Repositorios
 
         public bool EstaRelacionado(SqlConnection conn, int categoriaId)
         {
-            string selectQuery = @"SELECT COUNT(*) FROM Bebidas 
+            string selectQuery = @"SELECT COUNT(*) FROM Productos 
                                     WHERE CategoriaId=@categoriaId";
             return conn.QuerySingle<int>(selectQuery, new { categoriaId }) > 0;
         }
@@ -76,15 +76,17 @@ namespace Kevin2024.Datos.Repositorios
         public int GetCantidad(SqlConnection conn, Func<Categorias, bool>? filter)
         {
             var lista = new List<Categorias>();
-            string selectQuery = @"SELECT CategoriaId, Descripcion FROM Categorias";
+            string selectQuery = "SELECT CategoriaId, Descripcion FROM Categorias";
             var listaCategorias = conn.Query<Categorias>(selectQuery).ToList();
             lista.AddRange(listaCategorias);
-            if (filter != null)
+            if(filter != null)
             {
                 lista = lista.Where(filter).ToList();
             }
             return lista.Count;
         }
+
+
 
         public List<Categorias>? GetLista(SqlConnection conn, int currentPage, int pageSize, Orden orden, Func<Categorias, bool>? filter)
         {

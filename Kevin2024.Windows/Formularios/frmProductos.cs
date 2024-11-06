@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace Kevin2024.Windows.Formularios
 {
-    public partial class frmBebidas : Form
+    public partial class frmProductos : Form
     {
         private readonly IServiceProvider? _serviceProvider;
         private readonly IServiciosProductos? _servicios;
@@ -25,7 +25,10 @@ namespace Kevin2024.Windows.Formularios
         //Orden
         private Orden orden = Orden.Ninguno;
 
-        public frmBebidas(IServiceProvider? serviceProvider)
+        //Tipo para busqueda
+        Tipos tipo = Tipos.Ninguno;
+
+        public frmProductos(IServiceProvider? serviceProvider)
         {
             InitializeComponent();
             _serviceProvider = serviceProvider;
@@ -77,7 +80,6 @@ namespace Kevin2024.Windows.Formularios
                     currentPage = 1;
                     filter = null;
                     tsbFiltrar.Enabled = true;
-                    //RecargarGrilla();
                 }
             }
             catch (Exception)
@@ -88,7 +90,7 @@ namespace Kevin2024.Windows.Formularios
         }
         private void tsbNuevo_Click(object sender, EventArgs e)
         {
-            frmPostresAE frm = new frmPostresAE(_serviceProvider);
+            frmProductosAE frm = new frmProductosAE(_serviceProvider);
             DialogResult dr = frm.ShowDialog(this);
             if (dr == DialogResult.Cancel) return;
             try
@@ -136,7 +138,7 @@ namespace Kevin2024.Windows.Formularios
             ProductosListDto pListDto = (ProductosListDto)r.Tag;
             Productos? producto = _servicios!.GetProductoPorId(pListDto.ProductoId);
             if (producto is null) return;
-            frmBebidasAE frm = new frmBebidasAE(_serviceProvider) { Text = "Editar Producto" };
+            frmProductosAE frm = new frmProductosAE(_serviceProvider) { Text = "Editar Producto" };
             frm.SetProducto(producto);
             DialogResult dr = frm.ShowDialog(this);
             if (dr == DialogResult.Cancel) return;
@@ -178,7 +180,7 @@ namespace Kevin2024.Windows.Formularios
             var r = dgvDatos.SelectedRows[0];
             if (r.Tag == null) return;
             ProductosListDto pListDto = (ProductosListDto)r.Tag;
-            DialogResult dr = MessageBox.Show($"¿Deseas dar de baja la siguiente bebida?\n MARCA: {pListDto.Marca.Nombre}\n SABOR: {pListDto.Sabor}\n TAMAÑO: {pListDto.Tamanio}",
+            DialogResult dr = MessageBox.Show($"¿Deseas dar de baja la siguiente bebida?\n Producto: {pListDto.Nombre!}\n CobBarras: {pListDto.CodBarras}",
                 "Confirmar",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question,
@@ -258,17 +260,39 @@ namespace Kevin2024.Windows.Formularios
             LoadData(filter);
         }
 
+        private void tsbActualizar_Click(object sender, EventArgs e)
+        {
+            filter = null;
+            orden = Orden.Ninguno;
+            currentPage = 1;
+            tsbFiltrar.Enabled = true;
+            RecargarGrilla();
+        }
+
+        private void ordenAZToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            orden = Orden.OrdenAZ;
+            LoadData();
+        }
+
+        private void ordenZAToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            orden = Orden.OrdenZA;
+            LoadData();
+        }
         private void busquedaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmFiltroTexto frm = new frmFiltroTexto() { Text = "Ingresar texto para buscar..." };
+            tipo = Tipos.Ninguno;
+            frmFiltro frm = new frmFiltro(tipo) { Text = "Ingresar texto para buscar..." };
             DialogResult dr = frm.ShowDialog(this);
             try
             {
                 var textoFiltro = frm.GetTexto();
                 if (textoFiltro is null || textoFiltro == string.Empty) return;
 
-                filter = b => b.Marca.Nombre.ToUpper().Contains(textoFiltro.ToUpper());
-                totalRecords = _servicios!.GetCantidad(filter);
+                filter=b=>(b.Nombre.ToUpper().Contains(textoFiltro.ToUpper()) ||
+                (b.CodBarras.ToString().Contains(textoFiltro)));
+                totalRecords = _servicios!.GetCantidad(filter); 
                 currentPage = 1;
                 if (totalRecords > 0)
                 {
@@ -291,26 +315,100 @@ namespace Kevin2024.Windows.Formularios
                 throw;
             }
         }
-
-        private void tsbActualizar_Click(object sender, EventArgs e)
+        private void categoriaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            filter = null;
-            orden = Orden.Ninguno;
-            currentPage = 1;
-            tsbFiltrar.Enabled = true;
-            RecargarGrilla();
+            tipo = Tipos.Categoria;
+            frmFiltro frm = new frmFiltro(tipo) { Text = "Ingresar texto para buscar..." };
+
+            DialogResult dr = frm.ShowDialog(this);
+            try
+            {
+                var textoFiltro = frm.GetTexto();
+                if (textoFiltro is null || textoFiltro == string.Empty) return;
+                filter = p => p.Categoria!.ToUpper().Contains(textoFiltro.ToUpper());
+                if (totalRecords > 0)
+                {
+                    totalPages = (int)Math.Ceiling((decimal)totalRecords / pageSize);
+                    tsbFiltrar.Enabled = false;
+                    LoadData(filter);
+                }
+                else
+                {
+                    MessageBox.Show("No se encontraron registros..",
+                        "Mensaje",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+                    filter = null;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
-        private void ordenAZToolStripMenuItem_Click(object sender, EventArgs e)
+        private void marcaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            orden = Orden.OrdenAZ;
-            LoadData();
+            tipo = Tipos.Marcas;
+            frmFiltro frm = new frmFiltro(tipo) { Text = "Ingresar texto para buscar..." };
+
+            DialogResult dr = frm.ShowDialog(this);
+            try
+            {
+                var textoFiltro = frm.GetTexto();
+                if (textoFiltro is null || textoFiltro == string.Empty) return;
+                filter = p => p.Marca!.ToUpper().Contains(textoFiltro.ToUpper());
+                if (totalRecords > 0)
+                {
+                    totalPages = (int)Math.Ceiling((decimal)totalRecords / pageSize);
+                    tsbFiltrar.Enabled = false;
+                    LoadData(filter);
+                }
+                else
+                {
+                    MessageBox.Show("No se encontraron registros..",
+                        "Mensaje",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+                    filter = null;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
-        private void ordenZAToolStripMenuItem_Click(object sender, EventArgs e)
+        private void tamañoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            orden = Orden.OrdenZA;
-            LoadData();
+            tipo = Tipos.Tamanio;
+            frmFiltro frm = new frmFiltro(tipo) { Text = "Ingresar texto para buscar..." };
+
+            DialogResult dr = frm.ShowDialog(this);
+            try
+            {
+                var textoFiltro = frm.GetTexto();
+                if (textoFiltro is null || textoFiltro == string.Empty) return;
+                filter = p => p.Tamanio!.ToUpper().Contains(textoFiltro.ToUpper());
+                if (totalRecords > 0)
+                {
+                    totalPages = (int)Math.Ceiling((decimal)totalRecords / pageSize);
+                    tsbFiltrar.Enabled = false;
+                    LoadData(filter);
+                }
+                else
+                {
+                    MessageBox.Show("No se encontraron registros..",
+                        "Mensaje",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+                    filter = null;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

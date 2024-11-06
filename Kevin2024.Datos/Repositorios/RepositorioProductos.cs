@@ -77,6 +77,7 @@ namespace Kevin2024.Datos.Repositorios
                                     WHERE ProductoId = @ProductoId";
             int registrosAfectados = conn.Execute(updateQuery, new
             {
+                producto.ProductoId,
                 producto.Nombre,
                 producto.Descripcion,
                 producto.MarcaId,
@@ -111,11 +112,11 @@ namespace Kevin2024.Datos.Repositorios
             string conditional = string.Empty;
             if (producto.ProductoId == 0)
             {
-                conditional = " WHERE Nombre=@Nombre AND CodBarras = @CodBarras";
+                conditional = " WHERE CodBarras = @CodBarras";
             }
             else
             {
-                conditional = " WHERE Descripcion=@Descripcion AND TamanioId<>@TamanioId";
+                conditional = " WHERE CodBarras = @CodBarras AND ProductoId<>@ProductoId";
             }
             finalQuery = string.Concat(selectQuery, conditional);
             return conn.QuerySingle<int>(finalQuery, producto) > 0;
@@ -129,7 +130,7 @@ namespace Kevin2024.Datos.Repositorios
 								p.Descripcion,
                                 Sabor,
 								p.CodBarras,
-                                t.Cantidad,
+                                t.Descripcion,
 								c.Descripcion,
                                 PrecioCosto,
                                 PrecioVenta AS Precio, 
@@ -159,16 +160,12 @@ namespace Kevin2024.Datos.Repositorios
             string finalQuery = string.Empty;
             var selectQuery = @"SELECT ProductoId AS ProductoId,
                                 p.Nombre,
-								p.Descripcion,
 								m.Nombre AS Marca,
-                                Sabor,
 								p.CodBarras,
-                                t.Cantidad,
-								c.Descripcion,
-                                PrecioCosto,
-                                PrecioVenta AS Precio, 
+                                t.Descripcion AS Tamanio,
+								c.Descripcion AS Categoria,
+                                PrecioVenta, 
                                 Stock, 
-                                NivelDeReposicion, 
                                 Suspendido
                            FROM Productos p
 

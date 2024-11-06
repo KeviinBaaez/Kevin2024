@@ -1,6 +1,6 @@
 ﻿namespace Kevin2024.Windows.Formularios
 {
-    partial class frmBebidas
+    partial class frmEmpleados
     {
         /// <summary>
         /// Required designer variable.
@@ -28,10 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmBebidas));
-            panel1 = new Panel();
-            dgvDatos = new DataGridView();
-            panel2 = new Panel();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             toolStrip1 = new ToolStrip();
             tsbNuevo = new ToolStripButton();
             tsbEditar = new ToolStripButton();
@@ -54,59 +53,21 @@
             label1 = new Label();
             cboPaginas = new ComboBox();
             txtPaginas = new TextBox();
-            ColProductoId = new DataGridViewTextBoxColumn();
+            panel2 = new Panel();
+            panel4 = new Panel();
+            dgvDatos = new DataGridView();
+            panel1 = new Panel();
+            ColEmpleadoId = new DataGridViewTextBoxColumn();
             ColNombre = new DataGridViewTextBoxColumn();
-            ColMarca = new DataGridViewTextBoxColumn();
-            ColSabor = new DataGridViewTextBoxColumn();
-            ColCodBarras = new DataGridViewTextBoxColumn();
-            ColTamaño = new DataGridViewTextBoxColumn();
-            ColCategoria = new DataGridViewTextBoxColumn();
-            ColPrecioCosto = new DataGridViewTextBoxColumn();
-            ColPrecioVenta = new DataGridViewTextBoxColumn();
-            ColStock = new DataGridViewTextBoxColumn();
-            ColNivelReposicion = new DataGridViewTextBoxColumn();
+            ColDni = new DataGridViewTextBoxColumn();
+            ColSalario = new DataGridViewTextBoxColumn();
             ColSuspendido = new DataGridViewCheckBoxColumn();
-            panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvDatos).BeginInit();
-            panel2.SuspendLayout();
             toolStrip1.SuspendLayout();
             panel3.SuspendLayout();
+            panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvDatos).BeginInit();
+            panel1.SuspendLayout();
             SuspendLayout();
-            // 
-            // panel1
-            // 
-            panel1.Controls.Add(dgvDatos);
-            panel1.Dock = DockStyle.Fill;
-            panel1.Location = new Point(0, 59);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(900, 352);
-            panel1.TabIndex = 0;
-            // 
-            // dgvDatos
-            // 
-            dgvDatos.AllowUserToAddRows = false;
-            dgvDatos.AllowUserToDeleteRows = false;
-            dgvDatos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvDatos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvDatos.Columns.AddRange(new DataGridViewColumn[] { ColProductoId, ColNombre, ColMarca, ColSabor, ColCodBarras, ColTamaño, ColCategoria, ColPrecioCosto, ColPrecioVenta, ColStock, ColNivelReposicion, ColSuspendido });
-            dgvDatos.Dock = DockStyle.Fill;
-            dgvDatos.Location = new Point(0, 0);
-            dgvDatos.MultiSelect = false;
-            dgvDatos.Name = "dgvDatos";
-            dgvDatos.ReadOnly = true;
-            dgvDatos.RowHeadersVisible = false;
-            dgvDatos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvDatos.Size = new Size(900, 352);
-            dgvDatos.TabIndex = 0;
-            // 
-            // panel2
-            // 
-            panel2.Controls.Add(toolStrip1);
-            panel2.Dock = DockStyle.Top;
-            panel2.Location = new Point(0, 0);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(900, 59);
-            panel2.TabIndex = 1;
             // 
             // toolStrip1
             // 
@@ -117,18 +78,17 @@
             toolStrip1.Location = new Point(0, 0);
             toolStrip1.Name = "toolStrip1";
             toolStrip1.RenderMode = ToolStripRenderMode.System;
-            toolStrip1.Size = new Size(900, 59);
+            toolStrip1.Size = new Size(900, 72);
             toolStrip1.TabIndex = 0;
             toolStrip1.Text = "toolStrip1";
             // 
             // tsbNuevo
             // 
-            tsbNuevo.BackColor = Color.FromArgb(1, 95, 168);
             tsbNuevo.Font = new Font("Constantia", 14.25F, FontStyle.Bold);
             tsbNuevo.Image = Properties.Resources.agregar_documento__1_;
             tsbNuevo.ImageTransparentColor = Color.Magenta;
             tsbNuevo.Name = "tsbNuevo";
-            tsbNuevo.Size = new Size(71, 56);
+            tsbNuevo.Size = new Size(71, 69);
             tsbNuevo.Text = "Nuevo";
             tsbNuevo.TextAlign = ContentAlignment.BottomCenter;
             tsbNuevo.TextImageRelation = TextImageRelation.ImageAboveText;
@@ -140,7 +100,7 @@
             tsbEditar.Image = Properties.Resources.editar;
             tsbEditar.ImageTransparentColor = Color.Magenta;
             tsbEditar.Name = "tsbEditar";
-            tsbEditar.Size = new Size(68, 56);
+            tsbEditar.Size = new Size(68, 69);
             tsbEditar.Text = "Editar";
             tsbEditar.TextAlign = ContentAlignment.BottomCenter;
             tsbEditar.TextImageRelation = TextImageRelation.ImageAboveText;
@@ -152,7 +112,7 @@
             tsbBorrar.Image = Properties.Resources.borrar;
             tsbBorrar.ImageTransparentColor = Color.Magenta;
             tsbBorrar.Name = "tsbBorrar";
-            tsbBorrar.Size = new Size(72, 56);
+            tsbBorrar.Size = new Size(72, 69);
             tsbBorrar.Text = "Borrar";
             tsbBorrar.TextAlign = ContentAlignment.BottomCenter;
             tsbBorrar.TextImageRelation = TextImageRelation.ImageAboveText;
@@ -161,7 +121,7 @@
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(6, 59);
+            toolStripSeparator1.Size = new Size(6, 72);
             // 
             // tsbFiltrar
             // 
@@ -170,12 +130,12 @@
             tsbFiltrar.Image = Properties.Resources.lista;
             tsbFiltrar.ImageTransparentColor = Color.Magenta;
             tsbFiltrar.Name = "tsbFiltrar";
-            tsbFiltrar.Size = new Size(95, 56);
+            tsbFiltrar.Size = new Size(95, 69);
             tsbFiltrar.Text = "Filtrar";
             // 
             // busquedaToolStripMenuItem
             // 
-            busquedaToolStripMenuItem.Image = (Image)resources.GetObject("busquedaToolStripMenuItem.Image");
+            busquedaToolStripMenuItem.Image = Properties.Resources.busqueda;
             busquedaToolStripMenuItem.Name = "busquedaToolStripMenuItem";
             busquedaToolStripMenuItem.Size = new Size(170, 28);
             busquedaToolStripMenuItem.Text = "Busqueda";
@@ -187,14 +147,14 @@
             tsbActualizar.Image = Properties.Resources.actualizar;
             tsbActualizar.ImageTransparentColor = Color.Magenta;
             tsbActualizar.Name = "tsbActualizar";
-            tsbActualizar.Size = new Size(121, 56);
+            tsbActualizar.Size = new Size(121, 69);
             tsbActualizar.Text = "Actualizar";
             tsbActualizar.Click += tsbActualizar_Click;
             // 
             // toolStripSeparator2
             // 
             toolStripSeparator2.Name = "toolStripSeparator2";
-            toolStripSeparator2.Size = new Size(6, 59);
+            toolStripSeparator2.Size = new Size(6, 72);
             // 
             // toolStripButton7
             // 
@@ -203,7 +163,7 @@
             toolStripButton7.Image = Properties.Resources.ordenar_alt;
             toolStripButton7.ImageTransparentColor = Color.Magenta;
             toolStripButton7.Name = "toolStripButton7";
-            toolStripButton7.Size = new Size(115, 56);
+            toolStripButton7.Size = new Size(115, 69);
             toolStripButton7.Text = "Ordenar";
             // 
             // ordenAZToolStripMenuItem
@@ -225,7 +185,7 @@
             // toolStripSeparator3
             // 
             toolStripSeparator3.Name = "toolStripSeparator3";
-            toolStripSeparator3.Size = new Size(6, 59);
+            toolStripSeparator3.Size = new Size(6, 72);
             // 
             // tsbSalir
             // 
@@ -233,7 +193,7 @@
             tsbSalir.Image = Properties.Resources.salir_alt;
             tsbSalir.ImageTransparentColor = Color.Magenta;
             tsbSalir.Name = "tsbSalir";
-            tsbSalir.Size = new Size(54, 56);
+            tsbSalir.Size = new Size(54, 69);
             tsbSalir.Text = "Salir";
             tsbSalir.TextAlign = ContentAlignment.BottomCenter;
             tsbSalir.TextImageRelation = TextImageRelation.ImageAboveText;
@@ -253,7 +213,7 @@
             panel3.Location = new Point(0, 411);
             panel3.Name = "panel3";
             panel3.Size = new Size(900, 64);
-            panel3.TabIndex = 2;
+            panel3.TabIndex = 5;
             // 
             // btnUltimo
             // 
@@ -326,12 +286,60 @@
             txtPaginas.Size = new Size(79, 23);
             txtPaginas.TabIndex = 0;
             // 
-            // ColProductoId
+            // panel2
             // 
-            ColProductoId.HeaderText = "ProductoId";
-            ColProductoId.Name = "ColProductoId";
-            ColProductoId.ReadOnly = true;
-            ColProductoId.Visible = false;
+            panel2.BackgroundImageLayout = ImageLayout.Center;
+            panel2.Controls.Add(toolStrip1);
+            panel2.Dock = DockStyle.Top;
+            panel2.Location = new Point(0, 0);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(900, 72);
+            panel2.TabIndex = 4;
+            // 
+            // panel4
+            // 
+            panel4.Dock = DockStyle.Fill;
+            panel4.Location = new Point(0, 0);
+            panel4.Name = "panel4";
+            panel4.Size = new Size(900, 475);
+            panel4.TabIndex = 6;
+            // 
+            // dgvDatos
+            // 
+            dgvDatos.AllowUserToAddRows = false;
+            dgvDatos.AllowUserToDeleteRows = false;
+            dataGridViewCellStyle1.Font = new Font("Constantia", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dgvDatos.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dgvDatos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvDatos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvDatos.Columns.AddRange(new DataGridViewColumn[] { ColEmpleadoId, ColNombre, ColDni, ColSalario, ColSuspendido });
+            dgvDatos.Dock = DockStyle.Fill;
+            dgvDatos.Location = new Point(0, 0);
+            dgvDatos.MultiSelect = false;
+            dgvDatos.Name = "dgvDatos";
+            dgvDatos.ReadOnly = true;
+            dgvDatos.RowHeadersVisible = false;
+            dataGridViewCellStyle3.Font = new Font("Constantia", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dgvDatos.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            dgvDatos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvDatos.Size = new Size(900, 339);
+            dgvDatos.TabIndex = 0;
+            // 
+            // panel1
+            // 
+            panel1.Controls.Add(dgvDatos);
+            panel1.Dock = DockStyle.Fill;
+            panel1.Location = new Point(0, 72);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(900, 339);
+            panel1.TabIndex = 3;
+            // 
+            // ColEmpleadoId
+            // 
+            ColEmpleadoId.HeaderText = "EmpleadoId";
+            ColEmpleadoId.Name = "ColEmpleadoId";
+            ColEmpleadoId.ReadOnly = true;
+            ColEmpleadoId.Visible = false;
             // 
             // ColNombre
             // 
@@ -339,59 +347,19 @@
             ColNombre.Name = "ColNombre";
             ColNombre.ReadOnly = true;
             // 
-            // ColMarca
+            // ColDni
             // 
-            ColMarca.HeaderText = "Marca";
-            ColMarca.Name = "ColMarca";
-            ColMarca.ReadOnly = true;
+            dataGridViewCellStyle2.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            ColDni.DefaultCellStyle = dataGridViewCellStyle2;
+            ColDni.HeaderText = "Dni";
+            ColDni.Name = "ColDni";
+            ColDni.ReadOnly = true;
             // 
-            // ColSabor
+            // ColSalario
             // 
-            ColSabor.HeaderText = "Sabor";
-            ColSabor.Name = "ColSabor";
-            ColSabor.ReadOnly = true;
-            // 
-            // ColCodBarras
-            // 
-            ColCodBarras.HeaderText = "CodBarras";
-            ColCodBarras.Name = "ColCodBarras";
-            ColCodBarras.ReadOnly = true;
-            // 
-            // ColTamaño
-            // 
-            ColTamaño.HeaderText = "Tamaño";
-            ColTamaño.Name = "ColTamaño";
-            ColTamaño.ReadOnly = true;
-            // 
-            // ColCategoria
-            // 
-            ColCategoria.HeaderText = "Categoria";
-            ColCategoria.Name = "ColCategoria";
-            ColCategoria.ReadOnly = true;
-            // 
-            // ColPrecioCosto
-            // 
-            ColPrecioCosto.HeaderText = "PrecioCosto";
-            ColPrecioCosto.Name = "ColPrecioCosto";
-            ColPrecioCosto.ReadOnly = true;
-            // 
-            // ColPrecioVenta
-            // 
-            ColPrecioVenta.HeaderText = "PrecioVenta";
-            ColPrecioVenta.Name = "ColPrecioVenta";
-            ColPrecioVenta.ReadOnly = true;
-            // 
-            // ColStock
-            // 
-            ColStock.HeaderText = "Stock";
-            ColStock.Name = "ColStock";
-            ColStock.ReadOnly = true;
-            // 
-            // ColNivelReposicion
-            // 
-            ColNivelReposicion.HeaderText = "N.Reposicion";
-            ColNivelReposicion.Name = "ColNivelReposicion";
-            ColNivelReposicion.ReadOnly = true;
+            ColSalario.HeaderText = "Salario";
+            ColSalario.Name = "ColSalario";
+            ColSalario.ReadOnly = true;
             // 
             // ColSuspendido
             // 
@@ -399,35 +367,33 @@
             ColSuspendido.Name = "ColSuspendido";
             ColSuspendido.ReadOnly = true;
             // 
-            // frmBebidas
+            // frmEmpleados
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(10, 21, 47);
+            BackColor = Color.FromArgb(1, 95, 168);
             ClientSize = new Size(900, 475);
             Controls.Add(panel1);
             Controls.Add(panel3);
             Controls.Add(panel2);
+            Controls.Add(panel4);
             FormBorderStyle = FormBorderStyle.None;
-            Name = "frmBebidas";
-            Text = "frmBebidas";
-            Load += frmBebidas_Load;
-            panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dgvDatos).EndInit();
-            panel2.ResumeLayout(false);
-            panel2.PerformLayout();
+            Name = "frmEmpleados";
+            Text = "frmPostres";
+            Load += frmPostre_Load;
             toolStrip1.ResumeLayout(false);
             toolStrip1.PerformLayout();
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
+            panel2.ResumeLayout(false);
+            panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvDatos).EndInit();
+            panel1.ResumeLayout(false);
             ResumeLayout(false);
         }
 
         #endregion
 
-        private Panel panel1;
-        private DataGridView dgvDatos;
-        private Panel panel2;
         private ToolStrip toolStrip1;
         private ToolStripButton tsbNuevo;
         private ToolStripButton tsbEditar;
@@ -439,28 +405,25 @@
         private ToolStripSeparator toolStripSeparator3;
         private ToolStripButton tsbSalir;
         private Panel panel3;
-        private Label label1;
-        private ComboBox cboPaginas;
-        private TextBox txtPaginas;
         private Button btnUltimo;
         private Button btnSiguiente;
         private Button btnAnterior;
         private Button btnPrimero;
-        private ToolStripMenuItem busquedaToolStripMenuItem;
+        private Label label1;
+        private ComboBox cboPaginas;
+        private TextBox txtPaginas;
+        private Panel panel2;
+        private Panel panel4;
+        private DataGridView dgvDatos;
+        private Panel panel1;
         private ToolStripDropDownButton toolStripButton7;
         private ToolStripMenuItem ordenAZToolStripMenuItem;
         private ToolStripMenuItem ordenZAToolStripMenuItem;
-        private DataGridViewTextBoxColumn ColProductoId;
+        private ToolStripMenuItem busquedaToolStripMenuItem;
+        private DataGridViewTextBoxColumn ColEmpleadoId;
         private DataGridViewTextBoxColumn ColNombre;
-        private DataGridViewTextBoxColumn ColMarca;
-        private DataGridViewTextBoxColumn ColSabor;
-        private DataGridViewTextBoxColumn ColCodBarras;
-        private DataGridViewTextBoxColumn ColTamaño;
-        private DataGridViewTextBoxColumn ColCategoria;
-        private DataGridViewTextBoxColumn ColPrecioCosto;
-        private DataGridViewTextBoxColumn ColPrecioVenta;
-        private DataGridViewTextBoxColumn ColStock;
-        private DataGridViewTextBoxColumn ColNivelReposicion;
+        private DataGridViewTextBoxColumn ColDni;
+        private DataGridViewTextBoxColumn ColSalario;
         private DataGridViewCheckBoxColumn ColSuspendido;
     }
 }

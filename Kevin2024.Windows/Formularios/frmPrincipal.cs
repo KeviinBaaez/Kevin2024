@@ -19,9 +19,12 @@
             panelDespegable.Visible = false;
             panelAplegar.Visible = false;
             panel1.Size = new Size(60, 634);
-            toolStrip2.Visible = false;
             toolStrip3.Visible = false;
             panelFormularios.Visible = false;
+            btnVentas.Enabled = false;
+            btnClientes.Enabled = false;
+            toolStrip1.Enabled= false;
+            btnUsuario.Enabled = false;
         }
 
         //private void OcultarMenuDespegable()
@@ -46,11 +49,8 @@
         }
         private void OcultarTsb()
         {
-            if (toolStrip2.Visible == true)
-            {
-                toolStrip2.Visible = false;
-            }
-            else if (toolStrip3.Visible == true)
+
+            if (toolStrip3.Visible == true)
             {
                 toolStrip3.Visible = false;
             }
@@ -99,36 +99,7 @@
 
         private void btnProductos_Click(object sender, EventArgs e)
         {
-            MostrarTsb(toolStrip2);
-            //if (toolStrip2.Visible == false)
-            //{
-            //    //toolStrip2.Visible = true;
-            //    panelFormularios.Visible = false;
-            //    flowLayoutPanel1.Size = new Size(1036, 271);
-            //}
-            //else
-            //{
-            //    toolStrip2.Visible = false;
-            //    flowLayoutPanel1.Size = new Size(1036, 75);
-            //    if (FormularioAbierto == null)
-            //    {
-            //        return;
-            //    }
-            //    else
-            //    {
-            //        panelFormularios.Visible = true;
-            //    }
-            //}
-        }
-
-        private void tsbBebidas_Click(object sender, EventArgs e)
-        {
-            AbrirFormularios(new frmBebidas(_serviceProvider));
-        }
-
-        private void tsbPostres_Click(object sender, EventArgs e)
-        {
-            AbrirFormularios(new frmPostres(_serviceProvider));
+            AbrirFormularios(new frmProductos(_serviceProvider));
         }
 
         private Form FormularioAbierto = null;
@@ -165,25 +136,6 @@
         private void btnOtros_Click(object sender, EventArgs e)
         {
             MostrarTsb(toolStrip3);
-            //if (toolStrip3.Visible == false)
-            //{
-            //    toolStrip3.Visible = true;
-            //    panelFormularios.Visible = false;
-            //    flowLayoutPanel1.Size = new Size(1036, 242);
-            //}
-            //else
-            //{
-            //    toolStrip2.Visible = false;
-            //    flowLayoutPanel1.Size = new Size(1036, 75);
-            //    if (FormularioAbierto == null)
-            //    {
-            //        return;
-            //    }
-            //    else
-            //    {
-            //        panelFormularios.Visible = true;
-            //    }
-            //}
         }
 
         private void btnMarcas_Click(object sender, EventArgs e)
@@ -199,6 +151,11 @@
         private void btnCategoria_Click(object sender, EventArgs e)
         {
             AbrirFormularios(new frmCategoria(_serviceProvider));
+        }
+
+        private void btnEmpleados_Click(object sender, EventArgs e)
+        {
+            AbrirFormularios(new frmEmpleados(_serviceProvider));
         }
     }
 }

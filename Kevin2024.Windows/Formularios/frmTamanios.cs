@@ -22,6 +22,9 @@ namespace Kevin2024.Windows.Formularios
 
         //Orden 
         private Orden orden = Orden.Ninguno;
+
+        //Tipo para busqueda
+        Tipos tipo = Tipos.Tamanio;
         public frmTamanios(IServiceProvider? serviceProvider)
         {
             InitializeComponent();
@@ -98,7 +101,7 @@ namespace Kevin2024.Windows.Formularios
 
         private void tsbNuevo_Click(object sender, EventArgs e)
         {
-            frmTamaniosAE frm = new frmTamaniosAE(_serviceProvider) { Text = "Nuevo Tamaño" };
+           frmNuevoTipoAE frm = new frmNuevoTipoAE(_serviceProvider, tipo) { Text = "Nuevo Tamaño" };
             DialogResult dr = frm.ShowDialog(this);
             if (dr == DialogResult.Cancel) return;
             try
@@ -194,7 +197,7 @@ namespace Kevin2024.Windows.Formularios
             var r = dgvDatos.SelectedRows[0];
             if (r.Tag is null) return;
             Tamanio? tamanio = (Tamanio)r.Tag;
-            frmTamaniosAE frm = new frmTamaniosAE(_serviceProvider) { Text = "Editar Tamanio" };
+            frmNuevoTipoAE frm = new frmNuevoTipoAE(_serviceProvider, tipo) { Text = "Editar Tamanio" };
             frm.SetTamanio(tamanio);
             DialogResult dr = frm.ShowDialog(this);
             if (dr == DialogResult.Cancel) return;
@@ -231,7 +234,7 @@ namespace Kevin2024.Windows.Formularios
 
         private void busquedaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmFiltroTexto frm = new frmFiltroTexto() { Text = "Ingresar texto para buscar..." };
+            frmFiltro frm = new frmFiltro(tipo) { Text = "Ingresar texto para buscar..." };
             DialogResult dr = frm.ShowDialog(this);
             try
             {

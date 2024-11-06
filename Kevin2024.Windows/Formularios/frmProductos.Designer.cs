@@ -1,6 +1,6 @@
 ﻿namespace Kevin2024.Windows.Formularios
 {
-    partial class frmPostres
+    partial class frmProductos
     {
         /// <summary>
         /// Required designer variable.
@@ -28,12 +28,22 @@
         /// </summary>
         private void InitializeComponent()
         {
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmProductos));
+            panel1 = new Panel();
+            dgvDatos = new DataGridView();
+            panel2 = new Panel();
             toolStrip1 = new ToolStrip();
             tsbNuevo = new ToolStripButton();
             tsbEditar = new ToolStripButton();
             tsbBorrar = new ToolStripButton();
             toolStripSeparator1 = new ToolStripSeparator();
             tsbFiltrar = new ToolStripDropDownButton();
+            busquedaToolStripMenuItem = new ToolStripMenuItem();
+            categoriaToolStripMenuItem = new ToolStripMenuItem();
+            marcaToolStripMenuItem = new ToolStripMenuItem();
+            tamañoToolStripMenuItem = new ToolStripMenuItem();
             tsbActualizar = new ToolStripButton();
             toolStripSeparator2 = new ToolStripSeparator();
             toolStripButton7 = new ToolStripDropDownButton();
@@ -49,27 +59,60 @@
             label1 = new Label();
             cboPaginas = new ComboBox();
             txtPaginas = new TextBox();
-            panel2 = new Panel();
-            panel4 = new Panel();
-            dgvDatos = new DataGridView();
-            ColPostreId = new DataGridViewTextBoxColumn();
+            ColProductoId = new DataGridViewTextBoxColumn();
             ColNombre = new DataGridViewTextBoxColumn();
             ColMarca = new DataGridViewTextBoxColumn();
-            ColSabor = new DataGridViewTextBoxColumn();
             ColCodBarras = new DataGridViewTextBoxColumn();
-            ColTamanio = new DataGridViewTextBoxColumn();
-            ColPrecioCosto = new DataGridViewTextBoxColumn();
+            ColTamaño = new DataGridViewTextBoxColumn();
+            ColCategoria = new DataGridViewTextBoxColumn();
             ColPrecioVenta = new DataGridViewTextBoxColumn();
             ColStock = new DataGridViewTextBoxColumn();
-            ColNivelDeReposicion = new DataGridViewTextBoxColumn();
             ColSuspendido = new DataGridViewCheckBoxColumn();
-            panel1 = new Panel();
+            panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvDatos).BeginInit();
+            panel2.SuspendLayout();
             toolStrip1.SuspendLayout();
             panel3.SuspendLayout();
-            panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvDatos).BeginInit();
-            panel1.SuspendLayout();
             SuspendLayout();
+            // 
+            // panel1
+            // 
+            panel1.Controls.Add(dgvDatos);
+            panel1.Dock = DockStyle.Fill;
+            panel1.Location = new Point(0, 72);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(900, 339);
+            panel1.TabIndex = 0;
+            // 
+            // dgvDatos
+            // 
+            dgvDatos.AllowUserToAddRows = false;
+            dgvDatos.AllowUserToDeleteRows = false;
+            dataGridViewCellStyle1.Font = new Font("Constantia", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dgvDatos.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dgvDatos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvDatos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvDatos.Columns.AddRange(new DataGridViewColumn[] { ColProductoId, ColNombre, ColMarca, ColCodBarras, ColTamaño, ColCategoria, ColPrecioVenta, ColStock, ColSuspendido });
+            dgvDatos.Dock = DockStyle.Fill;
+            dgvDatos.Location = new Point(0, 0);
+            dgvDatos.MultiSelect = false;
+            dgvDatos.Name = "dgvDatos";
+            dgvDatos.ReadOnly = true;
+            dgvDatos.RowHeadersVisible = false;
+            dataGridViewCellStyle2.Font = new Font("Constantia", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dgvDatos.RowsDefaultCellStyle = dataGridViewCellStyle2;
+            dgvDatos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvDatos.Size = new Size(900, 339);
+            dgvDatos.TabIndex = 0;
+            // 
+            // panel2
+            // 
+            panel2.Controls.Add(toolStrip1);
+            panel2.Dock = DockStyle.Top;
+            panel2.Location = new Point(0, 0);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(900, 72);
+            panel2.TabIndex = 1;
             // 
             // toolStrip1
             // 
@@ -86,6 +129,7 @@
             // 
             // tsbNuevo
             // 
+            tsbNuevo.BackColor = Color.FromArgb(1, 95, 168);
             tsbNuevo.Font = new Font("Constantia", 14.25F, FontStyle.Bold);
             tsbNuevo.Image = Properties.Resources.agregar_documento__1_;
             tsbNuevo.ImageTransparentColor = Color.Magenta;
@@ -127,12 +171,45 @@
             // 
             // tsbFiltrar
             // 
+            tsbFiltrar.DropDownItems.AddRange(new ToolStripItem[] { busquedaToolStripMenuItem, categoriaToolStripMenuItem, marcaToolStripMenuItem, tamañoToolStripMenuItem });
             tsbFiltrar.Font = new Font("Constantia", 14.25F, FontStyle.Bold);
             tsbFiltrar.Image = Properties.Resources.lista;
             tsbFiltrar.ImageTransparentColor = Color.Magenta;
             tsbFiltrar.Name = "tsbFiltrar";
             tsbFiltrar.Size = new Size(95, 69);
             tsbFiltrar.Text = "Filtrar";
+            // 
+            // busquedaToolStripMenuItem
+            // 
+            busquedaToolStripMenuItem.Image = (Image)resources.GetObject("busquedaToolStripMenuItem.Image");
+            busquedaToolStripMenuItem.Name = "busquedaToolStripMenuItem";
+            busquedaToolStripMenuItem.Size = new Size(170, 28);
+            busquedaToolStripMenuItem.Text = "Busqueda";
+            busquedaToolStripMenuItem.Click += busquedaToolStripMenuItem_Click;
+            // 
+            // categoriaToolStripMenuItem
+            // 
+            categoriaToolStripMenuItem.Image = Properties.Resources.busqueda;
+            categoriaToolStripMenuItem.Name = "categoriaToolStripMenuItem";
+            categoriaToolStripMenuItem.Size = new Size(170, 28);
+            categoriaToolStripMenuItem.Text = "Categoria";
+            categoriaToolStripMenuItem.Click += categoriaToolStripMenuItem_Click;
+            // 
+            // marcaToolStripMenuItem
+            // 
+            marcaToolStripMenuItem.Image = Properties.Resources.busqueda;
+            marcaToolStripMenuItem.Name = "marcaToolStripMenuItem";
+            marcaToolStripMenuItem.Size = new Size(170, 28);
+            marcaToolStripMenuItem.Text = "Marca";
+            marcaToolStripMenuItem.Click += marcaToolStripMenuItem_Click;
+            // 
+            // tamañoToolStripMenuItem
+            // 
+            tamañoToolStripMenuItem.Image = Properties.Resources.busqueda;
+            tamañoToolStripMenuItem.Name = "tamañoToolStripMenuItem";
+            tamañoToolStripMenuItem.Size = new Size(170, 28);
+            tamañoToolStripMenuItem.Text = "Tamaño";
+            tamañoToolStripMenuItem.Click += tamañoToolStripMenuItem_Click;
             // 
             // tsbActualizar
             // 
@@ -206,7 +283,7 @@
             panel3.Location = new Point(0, 411);
             panel3.Name = "panel3";
             panel3.Size = new Size(900, 64);
-            panel3.TabIndex = 5;
+            panel3.TabIndex = 2;
             // 
             // btnUltimo
             // 
@@ -279,144 +356,109 @@
             txtPaginas.Size = new Size(79, 23);
             txtPaginas.TabIndex = 0;
             // 
-            // panel2
+            // ColProductoId
             // 
-            panel2.BackgroundImageLayout = ImageLayout.Center;
-            panel2.Controls.Add(toolStrip1);
-            panel2.Dock = DockStyle.Top;
-            panel2.Location = new Point(0, 0);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(900, 72);
-            panel2.TabIndex = 4;
-            // 
-            // panel4
-            // 
-            panel4.Dock = DockStyle.Fill;
-            panel4.Location = new Point(0, 0);
-            panel4.Name = "panel4";
-            panel4.Size = new Size(900, 475);
-            panel4.TabIndex = 6;
-            // 
-            // dgvDatos
-            // 
-            dgvDatos.AllowUserToAddRows = false;
-            dgvDatos.AllowUserToDeleteRows = false;
-            dgvDatos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvDatos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvDatos.Columns.AddRange(new DataGridViewColumn[] { ColPostreId, ColNombre, ColMarca, ColSabor, ColCodBarras, ColTamanio, ColPrecioCosto, ColPrecioVenta, ColStock, ColNivelDeReposicion, ColSuspendido });
-            dgvDatos.Dock = DockStyle.Fill;
-            dgvDatos.Location = new Point(0, 0);
-            dgvDatos.MultiSelect = false;
-            dgvDatos.Name = "dgvDatos";
-            dgvDatos.ReadOnly = true;
-            dgvDatos.RowHeadersVisible = false;
-            dgvDatos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvDatos.Size = new Size(900, 339);
-            dgvDatos.TabIndex = 0;
-            // 
-            // ColPostreId
-            // 
-            ColPostreId.HeaderText = "PostreId";
-            ColPostreId.Name = "ColPostreId";
-            ColPostreId.ReadOnly = true;
-            ColPostreId.Visible = false;
+            ColProductoId.HeaderText = "ProductoId";
+            ColProductoId.Name = "ColProductoId";
+            ColProductoId.ReadOnly = true;
+            ColProductoId.Visible = false;
             // 
             // ColNombre
             // 
+            ColNombre.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            ColNombre.FillWeight = 41.34588F;
             ColNombre.HeaderText = "Nombre";
             ColNombre.Name = "ColNombre";
             ColNombre.ReadOnly = true;
             // 
             // ColMarca
             // 
+            ColMarca.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            ColMarca.FillWeight = 41.34588F;
             ColMarca.HeaderText = "Marca";
             ColMarca.Name = "ColMarca";
             ColMarca.ReadOnly = true;
             // 
-            // ColSabor
-            // 
-            ColSabor.HeaderText = "Sabor";
-            ColSabor.Name = "ColSabor";
-            ColSabor.ReadOnly = true;
-            // 
             // ColCodBarras
             // 
-            ColCodBarras.HeaderText = "Cod. Barras";
+            ColCodBarras.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            ColCodBarras.FillWeight = 41.34588F;
+            ColCodBarras.HeaderText = "CodBarras";
             ColCodBarras.Name = "ColCodBarras";
             ColCodBarras.ReadOnly = true;
             // 
-            // ColTamanio
+            // ColTamaño
             // 
-            ColTamanio.HeaderText = "Tamaño";
-            ColTamanio.Name = "ColTamanio";
-            ColTamanio.ReadOnly = true;
+            ColTamaño.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            ColTamaño.FillWeight = 41.34588F;
+            ColTamaño.HeaderText = "Tamaño";
+            ColTamaño.Name = "ColTamaño";
+            ColTamaño.ReadOnly = true;
             // 
-            // ColPrecioCosto
+            // ColCategoria
             // 
-            ColPrecioCosto.HeaderText = "Precio Costo";
-            ColPrecioCosto.Name = "ColPrecioCosto";
-            ColPrecioCosto.ReadOnly = true;
+            ColCategoria.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            ColCategoria.FillWeight = 41.34588F;
+            ColCategoria.HeaderText = "Categoria";
+            ColCategoria.Name = "ColCategoria";
+            ColCategoria.ReadOnly = true;
             // 
             // ColPrecioVenta
             // 
-            ColPrecioVenta.HeaderText = "Precio Venta";
+            ColPrecioVenta.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            ColPrecioVenta.FillWeight = 41.34588F;
+            ColPrecioVenta.HeaderText = "PrecioVenta";
             ColPrecioVenta.Name = "ColPrecioVenta";
             ColPrecioVenta.ReadOnly = true;
+            ColPrecioVenta.Width = 110;
             // 
             // ColStock
             // 
+            ColStock.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            ColStock.FillWeight = 67.87527F;
             ColStock.HeaderText = "Stock";
             ColStock.Name = "ColStock";
             ColStock.ReadOnly = true;
-            // 
-            // ColNivelDeReposicion
-            // 
-            ColNivelDeReposicion.HeaderText = "Nivel De Reposicion";
-            ColNivelDeReposicion.Name = "ColNivelDeReposicion";
-            ColNivelDeReposicion.ReadOnly = true;
+            ColStock.Width = 90;
             // 
             // ColSuspendido
             // 
+            ColSuspendido.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            ColSuspendido.FillWeight = 484.049438F;
             ColSuspendido.HeaderText = "Suspendido";
             ColSuspendido.Name = "ColSuspendido";
             ColSuspendido.ReadOnly = true;
+            ColSuspendido.Width = 80;
             // 
-            // panel1
-            // 
-            panel1.Controls.Add(dgvDatos);
-            panel1.Dock = DockStyle.Fill;
-            panel1.Location = new Point(0, 72);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(900, 339);
-            panel1.TabIndex = 3;
-            // 
-            // frmPostres
+            // frmProductos
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(1, 95, 168);
+            BackColor = Color.FromArgb(10, 21, 47);
             ClientSize = new Size(900, 475);
             Controls.Add(panel1);
             Controls.Add(panel3);
             Controls.Add(panel2);
-            Controls.Add(panel4);
             FormBorderStyle = FormBorderStyle.None;
-            Name = "frmPostres";
-            Text = "frmPostres";
-            Load += frmPostre_Load;
+            Name = "frmProductos";
+            Text = "frmBebidas";
+            Load += frmBebidas_Load;
+            panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dgvDatos).EndInit();
+            panel2.ResumeLayout(false);
+            panel2.PerformLayout();
             toolStrip1.ResumeLayout(false);
             toolStrip1.PerformLayout();
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
-            panel2.ResumeLayout(false);
-            panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvDatos).EndInit();
-            panel1.ResumeLayout(false);
             ResumeLayout(false);
         }
 
         #endregion
 
+        private Panel panel1;
+        private DataGridView dgvDatos;
+        private Panel panel2;
         private ToolStrip toolStrip1;
         private ToolStripButton tsbNuevo;
         private ToolStripButton tsbEditar;
@@ -428,30 +470,28 @@
         private ToolStripSeparator toolStripSeparator3;
         private ToolStripButton tsbSalir;
         private Panel panel3;
+        private Label label1;
+        private ComboBox cboPaginas;
+        private TextBox txtPaginas;
         private Button btnUltimo;
         private Button btnSiguiente;
         private Button btnAnterior;
         private Button btnPrimero;
-        private Label label1;
-        private ComboBox cboPaginas;
-        private TextBox txtPaginas;
-        private Panel panel2;
-        private Panel panel4;
-        private DataGridView dgvDatos;
-        private Panel panel1;
-        private DataGridViewTextBoxColumn ColPostreId;
-        private DataGridViewTextBoxColumn ColNombre;
-        private DataGridViewTextBoxColumn ColMarca;
-        private DataGridViewTextBoxColumn ColSabor;
-        private DataGridViewTextBoxColumn ColCodBarras;
-        private DataGridViewTextBoxColumn ColTamanio;
-        private DataGridViewTextBoxColumn ColPrecioCosto;
-        private DataGridViewTextBoxColumn ColPrecioVenta;
-        private DataGridViewTextBoxColumn ColStock;
-        private DataGridViewTextBoxColumn ColNivelDeReposicion;
-        private DataGridViewCheckBoxColumn ColSuspendido;
+        private ToolStripMenuItem busquedaToolStripMenuItem;
         private ToolStripDropDownButton toolStripButton7;
         private ToolStripMenuItem ordenAZToolStripMenuItem;
         private ToolStripMenuItem ordenZAToolStripMenuItem;
+        private ToolStripMenuItem categoriaToolStripMenuItem;
+        private ToolStripMenuItem marcaToolStripMenuItem;
+        private ToolStripMenuItem tamañoToolStripMenuItem;
+        private DataGridViewTextBoxColumn ColProductoId;
+        private DataGridViewTextBoxColumn ColNombre;
+        private DataGridViewTextBoxColumn ColMarca;
+        private DataGridViewTextBoxColumn ColCodBarras;
+        private DataGridViewTextBoxColumn ColTamaño;
+        private DataGridViewTextBoxColumn ColCategoria;
+        private DataGridViewTextBoxColumn ColPrecioVenta;
+        private DataGridViewTextBoxColumn ColStock;
+        private DataGridViewCheckBoxColumn ColSuspendido;
     }
 }

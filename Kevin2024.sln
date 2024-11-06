@@ -5,13 +5,13 @@ VisualStudioVersion = 17.9.34607.119
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kevin2024.Windows", "Kevin2024.Windows\Kevin2024.Windows.csproj", "{E5AF1BAE-95F3-498C-857A-F73CD664D699}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kevin2024.Datos", "Kevin2024.Datos\Kevin2024.Datos.csproj", "{E0D444CC-CFF2-4C78-AC35-5E01E10556E8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kevin2024.Datos", "Kevin2024.Datos\Kevin2024.Datos.csproj", "{E0D444CC-CFF2-4C78-AC35-5E01E10556E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kevin2024.Entidades", "Kevin2024.Entindades\Kevin2024.Entidades.csproj", "{6EF73C92-9BBD-4596-9253-8D24E09D98CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kevin2024.Entidades", "Kevin2024.Entindades\Kevin2024.Entidades.csproj", "{6EF73C92-9BBD-4596-9253-8D24E09D98CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kevin2024.Servicios", "Kevin2024.Servicios\Kevin2024.Servicios.csproj", "{39904A2C-02A5-413A-AF35-82B8786264FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kevin2024.Servicios", "Kevin2024.Servicios\Kevin2024.Servicios.csproj", "{39904A2C-02A5-413A-AF35-82B8786264FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kevin2024.IoC", "Kevin2024.IoC\Kevin2024.IoC.csproj", "{1ECB0E4C-E72B-40D6-AEDE-F350D705D459}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kevin2024.IoC", "Kevin2024.IoC\Kevin2024.IoC.csproj", "{1ECB0E4C-E72B-40D6-AEDE-F350D705D459}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

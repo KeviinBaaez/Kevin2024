@@ -20,30 +20,26 @@ namespace Kevin2024.IoC
 
             service.AddScoped<IRepositorioLogin, RepositorioLogin>();
 
-            service.AddScoped<IRepositorioIngredinetes, RepositorioIngredientes>();
-
             service.AddScoped<IRepositorioMarcas, RepositorioMarcas>();
+
             service.AddScoped<IRepositorioCategorias, RepositorioCategorias>();
 
             service.AddScoped<IRepositorioTamanios, RepositorioTamanios>();
+
+            service.AddScoped<IRepositorioEmpleados, RepositorioEmpleados>();
             //SERVICE SERVICIOS
             service.AddScoped<IServiciosLogin, ServiciosLogin>();
 
-            service.AddScoped<IServiciosIngredientes, ServiciosIngredintes>();
-
             service.AddScoped<IServiciosMarcas, ServiciosMarcas>();
+
             service.AddScoped<IServiciosCategorias, ServiciosCategorias>();
+
+            service.AddScoped<IServiciosEmpleados, ServiciosEmpleados>();
 
             service.AddScoped<IServiciosLogin>(sp =>
             {
                 var repositorio = new RepositorioLogin();
                 return new ServiciosLogin(repositorio, cadena);
-            });
-
-            service.AddScoped<IServiciosIngredientes>(sp =>
-            {
-                var repositorio = new RepositorioIngredientes();
-                return new ServiciosIngredintes(repositorio, cadena);
             });
 
             service.AddScoped<IServiciosProductos>(sp =>
@@ -68,6 +64,12 @@ namespace Kevin2024.IoC
             {
                 var repositorio = new RepositorioTamanios();
                 return new ServiciosTamanios(repositorio, cadena);
+            });
+
+            service.AddScoped<IServiciosEmpleados>(sp =>
+            {
+                var repositorio = new RepositorioEmpleados();
+                return new ServiciosEmpleados(repositorio, cadena);
             });
 
             return service.BuildServiceProvider();  

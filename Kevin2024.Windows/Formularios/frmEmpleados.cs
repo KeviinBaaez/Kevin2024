@@ -5,14 +5,15 @@ using Kevin2024.Entidades.Enumeraciones;
 using Kevin2024.Servicios.Interfaces;
 using Kevin2024.Windows.Helpers;
 using Microsoft.Extensions.DependencyInjection;
+using System.Security.Principal;
 
 namespace Kevin2024.Windows.Formularios
 {
-    public partial class frmPostres : Form
+    public partial class frmEmpleados : Form
     {
         private readonly IServiceProvider? _serviceProvider;
-        private readonly IServiciosProductos? _servicios;
-        private List<ProductosListDto>? lista;
+        private readonly IServiciosEmpleados? _servicios;
+        private List<EmpleadosListDto>? lista;
         //Paginación
         private int currentPage = 1;
         private int totalPages = 0;
@@ -20,16 +21,16 @@ namespace Kevin2024.Windows.Formularios
         private int totalRecords = 0;
 
         //Filtro
-        private Func<ProductosListDto, bool>? filter = null;
+        private Func<EmpleadosListDto, bool>? filter = null;
 
         //Orden 
         Orden orden = Orden.Ninguno;
 
-        public frmPostres(IServiceProvider? serviceProvider)
+        public frmEmpleados(IServiceProvider? serviceProvider)
         {
             InitializeComponent();
             _serviceProvider = serviceProvider;
-            _servicios = _serviceProvider?.GetService<IServiciosProductos>() ??
+            _servicios = _serviceProvider?.GetService<IServiciosEmpleados>() ??
                 throw new ApplicationException("Dependencias no cargadas!!");
         }
 
@@ -51,14 +52,14 @@ namespace Kevin2024.Windows.Formularios
                 throw;
             }
         }
-        private void LoadData(Func<ProductosListDto, bool>? filter = null)
+        private void LoadData(Func<EmpleadosListDto, bool>? filter = null)
         {
             try
             {
                 lista = _servicios!.GetLista(currentPage, pageSize, orden, filter);
                 if (lista!.Count > 0)
                 {
-                    GridHelper.MostrarDatosEnGrilla<ProductosListDto>(lista, dgvDatos);
+                    GridHelper.MostrarDatosEnGrilla<EmpleadosListDto>(lista, dgvDatos);
                     if (cboPaginas.Items.Count != totalPages)
                     {
                         CombosHelper.CargarComboPaginas(ref cboPaginas, totalPages);
@@ -87,22 +88,22 @@ namespace Kevin2024.Windows.Formularios
         }
         private void tsbNuevo_Click(object sender, EventArgs e)
         {
-            frmPostresAE frm = new frmPostresAE(_serviceProvider);
+            frmEmpleadosAE frm = new frmEmpleadosAE(_serviceProvider);
             DialogResult dr = frm.ShowDialog(this);
             if (dr == DialogResult.Cancel) return;
             try
             {
-                Productos producto = frm.GetProducto();
-                if (producto is null)
+                Empleados? empleado = frm.GetEmpleado();
+                if (empleado is null)
                 {
                     return;
                 }
-                if (!_servicios!.Existe(producto))
+                if (!_servicios!.Existe(empleado))
                 {
-                    _servicios.Guardar(producto);
+                    _servicios.Guardar(empleado);
                     totalRecords = _servicios!.GetCantidad(filter);
                     totalPages = (int)Math.Ceiling((decimal)totalRecords / pageSize);
-                    currentPage = _servicios.GetPaginaPorRegistro(producto.Nombre, pageSize);
+                    currentPage = _servicios.GetPaginaPorRegistro(empleado.Nombre, pageSize);
                     LoadData(filter);
 
                     MessageBox.Show("Registro agregado",
@@ -132,23 +133,23 @@ namespace Kevin2024.Windows.Formularios
             if (dgvDatos.SelectedRows.Count == 0) return;
             var r = dgvDatos.SelectedRows[0];
             if (r.Tag == null) return;
-            PostresListDto postreDto = (PostresListDto)r.Tag;
-            Productos? postre = _servicios!.GetProductoPorId(postreDto.ProductoId);
-            if (postre is null) return;
-            frmPostresAE frm = new frmPostresAE(_serviceProvider) { Text = "Editar Postre" };
-            frm.SetPostre((Postre)postre);
+            EmpleadosListDto empleadoDto = (EmpleadosListDto)r.Tag;
+            Empleados empleado = _servicios!.GetEmpleadoPorId(empleadoDto.EmpleadoId);
+            if (empleado is null) return;
+            frmEmpleadosAE frm = new frmEmpleadosAE(_serviceProvider) { Text = "Editar datos del Empleado" };
+            frm.SetEmpleado((Empleados)empleado);
             DialogResult dr = frm.ShowDialog(this);
             if (dr == DialogResult.Cancel) return;
-            postre = frm.GetProducto();
-            if (postre is null) return;
+            empleado = frm.GetEmpleado();
+            if (empleado is null) return;
             try
             {
-                if (!_servicios!.Existe(postre))
+                if (!_servicios!.Existe(empleado))
                 {
-                    _servicios!.Guardar(postre);
-                    currentPage = _servicios!.GetPaginaPorRegistro(postre.Nombre, pageSize);
+                    _servicios!.Guardar(empleado);
+                    currentPage = _servicios!.GetPaginaPorRegistro(empleado.Nombre, pageSize);
                     LoadData();
-                    int row = GridHelper.ObtenerRowIndex(dgvDatos, postre.ProductoId);
+                    int row = GridHelper.ObtenerRowIndex(dgvDatos, empleado.EmpleadoId);
                     GridHelper.MarcarRow(dgvDatos, row);
                     MessageBox.Show("Registro modificado satisfactoriamente!",
                             "Mensaje",
@@ -176,9 +177,9 @@ namespace Kevin2024.Windows.Formularios
             if (dgvDatos.SelectedRows.Count == 0) return;
             var r = dgvDatos.SelectedRows[0];
             if (r.Tag == null) return;
-            PostresListDto postresListDto = (PostresListDto)r.Tag;
+            EmpleadosListDto empleadoDto = (EmpleadosListDto)r.Tag;
             //ACOMOAR EL MESSAGE BOX!!!!
-            DialogResult dr = MessageBox.Show($"¿Deseas dar de baja el siguiente postre?\n MARCA: {postresListDto.Marca.Nombre}\n SABOR: {postresListDto.Sabor}\n TAMAÑO: {postresListDto.Tamanio}",
+            DialogResult dr = MessageBox.Show($"¿Deseas dar de baja el siguiente Empleado?\n Nombre y Apellido: {empleadoDto.Nombre}\n Dni: {empleadoDto.Dni}",
                 "Confirmar",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question,
@@ -187,38 +188,20 @@ namespace Kevin2024.Windows.Formularios
             {
                 return;
             }
-            try
-            {
-                if (!_servicios!.EstaRelacionado(postresListDto.ProductoId))
-                {
-                    _servicios!.Borrar(postresListDto.ProductoId);
-                    totalRecords = _servicios!.GetCantidad(filter);
-                    totalPages = (int)Math.Ceiling((decimal)totalRecords / pageSize);
-                    if (currentPage > totalPages)
-                    {
-                        currentPage = totalPages;
-                    }
-                    LoadData();
-                    MessageBox.Show("Registro eliminado satisfactoriamente",
-                            "Mensaje",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Information);
-                }
-                else
-                {
-                    MessageBox.Show("¡Registro relacionado!",
-                        "Error",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
-                }
 
-            }
-            catch (Exception ex)
+            _servicios!.Borrar(empleadoDto.EmpleadoId);
+            totalRecords = _servicios!.GetCantidad(filter);
+            totalPages = (int)Math.Ceiling((decimal)totalRecords / pageSize);
+            if (currentPage > totalPages)
             {
-                MessageBox.Show(ex.Message,
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                throw;
+                currentPage = totalPages;
             }
+            LoadData();
+            MessageBox.Show("Registro eliminado satisfactoriamente",
+                    "Mensaje",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+
         }
         private void tsbSalir_Click(object sender, EventArgs e)
         {
@@ -275,6 +258,42 @@ namespace Kevin2024.Windows.Formularios
             currentPage = 1;
             tsbFiltrar.Enabled = true;
             RecargarGrilla();
+        }
+
+        private void busquedaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmFiltro frm = new frmFiltro(Tipos.Ninguno) { Text = "Escriba para buscar"};
+            DialogResult dr = frm.ShowDialog(this);
+            try
+            {
+                var textoFiltro = frm.GetTexto();
+                if (string.IsNullOrEmpty(textoFiltro)) return;
+                filter = e => (e.Nombre!.ToUpper().Contains(textoFiltro.ToUpper()))
+                ||(e.Apellido!.ToUpper().Contains(textoFiltro.ToUpper())) 
+                ||(e.Dni!.ToString().Contains(textoFiltro.ToString()));
+                totalRecords = _servicios!.GetCantidad(filter);
+                currentPage = 1;
+                if(totalRecords > 0)
+                {
+                    totalPages = (int)Math.Ceiling((decimal)totalRecords / pageSize);
+                    tsbFiltrar.Enabled = false;
+                    LoadData(filter);
+                }
+                else
+                {
+                    MessageBox.Show("No se encontraron registros..",
+                        "Mensaje",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+                    filter = null;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
         }
     }
 }
