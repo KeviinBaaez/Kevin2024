@@ -33,6 +33,15 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmProductos));
             panel1 = new Panel();
             dgvDatos = new DataGridView();
+            ColProductoId = new DataGridViewTextBoxColumn();
+            ColNombre = new DataGridViewTextBoxColumn();
+            ColMarca = new DataGridViewTextBoxColumn();
+            ColCodBarras = new DataGridViewTextBoxColumn();
+            ColTamaño = new DataGridViewTextBoxColumn();
+            ColCategoria = new DataGridViewTextBoxColumn();
+            ColPrecioVenta = new DataGridViewTextBoxColumn();
+            ColStock = new DataGridViewTextBoxColumn();
+            ColSuspendido = new DataGridViewCheckBoxColumn();
             panel2 = new Panel();
             toolStrip1 = new ToolStrip();
             tsbNuevo = new ToolStripButton();
@@ -59,15 +68,6 @@
             label1 = new Label();
             cboPaginas = new ComboBox();
             txtPaginas = new TextBox();
-            ColProductoId = new DataGridViewTextBoxColumn();
-            ColNombre = new DataGridViewTextBoxColumn();
-            ColMarca = new DataGridViewTextBoxColumn();
-            ColCodBarras = new DataGridViewTextBoxColumn();
-            ColTamaño = new DataGridViewTextBoxColumn();
-            ColCategoria = new DataGridViewTextBoxColumn();
-            ColPrecioVenta = new DataGridViewTextBoxColumn();
-            ColStock = new DataGridViewTextBoxColumn();
-            ColSuspendido = new DataGridViewCheckBoxColumn();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvDatos).BeginInit();
             panel2.SuspendLayout();
@@ -104,6 +104,80 @@
             dgvDatos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvDatos.Size = new Size(900, 339);
             dgvDatos.TabIndex = 0;
+            // 
+            // ColProductoId
+            // 
+            ColProductoId.HeaderText = "ProductoId";
+            ColProductoId.Name = "ColProductoId";
+            ColProductoId.ReadOnly = true;
+            ColProductoId.Visible = false;
+            // 
+            // ColNombre
+            // 
+            ColNombre.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            ColNombre.FillWeight = 41.34588F;
+            ColNombre.HeaderText = "Nombre";
+            ColNombre.Name = "ColNombre";
+            ColNombre.ReadOnly = true;
+            // 
+            // ColMarca
+            // 
+            ColMarca.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            ColMarca.FillWeight = 41.34588F;
+            ColMarca.HeaderText = "Marca";
+            ColMarca.Name = "ColMarca";
+            ColMarca.ReadOnly = true;
+            // 
+            // ColCodBarras
+            // 
+            ColCodBarras.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            ColCodBarras.FillWeight = 41.34588F;
+            ColCodBarras.HeaderText = "CodBarras";
+            ColCodBarras.Name = "ColCodBarras";
+            ColCodBarras.ReadOnly = true;
+            // 
+            // ColTamaño
+            // 
+            ColTamaño.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            ColTamaño.FillWeight = 41.34588F;
+            ColTamaño.HeaderText = "Tamaño";
+            ColTamaño.Name = "ColTamaño";
+            ColTamaño.ReadOnly = true;
+            // 
+            // ColCategoria
+            // 
+            ColCategoria.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            ColCategoria.FillWeight = 41.34588F;
+            ColCategoria.HeaderText = "Categoria";
+            ColCategoria.Name = "ColCategoria";
+            ColCategoria.ReadOnly = true;
+            // 
+            // ColPrecioVenta
+            // 
+            ColPrecioVenta.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            ColPrecioVenta.FillWeight = 41.34588F;
+            ColPrecioVenta.HeaderText = "PrecioVenta";
+            ColPrecioVenta.Name = "ColPrecioVenta";
+            ColPrecioVenta.ReadOnly = true;
+            ColPrecioVenta.Width = 110;
+            // 
+            // ColStock
+            // 
+            ColStock.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            ColStock.FillWeight = 67.87527F;
+            ColStock.HeaderText = "Stock";
+            ColStock.Name = "ColStock";
+            ColStock.ReadOnly = true;
+            ColStock.Width = 90;
+            // 
+            // ColSuspendido
+            // 
+            ColSuspendido.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            ColSuspendido.FillWeight = 484.049438F;
+            ColSuspendido.HeaderText = "Suspendido";
+            ColSuspendido.Name = "ColSuspendido";
+            ColSuspendido.ReadOnly = true;
+            ColSuspendido.Width = 80;
             // 
             // panel2
             // 
@@ -353,82 +427,10 @@
             // 
             txtPaginas.Location = new Point(140, 29);
             txtPaginas.Name = "txtPaginas";
+            txtPaginas.ReadOnly = true;
             txtPaginas.Size = new Size(79, 23);
             txtPaginas.TabIndex = 0;
-            // 
-            // ColProductoId
-            // 
-            ColProductoId.HeaderText = "ProductoId";
-            ColProductoId.Name = "ColProductoId";
-            ColProductoId.ReadOnly = true;
-            ColProductoId.Visible = false;
-            // 
-            // ColNombre
-            // 
-            ColNombre.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            ColNombre.FillWeight = 41.34588F;
-            ColNombre.HeaderText = "Nombre";
-            ColNombre.Name = "ColNombre";
-            ColNombre.ReadOnly = true;
-            // 
-            // ColMarca
-            // 
-            ColMarca.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            ColMarca.FillWeight = 41.34588F;
-            ColMarca.HeaderText = "Marca";
-            ColMarca.Name = "ColMarca";
-            ColMarca.ReadOnly = true;
-            // 
-            // ColCodBarras
-            // 
-            ColCodBarras.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            ColCodBarras.FillWeight = 41.34588F;
-            ColCodBarras.HeaderText = "CodBarras";
-            ColCodBarras.Name = "ColCodBarras";
-            ColCodBarras.ReadOnly = true;
-            // 
-            // ColTamaño
-            // 
-            ColTamaño.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            ColTamaño.FillWeight = 41.34588F;
-            ColTamaño.HeaderText = "Tamaño";
-            ColTamaño.Name = "ColTamaño";
-            ColTamaño.ReadOnly = true;
-            // 
-            // ColCategoria
-            // 
-            ColCategoria.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            ColCategoria.FillWeight = 41.34588F;
-            ColCategoria.HeaderText = "Categoria";
-            ColCategoria.Name = "ColCategoria";
-            ColCategoria.ReadOnly = true;
-            // 
-            // ColPrecioVenta
-            // 
-            ColPrecioVenta.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            ColPrecioVenta.FillWeight = 41.34588F;
-            ColPrecioVenta.HeaderText = "PrecioVenta";
-            ColPrecioVenta.Name = "ColPrecioVenta";
-            ColPrecioVenta.ReadOnly = true;
-            ColPrecioVenta.Width = 110;
-            // 
-            // ColStock
-            // 
-            ColStock.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            ColStock.FillWeight = 67.87527F;
-            ColStock.HeaderText = "Stock";
-            ColStock.Name = "ColStock";
-            ColStock.ReadOnly = true;
-            ColStock.Width = 90;
-            // 
-            // ColSuspendido
-            // 
-            ColSuspendido.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            ColSuspendido.FillWeight = 484.049438F;
-            ColSuspendido.HeaderText = "Suspendido";
-            ColSuspendido.Name = "ColSuspendido";
-            ColSuspendido.ReadOnly = true;
-            ColSuspendido.Width = 80;
+            txtPaginas.TextChanged += txtPaginas_TextChanged;
             // 
             // frmProductos
             // 
@@ -442,7 +444,7 @@
             FormBorderStyle = FormBorderStyle.None;
             Name = "frmProductos";
             Text = "frmBebidas";
-            Load += frmBebidas_Load;
+            Load += frmProductos_Load;
             panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvDatos).EndInit();
             panel2.ResumeLayout(false);

@@ -73,11 +73,6 @@ namespace Kevin2024.Datos.Repositorios
             }
         }
 
-        //public bool EstaRelacionado(SqlConnection conn, int empleadoId)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
         public bool Existe(SqlConnection conn, Empleados empleado)
         {
             string selectQuery = @"SELECT COUNT(*) FROM Empleados";
@@ -98,8 +93,7 @@ namespace Kevin2024.Datos.Repositorios
         public int GetCantidad(SqlConnection conn, Func<EmpleadosListDto, bool>? filter)
         {
             var lista = new List<EmpleadosListDto>();
-            string selectQuery = @"SELECT EmpleadoId, Nombre, Apellido, Dni, FechaNac, 
-                                FechaContrato, Salario FROM Empleados";
+            string selectQuery = @"SELECT EmpleadoId, Nombre, Apellido, Dni, Salario, Suspendido FROM Empleados";
             var listaEmpleados = conn.Query<EmpleadosListDto>(selectQuery).ToList();
             lista.AddRange(listaEmpleados);
             if (filter != null)
@@ -112,7 +106,7 @@ namespace Kevin2024.Datos.Repositorios
         public Empleados? GetEmpleadoPorId(SqlConnection conn, int empleadoId)
         {
             string selectQuery = @"SELECT EmpleadoId, Nombre, Apellido, Dni, FechaNac, 
-                                FechaContrato, Salario FROM Empleados
+                                FechaContrato, Salario, Suspendido FROM Empleados
                                                  WHERE EmpleadoId=@EmpleadoId";
             return conn.QuerySingleOrDefault<Empleados>(selectQuery, new { @EmpleadoId = empleadoId });
         }
@@ -122,9 +116,13 @@ namespace Kevin2024.Datos.Repositorios
             var lista = new List<EmpleadosListDto>();
             var finalQuery = string.Empty;
             var ordenQuery = string.Empty;
-            string selectQuery = @"SELECT EmpleadoId, CONCAT(Nombre,' ', Apellido) AS Nombre , Apellido, Dni, FechaNac, 
-                                FechaContrato, Salario, Suspendido FROM Empleados";
+            string selectQuery = @"SELECT EmpleadoId, CONCAT(Nombre,' ', Apellido) AS Nombre , Apellido, Dni, 
+                            Salario, Suspendido FROM Empleados";
 
+            if(orden == Orden.Ninguno)
+            {
+                ordenQuery = @" ORDER BY Nombre";
+            }
             if (orden == Orden.OrdenAZ)
             {
                 ordenQuery = @" ORDER BY Nombre";

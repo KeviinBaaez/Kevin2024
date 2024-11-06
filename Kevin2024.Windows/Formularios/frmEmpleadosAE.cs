@@ -1,14 +1,5 @@
-﻿using Kevin2024.Entidades;
-using Kevin2024.Entidades.Entidades;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using Kevin2024.Entidades.Entidades;
+using System.Text.RegularExpressions;
 
 namespace Kevin2024.Windows.Formularios
 {
@@ -42,7 +33,7 @@ namespace Kevin2024.Windows.Formularios
 
                 empleado.Nombre = txtNombre.Text;
                 empleado.Apellido = txtApellido.Text;
-                empleado.Dni = decimal.Parse(txtDni.Text);
+                empleado.Dni = txtDni.Text;
                 empleado.FechaNac = dtFechaNac.Value;
                 empleado.FechaContrato = dtFechaContrato.Value;
                 empleado.Salario = (double)nupSalario.Value;
@@ -55,8 +46,7 @@ namespace Kevin2024.Windows.Formularios
         {
             errorProvider1.Clear();
             bool valido = true;
-            decimal resultado;
-
+            Regex regex = new Regex(@"^[0-9]{1,2}\.[0-9]{3}\.[0-9]{3}$");
             if (string.IsNullOrEmpty(txtNombre.Text))
             {
                 valido = false;
@@ -67,12 +57,12 @@ namespace Kevin2024.Windows.Formularios
                 valido = false;
                 errorProvider1.SetError(txtApellido, "Ingrese el apellido");
             }
-            if (!decimal.TryParse(txtDni.Text, out resultado))
+            if (!regex.IsMatch(txtDni.Text))
             {
                 valido = false;
-                errorProvider1.SetError(txtDni, "Un nro. de dno no puede contener caracteres especiales");
+                errorProvider1.SetError(txtDni, "Ingrese el número de documento");
             }
-            if (dtFechaNac.Value >= DateTime.Now)
+            if (dtFechaNac.Value >= DateTime.Today)
             {
                 valido = false;
                 errorProvider1.SetError(dtFechaNac, "Ingrese una fecha coherente");
@@ -103,11 +93,11 @@ namespace Kevin2024.Windows.Formularios
             {
                 txtNombre.Text = empleado.Nombre;
                 txtApellido.Text = empleado.Apellido;
-                txtDni.Text = empleado.Dni.ToString();
+                txtDni.Text = empleado.Dni;
                 dtFechaNac.Value = empleado.FechaNac;
                 dtFechaContrato.Value = empleado.FechaContrato;
                 nupSalario.Value = (decimal)empleado.Salario;
-                checkBox1.Checked = empleado.Suspendido; 
+                checkBox1.Checked = empleado.Suspendido;
             }
 
         }

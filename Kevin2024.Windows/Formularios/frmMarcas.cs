@@ -1,5 +1,4 @@
-﻿using Kevin2024.Entidades;
-using Kevin2024.Entidades.Entidades;
+﻿using Kevin2024.Entidades.Entidades;
 using Kevin2024.Entidades.Enumeraciones;
 using Kevin2024.Servicios.Interfaces;
 using Kevin2024.Windows.Helpers;

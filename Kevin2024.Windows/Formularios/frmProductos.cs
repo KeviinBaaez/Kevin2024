@@ -4,7 +4,6 @@ using Kevin2024.Entidades.Enumeraciones;
 using Kevin2024.Servicios.Interfaces;
 using Kevin2024.Windows.Helpers;
 using Microsoft.Extensions.DependencyInjection;
-using System.Windows.Forms;
 
 namespace Kevin2024.Windows.Formularios
 {
@@ -36,7 +35,7 @@ namespace Kevin2024.Windows.Formularios
                 throw new ApplicationException("Dependencias no cargadas!!");
         }
 
-        private void frmBebidas_Load(object sender, EventArgs e)
+        private void frmProductos_Load(object sender, EventArgs e)
         {
             RecargarGrilla();
         }
@@ -222,7 +221,6 @@ namespace Kevin2024.Windows.Formularios
                 throw;
             }
         }
-
         private void tsbSalir_Click(object sender, EventArgs e)
         {
             Close();
@@ -272,13 +270,13 @@ namespace Kevin2024.Windows.Formularios
         private void ordenAZToolStripMenuItem_Click(object sender, EventArgs e)
         {
             orden = Orden.OrdenAZ;
-            LoadData();
+            LoadData(filter);
         }
 
         private void ordenZAToolStripMenuItem_Click(object sender, EventArgs e)
         {
             orden = Orden.OrdenZA;
-            LoadData();
+            LoadData(filter);
         }
         private void busquedaToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -290,9 +288,9 @@ namespace Kevin2024.Windows.Formularios
                 var textoFiltro = frm.GetTexto();
                 if (textoFiltro is null || textoFiltro == string.Empty) return;
 
-                filter=b=>(b.Nombre.ToUpper().Contains(textoFiltro.ToUpper()) ||
+                filter = b => (b.Nombre.ToUpper().Contains(textoFiltro.ToUpper()) ||
                 (b.CodBarras.ToString().Contains(textoFiltro)));
-                totalRecords = _servicios!.GetCantidad(filter); 
+                totalRecords = _servicios!.GetCantidad(filter);
                 currentPage = 1;
                 if (totalRecords > 0)
                 {
@@ -409,6 +407,11 @@ namespace Kevin2024.Windows.Formularios
             {
                 throw;
             }
+        }
+
+        private void txtPaginas_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

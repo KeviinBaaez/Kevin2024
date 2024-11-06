@@ -1,11 +1,9 @@
-﻿using Kevin2024.Entidades;
-using Kevin2024.Entidades.Dtos;
+﻿using Kevin2024.Entidades.Dtos;
 using Kevin2024.Entidades.Entidades;
 using Kevin2024.Entidades.Enumeraciones;
 using Kevin2024.Servicios.Interfaces;
 using Kevin2024.Windows.Helpers;
 using Microsoft.Extensions.DependencyInjection;
-using System.Security.Principal;
 
 namespace Kevin2024.Windows.Formularios
 {
@@ -134,7 +132,7 @@ namespace Kevin2024.Windows.Formularios
             var r = dgvDatos.SelectedRows[0];
             if (r.Tag == null) return;
             EmpleadosListDto empleadoDto = (EmpleadosListDto)r.Tag;
-            Empleados empleado = _servicios!.GetEmpleadoPorId(empleadoDto.EmpleadoId);
+            Empleados? empleado = _servicios!.GetEmpleadoPorId(empleadoDto.EmpleadoId);
             if (empleado is null) return;
             frmEmpleadosAE frm = new frmEmpleadosAE(_serviceProvider) { Text = "Editar datos del Empleado" };
             frm.SetEmpleado((Empleados)empleado);
@@ -262,18 +260,18 @@ namespace Kevin2024.Windows.Formularios
 
         private void busquedaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmFiltro frm = new frmFiltro(Tipos.Ninguno) { Text = "Escriba para buscar"};
+            frmFiltro frm = new frmFiltro(Tipos.Ninguno) { Text = "Escriba para buscar" };
             DialogResult dr = frm.ShowDialog(this);
             try
             {
                 var textoFiltro = frm.GetTexto();
                 if (string.IsNullOrEmpty(textoFiltro)) return;
                 filter = e => (e.Nombre!.ToUpper().Contains(textoFiltro.ToUpper()))
-                ||(e.Apellido!.ToUpper().Contains(textoFiltro.ToUpper())) 
-                ||(e.Dni!.ToString().Contains(textoFiltro.ToString()));
+                || (e.Apellido!.ToUpper().Contains(textoFiltro.ToUpper()))
+                || (e.Dni!.ToString().Contains(textoFiltro.ToString()));
                 totalRecords = _servicios!.GetCantidad(filter);
                 currentPage = 1;
-                if(totalRecords > 0)
+                if (totalRecords > 0)
                 {
                     totalPages = (int)Math.Ceiling((decimal)totalRecords / pageSize);
                     tsbFiltrar.Enabled = false;

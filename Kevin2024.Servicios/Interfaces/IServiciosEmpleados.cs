@@ -7,7 +7,6 @@ namespace Kevin2024.Servicios.Interfaces
     public interface IServiciosEmpleados
     {
         void Borrar(int empleadoId);
-        //bool EstaRelacionado(int empleadoId);
         bool Existe(Empleados empleado);
         int GetCantidad(Func<EmpleadosListDto, bool>? filter);
         Empleados GetEmpleadoPorId(int empleadoId);

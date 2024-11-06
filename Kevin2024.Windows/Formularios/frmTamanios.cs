@@ -79,7 +79,6 @@ namespace Kevin2024.Windows.Formularios
                     currentPage = 1;
                     filter = null;
                     tsbFiltrar.Enabled = true;
-                    RecargarGrilla();
                 }
             }
             catch (Exception)
@@ -88,20 +87,9 @@ namespace Kevin2024.Windows.Formularios
                 throw;
             }
         }
-        private void CboPaginas_SelectedIndexChanged(object? sender, EventArgs e)
-        {
-            currentPage = int.Parse(cboPaginas.Text);
-            LoadData(filter);
-        }
-
-        private void tsbSalir_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
-
         private void tsbNuevo_Click(object sender, EventArgs e)
         {
-           frmNuevoTipoAE frm = new frmNuevoTipoAE(_serviceProvider, tipo) { Text = "Nuevo Tamaño" };
+            frmNuevoTipoAE frm = new frmNuevoTipoAE(_serviceProvider, tipo) { Text = "Nuevo Tamaño" };
             DialogResult dr = frm.ShowDialog(this);
             if (dr == DialogResult.Cancel) return;
             try
@@ -231,6 +219,15 @@ namespace Kevin2024.Windows.Formularios
                 throw;
             }
         }
+        private void tsbSalir_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+        private void CboPaginas_SelectedIndexChanged(object? sender, EventArgs e)
+        {
+            currentPage = int.Parse(cboPaginas.Text);
+            LoadData(filter);
+        }
 
         private void busquedaToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -247,7 +244,6 @@ namespace Kevin2024.Windows.Formularios
                 {
                     totalPages = (int)Math.Ceiling((decimal)totalRecords / pageSize);
                     tsbFiltrar.Enabled = false;
-                    tsbFiltrar.BackColor = Color.DeepSkyBlue;
                     LoadData(filter);
                 }
                 else
@@ -272,7 +268,6 @@ namespace Kevin2024.Windows.Formularios
             orden = Orden.Ninguno;
             currentPage = 1;
             tsbFiltrar.Enabled = true;
-            tsbFiltrar.BackColor = SystemColors.Control;
             RecargarGrilla();
         }
         private void btnPrimero_Click(object sender, EventArgs e)

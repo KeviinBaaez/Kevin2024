@@ -56,12 +56,12 @@
             panel2 = new Panel();
             panel4 = new Panel();
             dgvDatos = new DataGridView();
-            panel1 = new Panel();
             ColEmpleadoId = new DataGridViewTextBoxColumn();
             ColNombre = new DataGridViewTextBoxColumn();
             ColDni = new DataGridViewTextBoxColumn();
             ColSalario = new DataGridViewTextBoxColumn();
             ColSuspendido = new DataGridViewCheckBoxColumn();
+            panel1 = new Panel();
             toolStrip1.SuspendLayout();
             panel3.SuspendLayout();
             panel2.SuspendLayout();
@@ -283,6 +283,7 @@
             // 
             txtPaginas.Location = new Point(140, 29);
             txtPaginas.Name = "txtPaginas";
+            txtPaginas.ReadOnly = true;
             txtPaginas.Size = new Size(79, 23);
             txtPaginas.TabIndex = 0;
             // 
@@ -325,15 +326,6 @@
             dgvDatos.Size = new Size(900, 339);
             dgvDatos.TabIndex = 0;
             // 
-            // panel1
-            // 
-            panel1.Controls.Add(dgvDatos);
-            panel1.Dock = DockStyle.Fill;
-            panel1.Location = new Point(0, 72);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(900, 339);
-            panel1.TabIndex = 3;
-            // 
             // ColEmpleadoId
             // 
             ColEmpleadoId.HeaderText = "EmpleadoId";
@@ -366,6 +358,15 @@
             ColSuspendido.HeaderText = "Suspendido";
             ColSuspendido.Name = "ColSuspendido";
             ColSuspendido.ReadOnly = true;
+            // 
+            // panel1
+            // 
+            panel1.Controls.Add(dgvDatos);
+            panel1.Dock = DockStyle.Fill;
+            panel1.Location = new Point(0, 72);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(900, 339);
+            panel1.TabIndex = 3;
             // 
             // frmEmpleados
             // 

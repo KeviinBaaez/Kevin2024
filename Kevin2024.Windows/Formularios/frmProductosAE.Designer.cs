@@ -174,10 +174,10 @@
             cboTamanio.DropDownStyle = ComboBoxStyle.DropDownList;
             cboTamanio.FormattingEnabled = true;
             cboTamanio.ItemHeight = 19;
-            cboTamanio.Location = new Point(147, 177);
+            cboTamanio.Location = new Point(137, 126);
             cboTamanio.Margin = new Padding(4);
             cboTamanio.Name = "cboTamanio";
-            cboTamanio.Size = new Size(303, 27);
+            cboTamanio.Size = new Size(291, 27);
             cboTamanio.TabIndex = 4;
             // 
             // checkBox1
@@ -194,7 +194,7 @@
             // 
             txtSabor.BackColor = Color.FromArgb(0, 59, 103);
             txtSabor.BorderStyle = BorderStyle.None;
-            txtSabor.Location = new Point(137, 127);
+            txtSabor.Location = new Point(135, 171);
             txtSabor.Margin = new Padding(4);
             txtSabor.Name = "txtSabor";
             txtSabor.PlaceholderText = "Sabor";
@@ -261,7 +261,7 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Constantia", 12F, FontStyle.Bold);
-            label4.Location = new Point(9, 177);
+            label4.Location = new Point(13, 126);
             label4.Margin = new Padding(4, 0, 4, 0);
             label4.Name = "label4";
             label4.Size = new Size(76, 19);
@@ -272,7 +272,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Constantia", 12F, FontStyle.Bold);
-            label3.Location = new Point(13, 127);
+            label3.Location = new Point(11, 171);
             label3.Margin = new Padding(4, 0, 4, 0);
             label3.Name = "label3";
             label3.Size = new Size(62, 19);
@@ -355,7 +355,7 @@
             // 
             label12.AutoSize = true;
             label12.Font = new Font("Constantia", 12F, FontStyle.Bold);
-            label12.Location = new Point(9, 127);
+            label12.Location = new Point(13, 76);
             label12.Margin = new Padding(4, 0, 4, 0);
             label12.Name = "label12";
             label12.Size = new Size(89, 19);
@@ -366,10 +366,10 @@
             // 
             cboCategorias.DropDownStyle = ComboBoxStyle.DropDownList;
             cboCategorias.FormattingEnabled = true;
-            cboCategorias.Location = new Point(147, 127);
+            cboCategorias.Location = new Point(137, 76);
             cboCategorias.Margin = new Padding(4);
             cboCategorias.Name = "cboCategorias";
-            cboCategorias.Size = new Size(303, 27);
+            cboCategorias.Size = new Size(291, 27);
             cboCategorias.TabIndex = 3;
             // 
             // groupBox1
@@ -390,13 +390,11 @@
             // groupBox2
             // 
             groupBox2.Controls.Add(label2);
-            groupBox2.Controls.Add(panel4);
-            groupBox2.Controls.Add(panel3);
             groupBox2.Controls.Add(cboMarca);
-            groupBox2.Controls.Add(label13);
-            groupBox2.Controls.Add(label3);
-            groupBox2.Controls.Add(txtDescripcion);
-            groupBox2.Controls.Add(txtSabor);
+            groupBox2.Controls.Add(label4);
+            groupBox2.Controls.Add(label12);
+            groupBox2.Controls.Add(cboCategorias);
+            groupBox2.Controls.Add(cboTamanio);
             groupBox2.Location = new Point(540, 85);
             groupBox2.Margin = new Padding(4);
             groupBox2.Name = "groupBox2";
@@ -404,12 +402,12 @@
             groupBox2.Size = new Size(464, 171);
             groupBox2.TabIndex = 5;
             groupBox2.TabStop = false;
-            groupBox2.Text = "Datos (NULL)";
+            groupBox2.Text = "Datos ";
             // 
             // panel4
             // 
             panel4.BackColor = SystemColors.ControlDarkDark;
-            panel4.Location = new Point(135, 110);
+            panel4.Location = new Point(133, 154);
             panel4.Margin = new Padding(4);
             panel4.Name = "panel4";
             panel4.Size = new Size(293, 1);
@@ -418,7 +416,7 @@
             // panel3
             // 
             panel3.BackColor = SystemColors.ControlDarkDark;
-            panel3.Location = new Point(137, 155);
+            panel3.Location = new Point(135, 199);
             panel3.Margin = new Padding(4);
             panel3.Name = "panel3";
             panel3.Size = new Size(293, 1);
@@ -428,7 +426,7 @@
             // 
             label13.AutoSize = true;
             label13.Font = new Font("Constantia", 12F, FontStyle.Bold);
-            label13.Location = new Point(11, 82);
+            label13.Location = new Point(9, 126);
             label13.Margin = new Padding(4, 0, 4, 0);
             label13.Name = "label13";
             label13.Size = new Size(105, 19);
@@ -439,7 +437,7 @@
             // 
             txtDescripcion.BackColor = Color.FromArgb(0, 59, 103);
             txtDescripcion.BorderStyle = BorderStyle.None;
-            txtDescripcion.Location = new Point(135, 82);
+            txtDescripcion.Location = new Point(133, 126);
             txtDescripcion.Margin = new Padding(4);
             txtDescripcion.Name = "txtDescripcion";
             txtDescripcion.PlaceholderText = "Descripción";
@@ -485,15 +483,17 @@
             // groupBox4
             // 
             groupBox4.Controls.Add(panel2);
+            groupBox4.Controls.Add(panel4);
             groupBox4.Controls.Add(panel1);
-            groupBox4.Controls.Add(label4);
             groupBox4.Controls.Add(label5);
-            groupBox4.Controls.Add(cboTamanio);
+            groupBox4.Controls.Add(panel3);
             groupBox4.Controls.Add(txtNombre);
             groupBox4.Controls.Add(label11);
             groupBox4.Controls.Add(txtCodigoBarras);
-            groupBox4.Controls.Add(label12);
-            groupBox4.Controls.Add(cboCategorias);
+            groupBox4.Controls.Add(label13);
+            groupBox4.Controls.Add(label3);
+            groupBox4.Controls.Add(txtSabor);
+            groupBox4.Controls.Add(txtDescripcion);
             groupBox4.Location = new Point(30, 85);
             groupBox4.Margin = new Padding(4);
             groupBox4.Name = "groupBox4";
@@ -525,7 +525,7 @@
             // 
             errorProvider1.ContainerControl = this;
             // 
-            // frmPostresAE
+            // frmProductosAE
             // 
             AutoScaleDimensions = new SizeF(10F, 19F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -547,7 +547,7 @@
             Controls.Add(label1);
             Font = new Font("Constantia", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             Margin = new Padding(4);
-            Name = "frmPostresAE";
+            Name = "frmProductosAE";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Nuevo Producto";
             Load += frmPostresAE_Load;

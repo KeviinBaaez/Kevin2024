@@ -49,7 +49,6 @@ namespace Kevin2024.Windows.Formularios
             {
                 totalRecords = _servicios!.GetCantidad(filter);
                 totalPages = (int)Math.Ceiling((decimal)totalRecords / pageSize);
-                currentPage = totalPages;
                 LoadData(filter);
             }
             catch (Exception)
@@ -84,8 +83,6 @@ namespace Kevin2024.Windows.Formularios
                     currentPage = 1;
                     filter = null;
                     tsbFiltrar.Enabled = true;
-                    tsbFiltrar.BackColor = SystemColors.Control;
-                    RecargarGrilla();
                 }
             }
             catch (Exception)
@@ -203,6 +200,7 @@ namespace Kevin2024.Windows.Formularios
             DialogResult dr = frm.ShowDialog(this);
             if (dr == DialogResult.Cancel) return;
             categoria = frm.GetCategoria();
+            if(categoria is null) return;
             try
             {
                 if (!_servicios!.Existe(categoria))
@@ -304,20 +302,20 @@ namespace Kevin2024.Windows.Formularios
             if (cboPaginas.SelectedIndex >= 0)
             {
                 currentPage = int.Parse(cboPaginas.Text);
-                LoadData();
+                LoadData(filter);
             }
         }
 
         private void ordenAZToolStripMenuItem_Click(object sender, EventArgs e)
         {
             orden = Orden.OrdenAZ;
-            LoadData();
+            LoadData(filter);
         }
 
         private void ordenZAToolStripMenuItem_Click(object sender, EventArgs e)
         {
             orden = Orden.OrdenZA;
-            LoadData();
+            LoadData(filter);
         }
     }
 }

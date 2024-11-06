@@ -127,22 +127,20 @@ namespace Kevin2024.Datos.Repositorios
             var listaProductos = new List<ProductosListDto>();
             string selectQuery = @"SELECT ProductoId AS ProductoId,
                                 p.Nombre,
-								p.Descripcion,
-                                Sabor,
+								m.Nombre AS Marca,
 								p.CodBarras,
-                                t.Descripcion,
-								c.Descripcion,
-                                PrecioCosto,
-                                PrecioVenta AS Precio, 
+                                t.Descripcion AS Tamanio,
+								c.Descripcion AS Categoria,
+                                PrecioVenta, 
                                 Stock, 
-                                NivelDeReposicion, 
                                 Suspendido
                            FROM Productos p
 
+                                LEFT JOIN Marcas m on p.MarcaId = m.MarcaId
 
-                                INNER JOIN Tamaños t on p.TamanioId = t.TamanioId
+                                LEFT JOIN Tamaños t on p.TamanioId = t.TamanioId
 
-                                INNER JOIN Categorias c on p.CategoriaId = c.CategoriaId";
+                                LEFT JOIN Categorias c on p.CategoriaId = c.CategoriaId ";
             var lista = conn.Query<ProductosListDto>(selectQuery).ToList();
             listaProductos.AddRange(lista);
 
@@ -169,11 +167,15 @@ namespace Kevin2024.Datos.Repositorios
                                 Suspendido
                            FROM Productos p
 
-                                INNER JOIN Marcas m on p.MarcaId = m.MarcaId
+                                LEFT JOIN Marcas m on p.MarcaId = m.MarcaId
 
-                                INNER JOIN Tamaños t on p.TamanioId = t.TamanioId
+                                LEFT JOIN Tamaños t on p.TamanioId = t.TamanioId
 
-                                INNER JOIN Categorias c on p.CategoriaId = c.CategoriaId ";
+                                LEFT JOIN Categorias c on p.CategoriaId = c.CategoriaId";
+            if(orden == Orden.Ninguno)
+            {
+                ordenQuery = @" ORDER BY p.Nombre";
+            }
             if (orden == Orden.OrdenAZ)
             {
                 ordenQuery = @" ORDER BY p.Nombre";

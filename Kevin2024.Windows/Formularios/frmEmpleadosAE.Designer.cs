@@ -202,7 +202,7 @@
             txtDni.BorderStyle = BorderStyle.None;
             txtDni.ForeColor = Color.White;
             txtDni.Location = new Point(135, 163);
-            txtDni.MaxLength = 8;
+            txtDni.MaxLength = 10;
             txtDni.Name = "txtDni";
             txtDni.PlaceholderText = "Dni";
             txtDni.Size = new Size(212, 16);
