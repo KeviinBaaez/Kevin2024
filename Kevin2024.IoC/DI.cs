@@ -20,21 +20,13 @@ namespace Kevin2024.IoC
 
             service.AddScoped<IRepositorioLogin, RepositorioLogin>();
 
-            service.AddScoped<IRepositorioMarcas, RepositorioMarcas>();
-
-            service.AddScoped<IRepositorioCategorias, RepositorioCategorias>();
-
-            service.AddScoped<IRepositorioTamanios, RepositorioTamanios>();
-
             service.AddScoped<IRepositorioEmpleados, RepositorioEmpleados>();
             //SERVICE SERVICIOS
             service.AddScoped<IServiciosLogin, ServiciosLogin>();
 
-            service.AddScoped<IServiciosMarcas, ServiciosMarcas>();
-
-            service.AddScoped<IServiciosCategorias, ServiciosCategorias>();
-
             service.AddScoped<IServiciosEmpleados, ServiciosEmpleados>();
+
+            service.AddScoped<IServiciosTipos, ServiciosTipos>();
 
             service.AddScoped<IServiciosLogin>(sp =>
             {
@@ -48,28 +40,16 @@ namespace Kevin2024.IoC
                 return new ServiciosProductos(repositorio, cadena);
             });
 
-            service.AddScoped<IServiciosMarcas>(sp =>
-            {
-                var repositorio = new RepositorioMarcas();
-                return new ServiciosMarcas(repositorio, cadena);
-            });
-
-            service.AddScoped<IServiciosCategorias>(sp =>
-            {
-                var repositorio = new RepositorioCategorias();
-                return new ServiciosCategorias(repositorio, cadena);
-            });
-
-            service.AddScoped<IServiciosTamanios>(sp =>
-            {
-                var repositorio = new RepositorioTamanios();
-                return new ServiciosTamanios(repositorio, cadena);
-            });
-
             service.AddScoped<IServiciosEmpleados>(sp =>
             {
                 var repositorio = new RepositorioEmpleados();
                 return new ServiciosEmpleados(repositorio, cadena);
+            });
+
+            service.AddScoped<IServiciosTipos>(sp =>
+            {
+                var repositorio = new RepositorioTipos();
+                return new ServiciosTipos(repositorio, cadena);
             });
 
             return service.BuildServiceProvider();  

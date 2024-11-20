@@ -68,6 +68,7 @@
             panel2 = new Panel();
             panel1 = new Panel();
             errorProvider1 = new ErrorProvider(components);
+            openFileDialog1 = new OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)nupNivelReposicion).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nupStock).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nupPrecioVenta).BeginInit();
@@ -196,6 +197,7 @@
             txtSabor.BorderStyle = BorderStyle.None;
             txtSabor.Location = new Point(135, 171);
             txtSabor.Margin = new Padding(4);
+            txtSabor.MaxLength = 50;
             txtSabor.Name = "txtSabor";
             txtSabor.PlaceholderText = "Sabor";
             txtSabor.Size = new Size(293, 20);
@@ -320,6 +322,7 @@
             txtNombre.BorderStyle = BorderStyle.None;
             txtNombre.Location = new Point(147, 24);
             txtNombre.Margin = new Padding(4);
+            txtNombre.MaxLength = 50;
             txtNombre.Name = "txtNombre";
             txtNombre.PlaceholderText = "Nombre";
             txtNombre.Size = new Size(304, 20);
@@ -439,6 +442,7 @@
             txtDescripcion.BorderStyle = BorderStyle.None;
             txtDescripcion.Location = new Point(133, 126);
             txtDescripcion.Margin = new Padding(4);
+            txtDescripcion.MaxLength = 150;
             txtDescripcion.Name = "txtDescripcion";
             txtDescripcion.PlaceholderText = "Descripción";
             txtDescripcion.Size = new Size(293, 20);
@@ -463,6 +467,7 @@
             picImagen.Margin = new Padding(4);
             picImagen.Name = "picImagen";
             picImagen.Size = new Size(183, 156);
+            picImagen.SizeMode = PictureBoxSizeMode.Zoom;
             picImagen.TabIndex = 0;
             picImagen.TabStop = false;
             // 
@@ -479,6 +484,7 @@
             btnBuscar.Text = "Buscar";
             btnBuscar.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnBuscar.UseVisualStyleBackColor = false;
+            btnBuscar.Click += btnBuscar_Click;
             // 
             // groupBox4
             // 
@@ -524,6 +530,10 @@
             // errorProvider1
             // 
             errorProvider1.ContainerControl = this;
+            // 
+            // openFileDialog1
+            // 
+            openFileDialog1.FileName = "openFileDialog1";
             // 
             // frmProductosAE
             // 
@@ -608,5 +618,6 @@
         private Panel panel4;
         private Label label13;
         private TextBox txtDescripcion;
+        private OpenFileDialog openFileDialog1;
     }
 }

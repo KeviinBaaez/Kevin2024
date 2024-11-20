@@ -173,6 +173,16 @@ namespace Kevin2024.Windows.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap boton_agregar_a_la_cola1 {
+            get {
+                object obj = ResourceManager.GetObject("boton-agregar-a-la-cola1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap boton_de_inicio {
             get {
                 object obj = ResourceManager.GetObject("boton-de-inicio", resourceCulture);
@@ -226,6 +236,26 @@ namespace Kevin2024.Windows.Properties {
         internal static System.Drawing.Bitmap circulo_marca_x {
             get {
                 object obj = ResourceManager.GetObject("circulo-marca-x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap comida_rapida {
+            get {
+                object obj = ResourceManager.GetObject("comida-rapida", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap comida_rapida__1_ {
+            get {
+                object obj = ResourceManager.GetObject("comida-rapida (1)", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -293,9 +323,29 @@ namespace Kevin2024.Windows.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap refresco_de_hamburguesa {
+            get {
+                object obj = ResourceManager.GetObject("refresco-de-hamburguesa", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap salir_alt {
             get {
                 object obj = ResourceManager.GetObject("salir-alt", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap usuarios_alt {
+            get {
+                object obj = ResourceManager.GetObject("usuarios-alt", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -41,9 +41,11 @@
             panel4 = new Panel();
             PanelProductos = new Panel();
             btnProductos = new Button();
+            panelCombos = new Panel();
+            btnCombos = new Button();
             PanelVentas = new Panel();
             btnVentas = new Button();
-            panel6 = new Panel();
+            panelClientes = new Panel();
             btnClientes = new Button();
             panelEmpleados = new Panel();
             btnEmpleados = new Button();
@@ -53,6 +55,7 @@
             btnTamanio = new ToolStripButton();
             btnCategoria = new ToolStripButton();
             btnUsuario = new ToolStripButton();
+            btnGeneros = new ToolStripButton();
             btnOtros = new Button();
             panel1 = new Panel();
             panelDespegable = new Panel();
@@ -77,8 +80,9 @@
             panel9.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
             PanelProductos.SuspendLayout();
+            panelCombos.SuspendLayout();
             PanelVentas.SuspendLayout();
-            panel6.SuspendLayout();
+            panelClientes.SuspendLayout();
             panelEmpleados.SuspendLayout();
             panelOtros.SuspendLayout();
             toolStrip3.SuspendLayout();
@@ -176,8 +180,9 @@
             // 
             flowLayoutPanel1.Controls.Add(panel4);
             flowLayoutPanel1.Controls.Add(PanelProductos);
+            flowLayoutPanel1.Controls.Add(panelCombos);
             flowLayoutPanel1.Controls.Add(PanelVentas);
-            flowLayoutPanel1.Controls.Add(panel6);
+            flowLayoutPanel1.Controls.Add(panelClientes);
             flowLayoutPanel1.Controls.Add(panelEmpleados);
             flowLayoutPanel1.Controls.Add(panelOtros);
             flowLayoutPanel1.Dock = DockStyle.Top;
@@ -199,7 +204,7 @@
             PanelProductos.Controls.Add(btnProductos);
             PanelProductos.Location = new Point(22, 3);
             PanelProductos.Name = "PanelProductos";
-            PanelProductos.Size = new Size(165, 65);
+            PanelProductos.Size = new Size(160, 65);
             PanelProductos.TabIndex = 3;
             // 
             // btnProductos
@@ -212,19 +217,45 @@
             btnProductos.Location = new Point(0, 0);
             btnProductos.Margin = new Padding(3, 30, 3, 3);
             btnProductos.Name = "btnProductos";
-            btnProductos.Size = new Size(165, 65);
+            btnProductos.Size = new Size(160, 65);
             btnProductos.TabIndex = 2;
             btnProductos.Text = "Productos";
             btnProductos.TextAlign = ContentAlignment.BottomCenter;
             btnProductos.UseVisualStyleBackColor = true;
             btnProductos.Click += btnProductos_Click;
             // 
+            // panelCombos
+            // 
+            panelCombos.BackColor = Color.FromArgb(0, 59, 103);
+            panelCombos.Controls.Add(btnCombos);
+            panelCombos.Location = new Point(188, 3);
+            panelCombos.Name = "panelCombos";
+            panelCombos.Size = new Size(160, 65);
+            panelCombos.TabIndex = 3;
+            // 
+            // btnCombos
+            // 
+            btnCombos.Dock = DockStyle.Top;
+            btnCombos.FlatStyle = FlatStyle.Flat;
+            btnCombos.Font = new Font("Constantia", 12.75F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point, 0);
+            btnCombos.Image = Properties.Resources.comida_rapida__1_;
+            btnCombos.ImageAlign = ContentAlignment.TopCenter;
+            btnCombos.Location = new Point(0, 0);
+            btnCombos.Margin = new Padding(3, 30, 3, 3);
+            btnCombos.Name = "btnCombos";
+            btnCombos.Size = new Size(160, 65);
+            btnCombos.TabIndex = 2;
+            btnCombos.Text = "Combos";
+            btnCombos.TextAlign = ContentAlignment.BottomCenter;
+            btnCombos.UseVisualStyleBackColor = true;
+            btnCombos.Click += btnProductos_Click;
+            // 
             // PanelVentas
             // 
             PanelVentas.Controls.Add(btnVentas);
-            PanelVentas.Location = new Point(193, 3);
+            PanelVentas.Location = new Point(354, 3);
             PanelVentas.Name = "PanelVentas";
-            PanelVentas.Size = new Size(165, 65);
+            PanelVentas.Size = new Size(160, 65);
             PanelVentas.TabIndex = 0;
             // 
             // btnVentas
@@ -237,19 +268,19 @@
             btnVentas.Location = new Point(0, 0);
             btnVentas.Margin = new Padding(3, 30, 3, 3);
             btnVentas.Name = "btnVentas";
-            btnVentas.Size = new Size(165, 65);
+            btnVentas.Size = new Size(160, 65);
             btnVentas.TabIndex = 2;
             btnVentas.Text = "Ventas";
             btnVentas.TextAlign = ContentAlignment.BottomCenter;
             btnVentas.UseVisualStyleBackColor = true;
             // 
-            // panel6
+            // panelClientes
             // 
-            panel6.Controls.Add(btnClientes);
-            panel6.Location = new Point(364, 3);
-            panel6.Name = "panel6";
-            panel6.Size = new Size(165, 65);
-            panel6.TabIndex = 0;
+            panelClientes.Controls.Add(btnClientes);
+            panelClientes.Location = new Point(520, 3);
+            panelClientes.Name = "panelClientes";
+            panelClientes.Size = new Size(160, 65);
+            panelClientes.TabIndex = 0;
             // 
             // btnClientes
             // 
@@ -261,7 +292,7 @@
             btnClientes.Location = new Point(0, 0);
             btnClientes.Margin = new Padding(3, 30, 3, 3);
             btnClientes.Name = "btnClientes";
-            btnClientes.Size = new Size(165, 65);
+            btnClientes.Size = new Size(160, 65);
             btnClientes.TabIndex = 2;
             btnClientes.Text = "Clientes";
             btnClientes.TextAlign = ContentAlignment.BottomCenter;
@@ -271,9 +302,9 @@
             // panelEmpleados
             // 
             panelEmpleados.Controls.Add(btnEmpleados);
-            panelEmpleados.Location = new Point(535, 3);
+            panelEmpleados.Location = new Point(686, 3);
             panelEmpleados.Name = "panelEmpleados";
-            panelEmpleados.Size = new Size(165, 65);
+            panelEmpleados.Size = new Size(160, 65);
             panelEmpleados.TabIndex = 0;
             // 
             // btnEmpleados
@@ -286,7 +317,7 @@
             btnEmpleados.Location = new Point(0, 0);
             btnEmpleados.Margin = new Padding(3, 30, 3, 3);
             btnEmpleados.Name = "btnEmpleados";
-            btnEmpleados.Size = new Size(165, 65);
+            btnEmpleados.Size = new Size(160, 65);
             btnEmpleados.TabIndex = 2;
             btnEmpleados.Text = "Empleados";
             btnEmpleados.TextAlign = ContentAlignment.BottomCenter;
@@ -297,9 +328,9 @@
             // 
             panelOtros.Controls.Add(toolStrip3);
             panelOtros.Controls.Add(btnOtros);
-            panelOtros.Location = new Point(706, 3);
+            panelOtros.Location = new Point(852, 3);
             panelOtros.Name = "panelOtros";
-            panelOtros.Size = new Size(165, 228);
+            panelOtros.Size = new Size(160, 327);
             panelOtros.TabIndex = 5;
             // 
             // toolStrip3
@@ -307,12 +338,12 @@
             toolStrip3.BackColor = Color.FromArgb(0, 59, 103);
             toolStrip3.Dock = DockStyle.Fill;
             toolStrip3.GripStyle = ToolStripGripStyle.Hidden;
-            toolStrip3.Items.AddRange(new ToolStripItem[] { btnMarcas, btnTamanio, btnCategoria, btnUsuario });
+            toolStrip3.Items.AddRange(new ToolStripItem[] { btnMarcas, btnTamanio, btnCategoria, btnUsuario, btnGeneros });
             toolStrip3.LayoutStyle = ToolStripLayoutStyle.VerticalStackWithOverflow;
             toolStrip3.Location = new Point(0, 65);
             toolStrip3.Name = "toolStrip3";
             toolStrip3.RenderMode = ToolStripRenderMode.System;
-            toolStrip3.Size = new Size(165, 163);
+            toolStrip3.Size = new Size(160, 262);
             toolStrip3.TabIndex = 3;
             // 
             // btnMarcas
@@ -322,7 +353,7 @@
             btnMarcas.ImageTransparentColor = Color.Magenta;
             btnMarcas.Margin = new Padding(0, 15, 0, 2);
             btnMarcas.Name = "btnMarcas";
-            btnMarcas.Size = new Size(163, 23);
+            btnMarcas.Size = new Size(158, 23);
             btnMarcas.Text = "Marcas";
             btnMarcas.Click += btnMarcas_Click;
             // 
@@ -333,7 +364,7 @@
             btnTamanio.ImageTransparentColor = Color.Magenta;
             btnTamanio.Margin = new Padding(0, 15, 0, 2);
             btnTamanio.Name = "btnTamanio";
-            btnTamanio.Size = new Size(163, 23);
+            btnTamanio.Size = new Size(158, 23);
             btnTamanio.Text = "Tamaños";
             btnTamanio.Click += btnTamanio_Click;
             // 
@@ -344,7 +375,7 @@
             btnCategoria.ImageTransparentColor = Color.Magenta;
             btnCategoria.Margin = new Padding(0, 15, 0, 2);
             btnCategoria.Name = "btnCategoria";
-            btnCategoria.Size = new Size(163, 23);
+            btnCategoria.Size = new Size(158, 23);
             btnCategoria.Text = "Categorias";
             btnCategoria.Click += btnCategoria_Click;
             // 
@@ -355,8 +386,19 @@
             btnUsuario.ImageTransparentColor = Color.Magenta;
             btnUsuario.Margin = new Padding(0, 15, 0, 2);
             btnUsuario.Name = "btnUsuario";
-            btnUsuario.Size = new Size(163, 23);
+            btnUsuario.Size = new Size(158, 23);
             btnUsuario.Text = "Usuarios";
+            // 
+            // btnGeneros
+            // 
+            btnGeneros.Font = new Font("Constantia", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnGeneros.Image = (Image)resources.GetObject("btnGeneros.Image");
+            btnGeneros.ImageTransparentColor = Color.Magenta;
+            btnGeneros.Margin = new Padding(0, 15, 0, 2);
+            btnGeneros.Name = "btnGeneros";
+            btnGeneros.Size = new Size(158, 23);
+            btnGeneros.Text = "Géneros";
+            btnGeneros.Click += btnGeneros_Click;
             // 
             // btnOtros
             // 
@@ -368,7 +410,7 @@
             btnOtros.Location = new Point(0, 0);
             btnOtros.Margin = new Padding(3, 30, 3, 3);
             btnOtros.Name = "btnOtros";
-            btnOtros.Size = new Size(165, 65);
+            btnOtros.Size = new Size(160, 65);
             btnOtros.TabIndex = 2;
             btnOtros.Text = "Varios";
             btnOtros.TextAlign = ContentAlignment.BottomCenter;
@@ -590,8 +632,9 @@
             panel9.ResumeLayout(false);
             flowLayoutPanel1.ResumeLayout(false);
             PanelProductos.ResumeLayout(false);
+            panelCombos.ResumeLayout(false);
             PanelVentas.ResumeLayout(false);
-            panel6.ResumeLayout(false);
+            panelClientes.ResumeLayout(false);
             panelEmpleados.ResumeLayout(false);
             panelOtros.ResumeLayout(false);
             panelOtros.PerformLayout();
@@ -636,7 +679,7 @@
         private FlowLayoutPanel flowLayoutPanel1;
         private Panel panel4;
         private Panel panelFormularios;
-        private Panel panel6;
+        private Panel panelClientes;
         private Panel panel7;
         private Panel panelk;
         private Panel panel10;
@@ -654,5 +697,8 @@
         private ToolStripButton btnTamanio;
         private ToolStripButton btnCategoria;
         private ToolStripButton btnUsuario;
+        private ToolStripButton btnGeneros;
+        private Panel panelCombos;
+        private Button btnCombos;
     }
 }

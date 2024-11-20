@@ -51,6 +51,12 @@
             label5 = new Label();
             txtCategoria = new TextBox();
             label6 = new Label();
+            panelGeneros = new Panel();
+            panel9 = new Panel();
+            label7 = new Label();
+            txtGenero = new TextBox();
+            panel10 = new Panel();
+            label8 = new Label();
             ((System.ComponentModel.ISupportInitialize)errorProvider1).BeginInit();
             panel2.SuspendLayout();
             panel3.SuspendLayout();
@@ -59,6 +65,8 @@
             panel5.SuspendLayout();
             panelCategorias.SuspendLayout();
             panel7.SuspendLayout();
+            panelGeneros.SuspendLayout();
+            panel9.SuspendLayout();
             SuspendLayout();
             // 
             // label1
@@ -106,7 +114,7 @@
             btnOK.FlatStyle = FlatStyle.Flat;
             btnOK.Font = new Font("Constantia", 12F, FontStyle.Bold);
             btnOK.Image = Properties.Resources.caja;
-            btnOK.Location = new Point(26, 6);
+            btnOK.Location = new Point(25, 6);
             btnOK.Name = "btnOK";
             btnOK.Size = new Size(159, 47);
             btnOK.TabIndex = 2;
@@ -123,7 +131,7 @@
             btnCancelar.FlatStyle = FlatStyle.Flat;
             btnCancelar.Font = new Font("Constantia", 12F, FontStyle.Bold);
             btnCancelar.Image = Properties.Resources.circulo_marca_x;
-            btnCancelar.Location = new Point(208, 6);
+            btnCancelar.Location = new Point(207, 6);
             btnCancelar.Name = "btnCancelar";
             btnCancelar.Size = new Size(124, 49);
             btnCancelar.TabIndex = 3;
@@ -151,9 +159,9 @@
             panel2.Controls.Add(btnCancelar);
             panel2.Controls.Add(btnOK);
             panel2.Dock = DockStyle.Bottom;
-            panel2.Location = new Point(0, 122);
+            panel2.Location = new Point(0, 123);
             panel2.Name = "panel2";
-            panel2.Size = new Size(359, 60);
+            panel2.Size = new Size(356, 60);
             panel2.TabIndex = 5;
             // 
             // panel3
@@ -304,19 +312,87 @@
             label6.Text = "¡Nueva Categoría!";
             label6.TextAlign = ContentAlignment.MiddleCenter;
             // 
+            // panelGeneros
+            // 
+            panelGeneros.Controls.Add(panel9);
+            panelGeneros.Controls.Add(label8);
+            panelGeneros.Location = new Point(0, 0);
+            panelGeneros.Name = "panelGeneros";
+            panelGeneros.Size = new Size(357, 123);
+            panelGeneros.TabIndex = 7;
+            // 
+            // panel9
+            // 
+            panel9.Controls.Add(label7);
+            panel9.Controls.Add(txtGenero);
+            panel9.Controls.Add(panel10);
+            panel9.Dock = DockStyle.Fill;
+            panel9.Location = new Point(0, 39);
+            panel9.Name = "panel9";
+            panel9.Size = new Size(357, 84);
+            panel9.TabIndex = 6;
+            // 
+            // label7
+            // 
+            label7.Anchor = AnchorStyles.None;
+            label7.AutoSize = true;
+            label7.Font = new Font("Constantia", 12F, FontStyle.Bold);
+            label7.ForeColor = SystemColors.ControlLightLight;
+            label7.Location = new Point(34, 34);
+            label7.Name = "label7";
+            label7.Size = new Size(71, 19);
+            label7.TabIndex = 0;
+            label7.Text = "Género:";
+            // 
+            // txtGenero
+            // 
+            txtGenero.Anchor = AnchorStyles.None;
+            txtGenero.BackColor = Color.FromArgb(0, 59, 103);
+            txtGenero.BorderStyle = BorderStyle.None;
+            txtGenero.Font = new Font("Constantia", 12F, FontStyle.Bold);
+            txtGenero.ForeColor = Color.White;
+            txtGenero.Location = new Point(134, 34);
+            txtGenero.Name = "txtGenero";
+            txtGenero.PlaceholderText = "Género";
+            txtGenero.Size = new Size(175, 20);
+            txtGenero.TabIndex = 1;
+            txtGenero.TextAlign = HorizontalAlignment.Center;
+            // 
+            // panel10
+            // 
+            panel10.Anchor = AnchorStyles.None;
+            panel10.BackColor = Color.Black;
+            panel10.Location = new Point(134, 55);
+            panel10.Name = "panel10";
+            panel10.Size = new Size(175, 1);
+            panel10.TabIndex = 4;
+            // 
+            // label8
+            // 
+            label8.Dock = DockStyle.Top;
+            label8.Font = new Font("Constantia", 18F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point, 0);
+            label8.ForeColor = SystemColors.ButtonHighlight;
+            label8.Location = new Point(0, 0);
+            label8.Name = "label8";
+            label8.Size = new Size(357, 39);
+            label8.TabIndex = 1;
+            label8.Text = "¡Nueva Género!";
+            label8.TextAlign = ContentAlignment.MiddleCenter;
+            // 
             // frmNuevoTipoAE
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(0, 59, 103);
-            ClientSize = new Size(359, 182);
+            ClientSize = new Size(356, 183);
             Controls.Add(panel2);
+            Controls.Add(panelGeneros);
             Controls.Add(panelMarcas);
             Controls.Add(panelCategorias);
             Controls.Add(panelTamanios);
             Name = "frmNuevoTipoAE";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "frmMarcasAE";
+            Text = "Nuevo";
             Load += frmMarcasAE_Load;
             ((System.ComponentModel.ISupportInitialize)errorProvider1).EndInit();
             panel2.ResumeLayout(false);
@@ -329,6 +405,9 @@
             panelCategorias.ResumeLayout(false);
             panel7.ResumeLayout(false);
             panel7.PerformLayout();
+            panelGeneros.ResumeLayout(false);
+            panel9.ResumeLayout(false);
+            panel9.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -356,5 +435,11 @@
         private Label label5;
         private TextBox txtCategoria;
         private Label label6;
+        private Panel panelGeneros;
+        private Panel panel9;
+        private Label label7;
+        private TextBox txtGenero;
+        private Panel panel10;
+        private Label label8;
     }
 }

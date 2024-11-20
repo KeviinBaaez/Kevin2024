@@ -87,6 +87,7 @@ namespace Kevin2024.Windows.Formularios
                 throw;
             }
         }
+
         private void tsbNuevo_Click(object sender, EventArgs e)
         {
             frmProductosAE frm = new frmProductosAE(_serviceProvider);
@@ -179,7 +180,7 @@ namespace Kevin2024.Windows.Formularios
             var r = dgvDatos.SelectedRows[0];
             if (r.Tag == null) return;
             ProductosListDto pListDto = (ProductosListDto)r.Tag;
-            DialogResult dr = MessageBox.Show($"¿Deseas dar de baja la siguiente bebida?\n Producto: {pListDto.Nombre!}\n CobBarras: {pListDto.CodBarras}",
+            DialogResult dr = MessageBox.Show($"¿Deseas dar de baja el siguiente Producto?\n Producto: {pListDto.Nombre!}\n CobBarras: {pListDto.CodBarras}",
                 "Confirmar",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question,
@@ -221,42 +222,6 @@ namespace Kevin2024.Windows.Formularios
                 throw;
             }
         }
-        private void tsbSalir_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
-
-        private void btnPrimero_Click(object sender, EventArgs e)
-        {
-            currentPage = 1;
-            LoadData(filter);
-        }
-        private void btnAnterior_Click(object sender, EventArgs e)
-        {
-            if (currentPage > 1)
-            {
-                currentPage--;
-                LoadData(filter);
-            }
-        }
-        private void btnSiguiente_Click(object sender, EventArgs e)
-        {
-            if (currentPage < totalPages)
-            {
-                currentPage++;
-                LoadData(filter);
-            }
-        }
-        private void btnUltimo_Click(object sender, EventArgs e)
-        {
-            currentPage = totalPages;
-            LoadData(filter);
-        }
-        private void CboPaginas_SelectedIndexChanged(object? sender, EventArgs e)
-        {
-            currentPage = int.Parse(cboPaginas.Text);
-            LoadData(filter);
-        }
 
         private void tsbActualizar_Click(object sender, EventArgs e)
         {
@@ -267,17 +232,22 @@ namespace Kevin2024.Windows.Formularios
             RecargarGrilla();
         }
 
+        private void tsbSalir_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
         private void ordenAZToolStripMenuItem_Click(object sender, EventArgs e)
         {
             orden = Orden.OrdenAZ;
             LoadData(filter);
         }
-
         private void ordenZAToolStripMenuItem_Click(object sender, EventArgs e)
         {
             orden = Orden.OrdenZA;
             LoadData(filter);
         }
+
         private void busquedaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             tipo = Tipos.Ninguno;
@@ -344,7 +314,6 @@ namespace Kevin2024.Windows.Formularios
                 throw;
             }
         }
-
         private void marcaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             tipo = Tipos.Marcas;
@@ -376,7 +345,6 @@ namespace Kevin2024.Windows.Formularios
                 throw;
             }
         }
-
         private void tamañoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             tipo = Tipos.Tamanio;
@@ -409,9 +377,36 @@ namespace Kevin2024.Windows.Formularios
             }
         }
 
-        private void txtPaginas_TextChanged(object sender, EventArgs e)
+        private void btnPrimero_Click(object sender, EventArgs e)
         {
-
+            currentPage = 1;
+            LoadData(filter);
+        }
+        private void btnAnterior_Click(object sender, EventArgs e)
+        {
+            if (currentPage > 1)
+            {
+                currentPage--;
+                LoadData(filter);
+            }
+        }
+        private void btnSiguiente_Click(object sender, EventArgs e)
+        {
+            if (currentPage < totalPages)
+            {
+                currentPage++;
+                LoadData(filter);
+            }
+        }
+        private void btnUltimo_Click(object sender, EventArgs e)
+        {
+            currentPage = totalPages;
+            LoadData(filter);
+        }
+        private void CboPaginas_SelectedIndexChanged(object? sender, EventArgs e)
+        {
+            currentPage = int.Parse(cboPaginas.Text);
+            LoadData(filter);
         }
     }
 }

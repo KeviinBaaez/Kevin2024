@@ -20,6 +20,7 @@ namespace Kevin2024.Windows.Formularios
 
         //Filtro
         private Func<EmpleadosListDto, bool>? filter = null;
+        private TiposDeDatos? generoFiltro = null;
 
         //Orden 
         Orden orden = Orden.Ninguno;
@@ -40,7 +41,7 @@ namespace Kevin2024.Windows.Formularios
         {
             try
             {
-                totalRecords = _servicios!.GetCantidad(filter);
+                totalRecords = _servicios!.GetCantidad(filter, generoFiltro);
                 totalPages = (int)Math.Ceiling((decimal)totalRecords / pageSize);
                 LoadData(filter);
             }
@@ -54,7 +55,7 @@ namespace Kevin2024.Windows.Formularios
         {
             try
             {
-                lista = _servicios!.GetLista(currentPage, pageSize, orden, filter);
+                lista = _servicios!.GetLista(currentPage, pageSize, orden, filter, generoFiltro);
                 if (lista!.Count > 0)
                 {
                     GridHelper.MostrarDatosEnGrilla<EmpleadosListDto>(lista, dgvDatos);
@@ -99,7 +100,7 @@ namespace Kevin2024.Windows.Formularios
                 if (!_servicios!.Existe(empleado))
                 {
                     _servicios.Guardar(empleado);
-                    totalRecords = _servicios!.GetCantidad(filter);
+                    totalRecords = _servicios!.GetCantidad(filter, generoFiltro);
                     totalPages = (int)Math.Ceiling((decimal)totalRecords / pageSize);
                     currentPage = _servicios.GetPaginaPorRegistro(empleado.Nombre, pageSize);
                     LoadData(filter);
@@ -176,7 +177,6 @@ namespace Kevin2024.Windows.Formularios
             var r = dgvDatos.SelectedRows[0];
             if (r.Tag == null) return;
             EmpleadosListDto empleadoDto = (EmpleadosListDto)r.Tag;
-            //ACOMOAR EL MESSAGE BOX!!!!
             DialogResult dr = MessageBox.Show($"¿Deseas dar de baja el siguiente Empleado?\n Nombre y Apellido: {empleadoDto.Nombre}\n Dni: {empleadoDto.Dni}",
                 "Confirmar",
                 MessageBoxButtons.YesNo,
@@ -188,7 +188,7 @@ namespace Kevin2024.Windows.Formularios
             }
 
             _servicios!.Borrar(empleadoDto.EmpleadoId);
-            totalRecords = _servicios!.GetCantidad(filter);
+            totalRecords = _servicios!.GetCantidad(filter, generoFiltro);
             totalPages = (int)Math.Ceiling((decimal)totalRecords / pageSize);
             if (currentPage > totalPages)
             {
@@ -200,11 +200,99 @@ namespace Kevin2024.Windows.Formularios
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
 
+        }        
+
+        private void tsbActualizar_Click(object sender, EventArgs e)
+        {
+            filter = null;
+            generoFiltro = null;
+            orden = Orden.Ninguno;
+            currentPage = 1;
+            tsbFiltrar.Enabled = true;
+            RecargarGrilla();
         }
         private void tsbSalir_Click(object sender, EventArgs e)
         {
             Close();
         }
+        private void busquedaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmFiltro frm = new frmFiltro(Tipos.Ninguno) { Text = "Escriba para buscar" };
+            DialogResult dr = frm.ShowDialog(this);
+            try
+            {
+                var textoFiltro = frm.GetTexto();
+                if (string.IsNullOrEmpty(textoFiltro)) return;
+                filter = e => (e.Nombre!.ToUpper().Contains(textoFiltro.ToUpper()))
+                || (e.Apellido!.ToUpper().Contains(textoFiltro.ToUpper()))
+                || (e.Dni!.ToString().Contains(textoFiltro.ToString()));
+                totalRecords = _servicios!.GetCantidad(filter, generoFiltro);
+                currentPage = 1;
+                if (totalRecords > 0)
+                {
+                    totalPages = (int)Math.Ceiling((decimal)totalRecords / pageSize);
+                    tsbFiltrar.Enabled = false;
+                    LoadData(filter);
+                }
+                else
+                {
+                    MessageBox.Show("No se encontraron registros..",
+                        "Mensaje",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+                    filter = null;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
+        private void génerosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmComboGeneros frm = new frmComboGeneros(_serviceProvider) { Text = "Seleccione para buscar" };
+            DialogResult dr = frm.ShowDialog(this);
+            if (dr == DialogResult.Cancel) return;
+            try
+            {
+                generoFiltro = frm.GetGenero();
+                if (generoFiltro is null) return;
+                totalRecords = _servicios!.GetCantidad(filter, generoFiltro);
+                currentPage = 1;
+                if (totalRecords > 0)
+                {
+                    totalPages = (int)Math.Ceiling((decimal)totalRecords / pageSize);
+                    tsbFiltrar.Enabled = false;
+                    LoadData(filter);
+                }
+                else
+                {
+                    MessageBox.Show("No se encontraron registros..",
+                        "Mensaje",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+                    filter = null;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        private void ordenAZToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            orden = Orden.OrdenAZ;
+            LoadData(filter);
+        }
+        private void ordenZAToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            orden = Orden.OrdenZA;
+            LoadData(filter);
+        }
+
         private void btnPrimero_Click(object sender, EventArgs e)
         {
             currentPage = 1;
@@ -235,63 +323,6 @@ namespace Kevin2024.Windows.Formularios
         {
             currentPage = int.Parse(cboPaginas.Text);
             LoadData(filter);
-        }
-
-        private void ordenAZToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            orden = Orden.OrdenAZ;
-            LoadData(filter);
-        }
-
-        private void ordenZAToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            orden = Orden.OrdenZA;
-            LoadData(filter);
-        }
-
-        private void tsbActualizar_Click(object sender, EventArgs e)
-        {
-            filter = null;
-            orden = Orden.Ninguno;
-            currentPage = 1;
-            tsbFiltrar.Enabled = true;
-            RecargarGrilla();
-        }
-
-        private void busquedaToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            frmFiltro frm = new frmFiltro(Tipos.Ninguno) { Text = "Escriba para buscar" };
-            DialogResult dr = frm.ShowDialog(this);
-            try
-            {
-                var textoFiltro = frm.GetTexto();
-                if (string.IsNullOrEmpty(textoFiltro)) return;
-                filter = e => (e.Nombre!.ToUpper().Contains(textoFiltro.ToUpper()))
-                || (e.Apellido!.ToUpper().Contains(textoFiltro.ToUpper()))
-                || (e.Dni!.ToString().Contains(textoFiltro.ToString()));
-                totalRecords = _servicios!.GetCantidad(filter);
-                currentPage = 1;
-                if (totalRecords > 0)
-                {
-                    totalPages = (int)Math.Ceiling((decimal)totalRecords / pageSize);
-                    tsbFiltrar.Enabled = false;
-                    LoadData(filter);
-                }
-                else
-                {
-                    MessageBox.Show("No se encontraron registros..",
-                        "Mensaje",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Warning);
-                    filter = null;
-                }
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-
         }
     }
 }

@@ -44,12 +44,16 @@
             errorProvider1 = new ErrorProvider(components);
             PanelBusqueda = new Panel();
             txtBusqueda = new TextBox();
+            panelGeneros = new Panel();
+            txtGenero = new TextBox();
+            label1 = new Label();
             panelCategorias.SuspendLayout();
             panelMarcas.SuspendLayout();
             panelTamanios.SuspendLayout();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)errorProvider1).BeginInit();
             PanelBusqueda.SuspendLayout();
+            panelGeneros.SuspendLayout();
             SuspendLayout();
             // 
             // panelCategorias
@@ -156,7 +160,7 @@
             panel1.Dock = DockStyle.Bottom;
             panel1.Location = new Point(0, 76);
             panel1.Name = "panel1";
-            panel1.Size = new Size(354, 55);
+            panel1.Size = new Size(361, 55);
             panel1.TabIndex = 2;
             // 
             // btnCancelar
@@ -200,7 +204,7 @@
             PanelBusqueda.BackColor = Color.FromArgb(0, 59, 103);
             PanelBusqueda.Controls.Add(txtBusqueda);
             PanelBusqueda.Font = new Font("Constantia", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            PanelBusqueda.Location = new Point(1, 3);
+            PanelBusqueda.Location = new Point(1, 0);
             PanelBusqueda.Name = "PanelBusqueda";
             PanelBusqueda.Size = new Size(358, 73);
             PanelBusqueda.TabIndex = 1;
@@ -216,13 +220,46 @@
             txtBusqueda.Size = new Size(281, 27);
             txtBusqueda.TabIndex = 1;
             // 
+            // panelGeneros
+            // 
+            panelGeneros.BackColor = Color.FromArgb(0, 59, 103);
+            panelGeneros.Controls.Add(txtGenero);
+            panelGeneros.Controls.Add(label1);
+            panelGeneros.Font = new Font("Constantia", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            panelGeneros.Location = new Point(1, 0);
+            panelGeneros.Name = "panelGeneros";
+            panelGeneros.Size = new Size(358, 76);
+            panelGeneros.TabIndex = 1;
+            // 
+            // txtGenero
+            // 
+            txtGenero.BackColor = Color.Black;
+            txtGenero.BorderStyle = BorderStyle.FixedSingle;
+            txtGenero.ForeColor = Color.White;
+            txtGenero.Location = new Point(118, 28);
+            txtGenero.Name = "txtGenero";
+            txtGenero.PlaceholderText = "Escriba para buscar...";
+            txtGenero.Size = new Size(217, 27);
+            txtGenero.TabIndex = 1;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.ForeColor = Color.White;
+            label1.Location = new Point(12, 30);
+            label1.Name = "label1";
+            label1.Size = new Size(78, 19);
+            label1.TabIndex = 1;
+            label1.Text = "Géneros:";
+            // 
             // frmFiltro
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(354, 131);
+            ClientSize = new Size(361, 131);
             Controls.Add(panel1);
             Controls.Add(PanelBusqueda);
+            Controls.Add(panelGeneros);
             Controls.Add(panelCategorias);
             Controls.Add(panelMarcas);
             Controls.Add(panelTamanios);
@@ -240,6 +277,8 @@
             ((System.ComponentModel.ISupportInitialize)errorProvider1).EndInit();
             PanelBusqueda.ResumeLayout(false);
             PanelBusqueda.PerformLayout();
+            panelGeneros.ResumeLayout(false);
+            panelGeneros.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -259,5 +298,9 @@
         private ErrorProvider errorProvider1;
         private Panel PanelBusqueda;
         private TextBox txtBusqueda;
+        private Panel panelGeneros;
+        private TextBox textBox1;
+        private Label label1;
+        private TextBox txtGenero;
     }
 }

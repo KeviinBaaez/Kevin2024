@@ -1,5 +1,4 @@
 ﻿using Kevin2024.Entidades;
-using Kevin2024.Entidades.Entidades;
 using Kevin2024.Windows.Helpers;
 
 namespace Kevin2024.Windows.Formularios
@@ -8,6 +7,11 @@ namespace Kevin2024.Windows.Formularios
     {
         private readonly IServiceProvider? _serviceProvider;
         private Productos? producto;
+
+        private string imagenNoDisponible = Environment.CurrentDirectory + @"\Imágenes\SinImagenDisponible.jpg";
+        private string archivoNoEncontrado = Environment.CurrentDirectory + @"\Imágenes\ArchivoNoEncontrado.jpg";
+        private string? archivoImagen = string.Empty;
+        private string carpetaImagen = Environment.CurrentDirectory + @"\Imágenes\";
         public frmProductosAE(IServiceProvider? serviceProvider)
         {
             InitializeComponent();
@@ -32,7 +36,7 @@ namespace Kevin2024.Windows.Formularios
                 producto.Nombre = txtNombre.Text;
                 producto.Descripcion = txtDescripcion.Text;
                 producto.MarcaId = (int)cboMarca.SelectedValue!;
-                if(producto.MarcaId == 0)
+                if (producto.MarcaId == 0)
                 {
                     producto.MarcaId = null;
                 }
@@ -44,8 +48,25 @@ namespace Kevin2024.Windows.Formularios
                 producto.PrecioVenta = nupPrecioVenta.Value;
                 producto.Stock = (int)nupStock.Value;
                 producto.NivelDeReposicion = (int)nupNivelReposicion.Value;
-                //Falta img
                 producto.Suspendido = checkBox1.Checked;
+
+                producto.Imagen = archivoImagen;
+
+                if (!string.IsNullOrWhiteSpace(producto.Imagen))
+                {
+                    if (!File.Exists($"{carpetaImagen}{producto.Imagen}"))
+                    {
+                        picImagen.Image = Image.FromFile(archivoNoEncontrado);
+                    }
+                    else
+                    {
+                        picImagen.Image = Image.FromFile($"{carpetaImagen}{producto.Imagen}");
+                    }
+                }
+                else
+                {
+                    picImagen.Image = Image.FromFile(imagenNoDisponible);
+                }
                 DialogResult = DialogResult.OK;
             }
         }
@@ -66,12 +87,12 @@ namespace Kevin2024.Windows.Formularios
                 valido = false;
                 errorProvider1.SetError(txtCodigoBarras, "Ingrese un codigo valido");
             }
-            if(cboTamanio.SelectedIndex == 0)
+            if (cboTamanio.SelectedIndex == 0)
             {
                 valido = false;
                 errorProvider1.SetError(cboTamanio, "Ingrese el tamaño del producto");
             }
-            if(cboCategorias.SelectedIndex == 0)
+            if (cboCategorias.SelectedIndex == 0)
             {
                 valido = false;
                 errorProvider1.SetError(cboCategorias, "Ingrese la categoria del producto");
@@ -85,7 +106,7 @@ namespace Kevin2024.Windows.Formularios
             {
                 DialogResult dr = MessageBox.Show("El precio costo es Cero, ¿Deseas dejarlo así?",
                     "Advertencia", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
-                if(dr == DialogResult.No)
+                if (dr == DialogResult.No)
                 {
                     valido = false;
                 }
@@ -105,16 +126,33 @@ namespace Kevin2024.Windows.Formularios
             {
                 txtNombre.Text = producto.Nombre;
                 txtDescripcion.Text = producto.Descripcion;
-                cboMarca.SelectedIndex = (int)producto.MarcaId!;
+                cboMarca.SelectedValue = (int)producto.MarcaId!;
                 txtSabor.Text = producto.Sabor;
                 txtCodigoBarras.Text = producto.CodBarras.ToString();
-                cboTamanio.SelectedIndex = (int)producto.TamanioId!;
-                cboCategorias.SelectedIndex = (int)producto.CategoriaId!;
+                cboTamanio.SelectedValue = (int)producto.TamanioId!;
+                cboCategorias.SelectedValue = (int)producto.CategoriaId!;
                 nupPrecioCosto.Value = producto.PrecioCosto;
                 nupPrecioVenta.Value = producto.PrecioVenta;
                 nupStock.Value = producto.Stock;
                 nupNivelReposicion.Value = producto.NivelDeReposicion;
                 checkBox1.Checked = producto.Suspendido;
+
+                if (producto.Imagen != string.Empty)
+                {
+                    if (!File.Exists($"{carpetaImagen}{producto.Imagen}"))
+                    {
+                        picImagen.Image = Image.FromFile(archivoNoEncontrado);
+                    }
+                    else
+                    {
+                        picImagen.Image = Image.FromFile($"{carpetaImagen}{producto.Imagen}");
+                        archivoImagen = producto.Imagen;
+                    }
+                }
+                else
+                {
+                    picImagen.Image = Image.FromFile(imagenNoDisponible);
+                }
             }
         }
 
@@ -130,5 +168,23 @@ namespace Kevin2024.Windows.Formularios
             this.producto = producto;
         }
 
+        private void btnBuscar_Click(object sender, EventArgs e)
+        {
+            openFileDialog1.Multiselect = false;
+            openFileDialog1.InitialDirectory = Environment.CurrentDirectory + @"Todos los archivos (.)|.|Archivos PNG (.png)|.png|Archivos JFIF (.jfif)|.jfif|Archivos JPG (.jpg)|.jpg";
+            openFileDialog1.FilterIndex = 1;
+            openFileDialog1.RestoreDirectory = true;
+            DialogResult dr = openFileDialog1.ShowDialog(this);
+
+            if (dr == DialogResult.OK)
+            {
+                if (openFileDialog1.FileName == null)
+                {
+                    return;
+                }
+                picImagen.Image = Image.FromFile(openFileDialog1.FileName);
+                archivoImagen = openFileDialog1.SafeFileName;
+            }
+        }
     }
 }

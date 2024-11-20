@@ -3,37 +3,39 @@ using Kevin2024.Entidades.Enumeraciones;
 using Kevin2024.Servicios.Interfaces;
 using Kevin2024.Windows.Helpers;
 using Microsoft.Extensions.DependencyInjection;
+using System.Windows.Forms;
 
 namespace Kevin2024.Windows.Formularios
 {
-    public partial class frmTamanios : Form
+    public partial class frmGeneros : Form
     {
         private readonly IServiceProvider? _serviceProvider;
         private readonly IServiciosTipos? _servicios;
         private List<TiposDeDatos>? lista;
+
         //Paginación
         private int currentPage = 1;
-        private int totalPages = 0;
         private int pageSize = 10;
+        private int totalPages = 0;
         private int totalRecords = 0;
+
+        //Tipo
+        private Tipos tipo = Tipos.Genero;
 
         //Filtro
         private Func<TiposDeDatos, bool>? filter = null;
 
-        //Orden 
+        //Órden
         private Orden orden = Orden.Ninguno;
 
-        //Tipo para busqueda
-        Tipos tipo = Tipos.Tamanio;
-        public frmTamanios(IServiceProvider? serviceProvider)
+        public frmGeneros(IServiceProvider? serviceProvider)
         {
             InitializeComponent();
             _serviceProvider = serviceProvider;
-            _servicios = _serviceProvider?.GetService<IServiciosTipos>() ??
-                throw new ApplicationException("Dependencias no cargadas!!");
+            _servicios = _serviceProvider?.GetService<IServiciosTipos>() ?? throw new ArgumentException("Dependencias No Cargadas!!!");
         }
 
-        private void frmTamanios_Load(object sender, EventArgs e)
+        private void frmGeneros_Load(object sender, EventArgs e)
         {
             RecargarGrilla();
         }
@@ -44,6 +46,7 @@ namespace Kevin2024.Windows.Formularios
             {
                 totalRecords = _servicios!.GetCantidad(tipo, filter);
                 totalPages = (int)Math.Ceiling((decimal)totalRecords / pageSize);
+                currentPage = totalPages;
                 LoadData(filter);
             }
             catch (Exception)
@@ -53,7 +56,7 @@ namespace Kevin2024.Windows.Formularios
             }
         }
 
-        private void LoadData(Func<TiposDeDatos, bool>? filter)
+        private void LoadData(Func<TiposDeDatos, bool>? filter = null)
         {
             try
             {
@@ -66,16 +69,16 @@ namespace Kevin2024.Windows.Formularios
                         CombosHelper.CargarComboPaginas(ref cboPaginas, totalPages);
                     }
                     txtPaginas.Text = totalPages.ToString();
-                    cboPaginas.SelectedIndexChanged -= CboPaginas_SelectedIndexChanged!;
+                    cboPaginas.SelectedIndexChanged -= cboPaginas_SelectedIndexChanged!;
                     cboPaginas.SelectedIndex = currentPage == 1 ? 0 : currentPage - 1;
-                    cboPaginas.SelectedIndexChanged += CboPaginas_SelectedIndexChanged!;
+                    cboPaginas.SelectedIndexChanged += cboPaginas_SelectedIndexChanged!;
                 }
                 else
                 {
                     MessageBox.Show("No se encontraron registros..",
-                        "Mensaje",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Warning);
+                         "Mensaje",
+                         MessageBoxButtons.OK,
+                         MessageBoxIcon.Warning);
                     currentPage = 1;
                     filter = null;
                     tsbFiltrar.Enabled = true;
@@ -87,23 +90,24 @@ namespace Kevin2024.Windows.Formularios
                 throw;
             }
         }
+
+
         private void tsbNuevo_Click(object sender, EventArgs e)
         {
-            frmNuevoTipoAE frm = new frmNuevoTipoAE(_serviceProvider, tipo) { Text = "Nuevo Tamaño" };
+            frmNuevoTipoAE frm = new frmNuevoTipoAE(_serviceProvider, tipo) { Text = "Nuevo Género" };
             DialogResult dr = frm.ShowDialog(this);
             if (dr == DialogResult.Cancel) return;
             try
             {
-                TiposDeDatos? tamanio = frm.GetTipoDeDato();
-                if (tamanio is null) return;
-                if (!_servicios!.Existe(tipo, tamanio))
+                TiposDeDatos? tiposDeDatos = frm.GetTipoDeDato();
+                if (tiposDeDatos is null) return;
+                if (!_servicios!.Existe(tipo, tiposDeDatos))
                 {
-                    _servicios.Guardar(tipo, tamanio);
+                    _servicios.Guardar(tipo, tiposDeDatos);
                     totalRecords = _servicios!.GetCantidad(tipo, filter);
                     totalPages = (int)Math.Ceiling((decimal)totalRecords / pageSize);
-                    currentPage = _servicios.GetPaginaPorRegistro(tipo, tamanio.Descripcion, pageSize);
+                    currentPage = _servicios.GetPaginaPorRegistro(tipo, tiposDeDatos.Descripcion, pageSize);
                     LoadData(filter);
-
                     MessageBox.Show("Registro agregado",
                         "Mensaje",
                         MessageBoxButtons.OK,
@@ -129,19 +133,18 @@ namespace Kevin2024.Windows.Formularios
             if (dgvDatos.SelectedRows.Count == 0) return;
             var r = dgvDatos.SelectedRows[0];
             if (r.Tag is null) return;
-            TiposDeDatos? tamanio = (TiposDeDatos)r.Tag;
-            frmNuevoTipoAE frm = new frmNuevoTipoAE(_serviceProvider, tipo) { Text = "Editar Tamanio" };
-            frm.SetTipoDeDato(tamanio);
-            DialogResult dr = frm.ShowDialog(this);
+            TiposDeDatos tiposDeDato = (TiposDeDatos)r.Tag;
+            frmNuevoTipoAE frm = new frmNuevoTipoAE(_serviceProvider, tipo) { Text = "Editar Genero" };
+            frm.SetTipoDeDato(tiposDeDato);
+            DialogResult dr = frm.ShowDialog();
             if (dr == DialogResult.Cancel) return;
-            tamanio = frm.GetTipoDeDato();
+            tiposDeDato = frm.GetTipoDeDato();
             try
             {
-                if (tamanio is null) return;
-                if (!_servicios!.Existe(tipo, tamanio))
+                if (!_servicios!.Existe(tipo, tiposDeDato))
                 {
-                    _servicios.Guardar(tipo, tamanio);
-                    GridHelper.SetearFila(r, tamanio);
+                    _servicios!.Guardar(tipo, tiposDeDato);
+                    GridHelper.SetearFila(r, tiposDeDato);
                     MessageBox.Show("Registro modificado satisfactoriamente",
                         "Mensaje",
                         MessageBoxButtons.OK,
@@ -149,47 +152,37 @@ namespace Kevin2024.Windows.Formularios
                 }
                 else
                 {
-                    MessageBox.Show("¡Registro Existente!\nEdicion denegada",
-                        "Error",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
+                    MessageBox.Show("¡Registro Existente!\n Alta denegada",
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)
             {
-
                 MessageBox.Show(ex.Message,
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
                 throw;
             }
         }
         private void tsbBorrar_Click(object sender, EventArgs e)
         {
-            if (dgvDatos.SelectedRows.Count == 0)
-            {
-                return;
-            }
+            if (dgvDatos.SelectedRows.Count == 0) return;
             var r = dgvDatos.SelectedRows[0];
-            if (r.Tag is null)
-            {
-                return;
-            }
-            TiposDeDatos tamanio = (TiposDeDatos)r.Tag;
-            DialogResult dr = MessageBox.Show($"¿Deseas dar de baja el tamaño: {tamanio.Descripcion}?",
+            if (r.Tag is null) return;
+            TiposDeDatos tiposDeDato = (TiposDeDatos)r.Tag;
+            DialogResult dr = MessageBox.Show($"¿Deseas dar de baja el genero: {tiposDeDato.Descripcion}?",
                 "Confirmar",
                 MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question,
-                MessageBoxDefaultButton.Button2);
-            if (dr == DialogResult.No)
-            {
-                return;
-            }
+                MessageBoxIcon.Question);
+            if (dr == DialogResult.Cancel) return;
             try
             {
-                if (!_servicios!.EstaRelacionado(tipo, tamanio.TipoId))
+                if (!_servicios!.EstaRelacionado(tipo, tiposDeDato.TipoId))
                 {
-                    _servicios!.Borrar(tipo, tamanio.TipoId);
+                    _servicios.Borrar(tipo, tiposDeDato.TipoId);
                     totalRecords = _servicios!.GetCantidad(tipo, filter);
                     totalPages = (int)Math.Ceiling((decimal)totalRecords / pageSize);
                     if (currentPage > totalPages)
@@ -197,25 +190,28 @@ namespace Kevin2024.Windows.Formularios
                         currentPage = totalPages;
                     }
                     LoadData(filter);
-                    MessageBox.Show("Registro eliminado satisfactoriamente",
+                    MessageBox.Show("¡Registro eliminado satisfactoriamente!",
                         "Mensaje",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Information);
                 }
                 else
                 {
-                    MessageBox.Show("¡Registro relacionado!",
-                        "Error",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
+                    MessageBox.Show("¡Registro relacionado!\n Alta denegada!",
+                                    "Error",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message,
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    "Error",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Error);
                 throw;
             }
+
         }
 
         private void tsbActualizar_Click(object sender, EventArgs e)
@@ -231,7 +227,9 @@ namespace Kevin2024.Windows.Formularios
         {
             Close();
         }
-        private void busquedaToolStripMenuItem_Click(object sender, EventArgs e)
+
+
+        private void tsbFiltrar_Click(object sender, EventArgs e)
         {
             frmFiltro frm = new frmFiltro(tipo) { Text = "Ingresar texto para buscar..." };
             DialogResult dr = frm.ShowDialog(this);
@@ -239,7 +237,7 @@ namespace Kevin2024.Windows.Formularios
             {
                 var textoFiltro = frm.GetTexto();
                 if (textoFiltro is null || textoFiltro == string.Empty) return;
-                filter = t => t.Descripcion.ToUpper().Contains(textoFiltro.ToUpper());
+                filter = b => b.Descripcion!.ToUpper().Contains(textoFiltro.ToUpper());
                 totalRecords = _servicios!.GetCantidad(tipo, filter);
                 currentPage = 1;
                 if (totalRecords > 0)
@@ -263,15 +261,16 @@ namespace Kevin2024.Windows.Formularios
                 throw;
             }
         }
+
         private void ordenAZToolStripMenuItem_Click(object sender, EventArgs e)
         {
             orden = Orden.OrdenAZ;
-            LoadData(filter);
+            LoadData();
         }
         private void ordenZAToolStripMenuItem_Click(object sender, EventArgs e)
         {
             orden = Orden.OrdenZA;
-            LoadData(filter);
+            LoadData();
         }
 
         private void btnPrimero_Click(object sender, EventArgs e)
@@ -300,10 +299,13 @@ namespace Kevin2024.Windows.Formularios
             currentPage = totalPages;
             LoadData(filter);
         }
-        private void CboPaginas_SelectedIndexChanged(object? sender, EventArgs e)
+        private void cboPaginas_SelectedIndexChanged(object sender, EventArgs e)
         {
-            currentPage = int.Parse(cboPaginas.Text);
-            LoadData(filter);
+            if (cboPaginas.SelectedIndex >= 0)
+            {
+                currentPage = int.Parse(cboPaginas.Text);
+                LoadData();
+            }
         }
     }
 }

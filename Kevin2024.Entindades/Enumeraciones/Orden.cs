@@ -10,6 +10,8 @@ namespace Kevin2024.Entidades.Enumeraciones
     {
         Ninguno = 0,
         OrdenAZ,
-        OrdenZA
+        OrdenZA,
+        OrdenM,
+        OrdenF
     }
 }

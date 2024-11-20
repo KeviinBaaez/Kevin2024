@@ -19,9 +19,7 @@ namespace Kevin2024.Entidades
         public string? Imagen {  get; set; }
         public bool Suspendido { get; set; }
         public int EnPedido { get; set; }
-        public Marcas? Marca { get; set; }
-        public Tamanio? Tamanio { get; set; }
-        public Categorias? Categoria { get; set; }
+        public TiposDeDatos? TiposDeDatos { get; set; }
 
 
     }

@@ -9,8 +9,8 @@ namespace Kevin2024.Windows.Formularios
     public partial class frmMarcas : Form
     {
         private readonly IServiceProvider? _serviceProvider;
-        private readonly IServiciosMarcas? _servicios;
-        private List<Marcas>? lista;
+        private readonly IServiciosTipos? _servicios;
+        private List<TiposDeDatos>? lista;
 
         //Paginación
         private int currentPage = 1;
@@ -19,7 +19,7 @@ namespace Kevin2024.Windows.Formularios
         private int totalRecords = 0;
 
         //Filtro
-        private Func<Marcas, bool>? filter = null;
+        private Func<TiposDeDatos, bool>? filter = null;
 
         //Orden
         private Orden orden = Orden.Ninguno;
@@ -31,7 +31,7 @@ namespace Kevin2024.Windows.Formularios
         {
             InitializeComponent();
             _serviceProvider = serviceProvider;
-            _servicios = _serviceProvider?.GetService<IServiciosMarcas>() ??
+            _servicios = _serviceProvider?.GetService<IServiciosTipos>() ??
                 throw new ApplicationException("Dependencias no cargadas!!");
         }
 
@@ -43,7 +43,7 @@ namespace Kevin2024.Windows.Formularios
         {
             try
             {
-                totalRecords = _servicios!.GetCantidad(filter);
+                totalRecords = _servicios!.GetCantidad(tipo, filter);
                 totalPages = (int)Math.Ceiling((decimal)totalRecords / pageSize);
                 currentPage = totalPages;
                 LoadData(filter);
@@ -54,14 +54,14 @@ namespace Kevin2024.Windows.Formularios
                 throw;
             }
         }
-        private void LoadData(Func<Marcas, bool>? filter = null)
+        private void LoadData(Func<TiposDeDatos, bool>? filter = null)
         {
             try
             {
-                lista = _servicios!.GetLista(currentPage, pageSize, orden, filter);
+                lista = _servicios!.GetLista(tipo, currentPage, pageSize, orden, filter);
                 if (lista!.Count > 0)
                 {
-                    GridHelper.MostrarDatosEnGrilla<Marcas>(lista, dgvDatos);
+                    GridHelper.MostrarDatosEnGrilla<TiposDeDatos>(lista, dgvDatos);
                     if (cboPaginas.Items.Count != totalPages)
                     {
                         CombosHelper.CargarComboPaginas(ref cboPaginas, totalPages);
@@ -80,8 +80,6 @@ namespace Kevin2024.Windows.Formularios
                     currentPage = 1;
                     filter = null;
                     tsbFiltrar.Enabled = true;
-                    tsbFiltrar.BackColor = SystemColors.Control;
-                    RecargarGrilla();
                 }
             }
             catch (Exception)
@@ -98,14 +96,14 @@ namespace Kevin2024.Windows.Formularios
             if (dr == DialogResult.Cancel) return;
             try
             {
-                Marcas? marca = frm.GetMarca();
+                TiposDeDatos? marca = frm.GetTipoDeDato();
                 if (marca is null) return;
-                if (!_servicios!.Existe(marca))
+                if (!_servicios!.Existe(tipo, marca))
                 {
-                    _servicios.Guardar(marca);
-                    totalRecords = _servicios!.GetCantidad(filter);
+                    _servicios.Guardar(tipo, marca);
+                    totalRecords = _servicios!.GetCantidad(tipo, filter);
                     totalPages = (int)Math.Ceiling((decimal)totalRecords / pageSize);
-                    currentPage = _servicios.GetPaginaPorRegistro(marca.Nombre, pageSize);
+                    currentPage = _servicios.GetPaginaPorRegistro(tipo, marca.Descripcion, pageSize);
                     LoadData(filter);
 
                     MessageBox.Show("Registro agregado",
@@ -128,7 +126,45 @@ namespace Kevin2024.Windows.Formularios
                 throw;
             }
         }
+        private void tsbEditar_Click(object sender, EventArgs e)
+        {
+            if (dgvDatos.SelectedRows.Count == 0) return;
+            var r = dgvDatos.SelectedRows[0];
+            if (r.Tag is null) return;
+            TiposDeDatos? marca = (TiposDeDatos)r.Tag;
+            frmNuevoTipoAE frm = new frmNuevoTipoAE(_serviceProvider, tipo) { Text = "Editar Marca" };
+            frm.SetTipoDeDato(marca);
+            DialogResult dr = frm.ShowDialog(this);
+            if (dr == DialogResult.Cancel) return;
+            marca = frm.GetTipoDeDato();
+            try
+            {
+                if (!_servicios!.Existe(tipo, marca))
+                {
+                    _servicios.Guardar(tipo, marca);
+                    GridHelper.SetearFila(r, marca);
+                    MessageBox.Show("Registro modificado satisfactoriamente",
+                        "Mensaje",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("¡Registro Existente!\nEdicion denegada",
+                        "Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
 
+                MessageBox.Show(ex.Message,
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                throw;
+            }
+        }
         private void tsbBorrar_Click(object sender, EventArgs e)
         {
             if (dgvDatos.SelectedRows.Count == 0)
@@ -140,8 +176,8 @@ namespace Kevin2024.Windows.Formularios
             {
                 return;
             }
-            Marcas marca = (Marcas)r.Tag;
-            DialogResult dr = MessageBox.Show($"¿Deseas dar de baja la marca: {marca.Nombre}?",
+            TiposDeDatos marca = (TiposDeDatos)r.Tag;
+            DialogResult dr = MessageBox.Show($"¿Deseas dar de baja la marca: {marca.Descripcion}?",
                 "Confirmar",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question,
@@ -152,10 +188,10 @@ namespace Kevin2024.Windows.Formularios
             }
             try
             {
-                if (!_servicios!.EstaRelacionado(marca.MarcaId))
+                if (!_servicios!.EstaRelacionado(tipo, marca.TipoId))
                 {
-                    _servicios!.Borrar(marca.MarcaId);
-                    totalRecords = _servicios!.GetCantidad(filter);
+                    _servicios!.Borrar(tipo, marca.TipoId);
+                    totalRecords = _servicios!.GetCantidad(tipo, filter);
                     totalPages = (int)Math.Ceiling((decimal)totalRecords / pageSize);
                     if (currentPage > totalPages)
                     {
@@ -183,44 +219,13 @@ namespace Kevin2024.Windows.Formularios
             }
         }
 
-        private void tsbEditar_Click(object sender, EventArgs e)
+        private void tsbActualizar_Click(object sender, EventArgs e)
         {
-            if (dgvDatos.SelectedRows.Count == 0) return;
-            var r = dgvDatos.SelectedRows[0];
-            if (r.Tag is null) return;
-            Marcas? marca = (Marcas)r.Tag;
-            frmNuevoTipoAE frm = new frmNuevoTipoAE(_serviceProvider, tipo) { Text = "Editar Marca" };
-            frm.SetMarca(marca);
-            DialogResult dr = frm.ShowDialog(this);
-            if (dr == DialogResult.Cancel) return;
-            marca = frm.GetMarca();
-            try
-            {
-                if (!_servicios!.Existe(marca))
-                {
-                    _servicios.Guardar(marca);
-                    GridHelper.SetearFila(r, marca);
-                    MessageBox.Show("Registro modificado satisfactoriamente",
-                        "Mensaje",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information);
-                }
-                else
-                {
-                    MessageBox.Show("¡Registro Existente!\nEdicion denegada",
-                        "Error",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
-                }
-            }
-            catch (Exception ex)
-            {
-
-                MessageBox.Show(ex.Message,
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                throw;
-            }
+            filter = null;
+            orden = Orden.Ninguno;
+            currentPage = 1;
+            tsbFiltrar.Enabled = true;
+            RecargarGrilla();
         }
 
         private void tsbSalir_Click(object sender, EventArgs e)
@@ -228,7 +233,7 @@ namespace Kevin2024.Windows.Formularios
             Close();
         }
 
-        private void busquedaToolStripMenuItem_Click(object sender, EventArgs e)
+        private void tsbFiltrar_Click(object sender, EventArgs e)
         {
             frmFiltro frm = new frmFiltro(tipo) { Text = "Ingresar texto para buscar..." };
             DialogResult dr = frm.ShowDialog(this);
@@ -236,8 +241,8 @@ namespace Kevin2024.Windows.Formularios
             {
                 var textoFiltro = frm.GetTexto();
                 if (textoFiltro is null || textoFiltro == string.Empty) return;
-                filter = b => b.Nombre.ToUpper().Contains(textoFiltro.ToUpper());
-                totalRecords = _servicios!.GetCantidad(filter);
+                filter = b => b.Descripcion!.ToUpper().Contains(textoFiltro.ToUpper());
+                totalRecords = _servicios!.GetCantidad(tipo, filter);
                 currentPage = 1;
                 if (totalRecords > 0)
                 {
@@ -260,14 +265,15 @@ namespace Kevin2024.Windows.Formularios
                 throw;
             }
         }
-
-        private void tsbActualizar_Click(object sender, EventArgs e)
+        private void ordenAZToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            filter = null;
-            orden = Orden.Ninguno;
-            currentPage = 1;
-            tsbFiltrar.Enabled = true;
-            RecargarGrilla();
+            orden = Orden.OrdenAZ;
+            LoadData();
+        }
+        private void ordenZAToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            orden = Orden.OrdenZA;
+            LoadData();
         }
         private void btnPrimero_Click(object sender, EventArgs e)
         {
@@ -304,16 +310,5 @@ namespace Kevin2024.Windows.Formularios
             }
         }
 
-        private void ordenAZToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            orden = Orden.OrdenAZ;
-            LoadData();
-        }
-
-        private void ordenZAToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            orden = Orden.OrdenZA;
-            LoadData();
-        }
     }
 }

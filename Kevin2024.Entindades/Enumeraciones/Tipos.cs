@@ -5,6 +5,7 @@
         Categoria = 1,
         Marcas = 2,
         Tamanio = 3,
-        Ninguno = 4
+        Genero = 4,
+        Ninguno = 5
     }
 }

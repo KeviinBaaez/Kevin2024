@@ -133,7 +133,8 @@ namespace Kevin2024.Datos.Repositorios
 								c.Descripcion AS Categoria,
                                 PrecioVenta, 
                                 Stock, 
-                                Suspendido
+                                Suspendido, 
+                                Imagen
                            FROM Productos p
 
                                 LEFT JOIN Marcas m on p.MarcaId = m.MarcaId
@@ -164,7 +165,8 @@ namespace Kevin2024.Datos.Repositorios
 								c.Descripcion AS Categoria,
                                 PrecioVenta, 
                                 Stock, 
-                                Suspendido
+                                Suspendido,
+                                Imagen
                            FROM Productos p
 
                                 LEFT JOIN Marcas m on p.MarcaId = m.MarcaId
@@ -213,7 +215,7 @@ namespace Kevin2024.Datos.Repositorios
                                                      CodBarras, TamanioId, CategoriaId, 
                                                  PrecioCosto, PrecioVenta, 
                                                  Stock, NivelDeReposicion, 
-                                                 Suspendido
+                                                 Suspendido, Imagen
                                FROM Productos
                                                  WHERE ProductoId=@ProductoId";
             return conn.QuerySingleOrDefault<Productos>(selectQuery, new { @ProductoId = productoId });

@@ -10,5 +10,10 @@
         public DateTime FechaContrato { get; set; }
         public double Salario { get; set; }
         public bool Suspendido { get; set; }
+        public int GeneroId {  get; set; }
+        public string? Telefono { get; set; }
+        public string? Direccion { get; set; }
+        public string? Imagen {  get; set; }
+
     }
 }

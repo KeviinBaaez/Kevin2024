@@ -11,9 +11,9 @@ namespace Kevin2024.Datos.Interfaces
         void Borrar(SqlConnection conn, int empleadoId, SqlTransaction tran);
         void Editar(SqlConnection conn, Empleados empleado, SqlTransaction tran);
         bool Existe(SqlConnection conn, Empleados empleado);
-        int GetCantidad(SqlConnection conn, Func<EmpleadosListDto, bool>? filter);
+        int GetCantidad(SqlConnection conn, Func<EmpleadosListDto, bool>? filter, TiposDeDatos? generoFiltro = null);
         Empleados? GetEmpleadoPorId(SqlConnection conn, int empleadoId);
-        List<EmpleadosListDto>? GetLista(SqlConnection conn, int currentPage, int pageSize, Orden orden, Func<EmpleadosListDto, bool>? filter);
+        List<EmpleadosListDto>? GetLista(SqlConnection conn, int currentPage, int pageSize, Orden orden, Func<EmpleadosListDto, bool>? filter, TiposDeDatos? generoFitro = null);
         int GetPaginaPorRegistro(SqlConnection conn, string? nombre, int pageSize);
     }
 }

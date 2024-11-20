@@ -8,22 +8,19 @@ namespace Kevin2024.Windows.Formularios
 {
     public partial class frmCategoria : Form
     {
-        public frmCategoria()
-        {
-            InitializeComponent();
-        }
         private readonly IServiceProvider? _serviceProvider;
-        private readonly IServiciosCategorias? _servicios;
-        private List<Categorias>? lista;
+        private readonly IServiciosTipos? _servicios;
+        private List<TiposDeDatos>? lista;
 
         //Paginación
-        private int currentPage = 1;
-        private int totalPages = 0;
-        private int pageSize = 10;
-        private int totalRecords = 0;
+        private int currentPage = 1;//pagina actual
+        private int totalPages = 0;//total de paginas
+        private int pageSize = 10;//registros por página
+        private int totalRecords = 0;//cantidad de registros
+
 
         //Filtro
-        private Func<Categorias, bool>? filter = null;
+        private Func<TiposDeDatos, bool>? filter = null;
 
         //Orden
         private Orden orden = Orden.Ninguno;
@@ -35,7 +32,7 @@ namespace Kevin2024.Windows.Formularios
         {
             InitializeComponent();
             _serviceProvider = serviceProvider;
-            _servicios = _serviceProvider?.GetService<IServiciosCategorias>() ??
+            _servicios = _serviceProvider?.GetService<IServiciosTipos>() ??
                 throw new ApplicationException("Dependencias no cargadas!!");
         }
 
@@ -47,7 +44,7 @@ namespace Kevin2024.Windows.Formularios
         {
             try
             {
-                totalRecords = _servicios!.GetCantidad(filter);
+                totalRecords = _servicios!.GetCantidad(tipo, filter);
                 totalPages = (int)Math.Ceiling((decimal)totalRecords / pageSize);
                 LoadData(filter);
             }
@@ -57,14 +54,14 @@ namespace Kevin2024.Windows.Formularios
                 throw;
             }
         }
-        private void LoadData(Func<Categorias, bool>? filter = null)
+        private void LoadData(Func<TiposDeDatos, bool>? filter = null)
         {
             try
             {
-                lista = _servicios!.GetLista(currentPage, pageSize, orden, filter);
+                lista = _servicios!.GetLista(tipo, currentPage, pageSize, orden, filter);
                 if (lista!.Count > 0)
                 {
-                    GridHelper.MostrarDatosEnGrilla<Categorias>(lista, dgvDatos);
+                    GridHelper.MostrarDatosEnGrilla<TiposDeDatos>(lista, dgvDatos);
                     if (cboPaginas.Items.Count != totalPages)
                     {
                         CombosHelper.CargarComboPaginas(ref cboPaginas, totalPages);
@@ -94,19 +91,19 @@ namespace Kevin2024.Windows.Formularios
 
         private void tsbNuevo_Click(object sender, EventArgs e)
         {
-            frmNuevoTipoAE frm = new frmNuevoTipoAE(_serviceProvider, tipo) { Text = "Nueva Marca" };
+            frmNuevoTipoAE frm = new frmNuevoTipoAE(_serviceProvider, tipo) { Text = "Nueva Categoria" };
             DialogResult dr = frm.ShowDialog(this);
             if (dr == DialogResult.Cancel) return;
             try
             {
-                Categorias? categoria = frm.GetCategoria();
+                TiposDeDatos? categoria = frm.GetTipoDeDato();
                 if (categoria is null) return;
-                if (!_servicios!.Existe(categoria))
+                if (!_servicios!.Existe(tipo, categoria))
                 {
-                    _servicios.Guardar(categoria);
-                    totalRecords = _servicios!.GetCantidad(filter);
+                    _servicios.Guardar(tipo, categoria);
+                    totalRecords = _servicios!.GetCantidad(tipo, filter);
                     totalPages = (int)Math.Ceiling((decimal)totalRecords / pageSize);
-                    currentPage = _servicios.GetPaginaPorRegistro(categoria.Descripcion, pageSize);
+                    currentPage = _servicios.GetPaginaPorRegistro(tipo, categoria.Descripcion, pageSize);
                     LoadData(filter);
 
                     MessageBox.Show("Registro agregado",
@@ -129,12 +126,46 @@ namespace Kevin2024.Windows.Formularios
                 throw;
             }
         }
-
-        private void tsbSalir_Click(object sender, EventArgs e)
+        private void tsbEditar_Click(object sender, EventArgs e)
         {
-            Close();
-        }
+            if (dgvDatos.SelectedRows.Count == 0) return;
+            var r = dgvDatos.SelectedRows[0];
+            if (r.Tag is null) return;
+            TiposDeDatos? categoria = (TiposDeDatos)r.Tag;
+            frmNuevoTipoAE frm = new frmNuevoTipoAE(_serviceProvider, tipo) { Text = "Editar Categoría" };
+            frm.SetTipoDeDato(categoria);
+            DialogResult dr = frm.ShowDialog(this);
+            if (dr == DialogResult.Cancel) return;
+            categoria = frm.GetTipoDeDato();
+            if(categoria is null) return;
+            try
+            {
+                if (!_servicios!.Existe(tipo, categoria))
+                {
+                    _servicios.Guardar(tipo, categoria);
+                    GridHelper.SetearFila(r, categoria);
+                    MessageBox.Show("Registro modificado satisfactoriamente",
+                        "Mensaje",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("¡Registro Existente!\nEdicion denegada",
+                        "Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
 
+                MessageBox.Show(ex.Message,
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                throw;
+            }
+        }
         private void tsbBorrar_Click(object sender, EventArgs e)
         {
             if (dgvDatos.SelectedRows.Count == 0)
@@ -146,7 +177,7 @@ namespace Kevin2024.Windows.Formularios
             {
                 return;
             }
-            Categorias categoria = (Categorias)r.Tag;
+            TiposDeDatos categoria = (TiposDeDatos)r.Tag;
             DialogResult dr = MessageBox.Show($"¿Deseas dar de baja la categoria: {categoria.Descripcion}?",
                 "Confirmar",
                 MessageBoxButtons.YesNo,
@@ -158,10 +189,10 @@ namespace Kevin2024.Windows.Formularios
             }
             try
             {
-                if (!_servicios!.EstaRelacionado(categoria.CategoriaId))
+                if (!_servicios!.EstaRelacionado(tipo, categoria.TipoId))
                 {
-                    _servicios!.Borrar(categoria.CategoriaId);
-                    totalRecords = _servicios!.GetCantidad(filter);
+                    _servicios!.Borrar(tipo, categoria.TipoId);
+                    totalRecords = _servicios!.GetCantidad(tipo, filter);
                     totalPages = (int)Math.Ceiling((decimal)totalRecords / pageSize);
                     if (currentPage > totalPages)
                     {
@@ -188,46 +219,17 @@ namespace Kevin2024.Windows.Formularios
                 throw;
             }
         }
-
-        private void tsbEditar_Click(object sender, EventArgs e)
+        private void tsbActualizar_Click(object sender, EventArgs e)
         {
-            if (dgvDatos.SelectedRows.Count == 0) return;
-            var r = dgvDatos.SelectedRows[0];
-            if (r.Tag is null) return;
-            Categorias? categoria = (Categorias)r.Tag;
-            frmNuevoTipoAE frm = new frmNuevoTipoAE(_serviceProvider, tipo) { Text = "Editar Marca" };
-            frm.SetCategoria(categoria);
-            DialogResult dr = frm.ShowDialog(this);
-            if (dr == DialogResult.Cancel) return;
-            categoria = frm.GetCategoria();
-            if(categoria is null) return;
-            try
-            {
-                if (!_servicios!.Existe(categoria))
-                {
-                    _servicios.Guardar(categoria);
-                    GridHelper.SetearFila(r, categoria);
-                    MessageBox.Show("Registro modificado satisfactoriamente",
-                        "Mensaje",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information);
-                }
-                else
-                {
-                    MessageBox.Show("¡Registro Existente!\nEdicion denegada",
-                        "Error",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
-                }
-            }
-            catch (Exception ex)
-            {
-
-                MessageBox.Show(ex.Message,
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                throw;
-            }
+            filter = null;
+            orden = Orden.Ninguno;
+            currentPage = 1;
+            tsbFiltrar.Enabled = true;
+            RecargarGrilla();
+        }
+        private void tsbSalir_Click(object sender, EventArgs e)
+        {
+            Close();
         }
 
         private void busquedaToolStripMenuItem_Click(object sender, EventArgs e)
@@ -238,8 +240,8 @@ namespace Kevin2024.Windows.Formularios
             {
                 var textoFiltro = frm.GetTexto();
                 if (textoFiltro is null || textoFiltro == string.Empty) return;
-                filter = b => b.Descripcion.ToUpper().Contains(textoFiltro.ToUpper());
-                totalRecords = _servicios!.GetCantidad(filter);
+                filter = b => b.Descripcion!.ToUpper().Contains(textoFiltro.ToUpper());
+                totalRecords = _servicios!.GetCantidad(tipo, filter);
                 currentPage = 1;
                 if (totalRecords > 0)
                 {
@@ -263,14 +265,17 @@ namespace Kevin2024.Windows.Formularios
             }
         }
 
-        private void tsbActualizar_Click(object sender, EventArgs e)
+        private void ordenAZToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            filter = null;
-            orden = Orden.Ninguno;
-            currentPage = 1;
-            tsbFiltrar.Enabled = true;
-            RecargarGrilla();
+            orden = Orden.OrdenAZ;
+            LoadData(filter);
         }
+        private void ordenZAToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            orden = Orden.OrdenZA;
+            LoadData(filter);
+        }
+
         private void btnPrimero_Click(object sender, EventArgs e)
         {
             currentPage = 1;
@@ -304,18 +309,6 @@ namespace Kevin2024.Windows.Formularios
                 currentPage = int.Parse(cboPaginas.Text);
                 LoadData(filter);
             }
-        }
-
-        private void ordenAZToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            orden = Orden.OrdenAZ;
-            LoadData(filter);
-        }
-
-        private void ordenZAToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            orden = Orden.OrdenZA;
-            LoadData(filter);
         }
     }
 }

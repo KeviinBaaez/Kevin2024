@@ -1,24 +1,31 @@
-﻿using Kevin2024.Entidades;
-using Kevin2024.Entidades.Entidades;
+﻿using Kevin2024.Entidades.Entidades;
+using Kevin2024.Entidades.Enumeraciones;
+using Kevin2024.Servicios.Interfaces;
 using Kevin2024.Windows.Helpers;
+using Microsoft.Extensions.DependencyInjection;
+using System.Drawing.Printing;
 using System.Text.RegularExpressions;
-using System.Windows.Forms;
 
 namespace Kevin2024.Windows.Formularios
 {
-    public partial class frmEmpleadosAE : Form
+    public partial class frmEmpleadoAE : Form
     {
         private readonly IServiceProvider? _serviceProvider;
+        private readonly IServiciosEmpleados? _serviciosEmpleados;
         private Empleados? empleado;
+
+        private List<Telefonos>? telefonos;
 
         private string imagenNoDisponible = Environment.CurrentDirectory + @"\Imágenes\SinImagenDisponible.jpg";
         private string archivoNoEncontrado = Environment.CurrentDirectory + @"\Imágenes\ArchivoNoEncontrado.jpg";
         private string? archivoImagen = string.Empty;
         private string carpetaImagen = Environment.CurrentDirectory + @"\Imágenes\";
-        public frmEmpleadosAE(IServiceProvider? serviceProvider)
+        public frmEmpleadoAE(IServiceProvider? serviceProvider, IServiciosEmpleados? serviciosEmpleados)
         {
             InitializeComponent();
             _serviceProvider = serviceProvider;
+            _serviciosEmpleados = serviceProvider?.GetService<IServiciosEmpleados>() ??
+                throw new ApplicationException("Dependencias no cargadas");
         }
 
         public Empleados? GetEmpleado()
@@ -65,8 +72,8 @@ namespace Kevin2024.Windows.Formularios
                 {
                     picImagen.Image = Image.FromFile(imagenNoDisponible);
                 }
-                empleado.Telefono = txtTelefono.Text;
-                empleado.Direccion = txtDireccion.Text;
+
+
 
                 DialogResult = DialogResult.OK;
             }
@@ -78,10 +85,10 @@ namespace Kevin2024.Windows.Formularios
             bool valido = true;
             Regex regex = new Regex(@"^[0-9]{1,2}\.[0-9]{3}\.[0-9]{3}$");
             Regex regex2 = new Regex(@"^[0-9]{8}$");
-            Regex telefono = new Regex(@"^[+ 0-9 -]+$");
-            DateTime fechaActual = DateTime.Now;
-            DateTime fechaNac = dtFechaNac.Value;
-            int años = fechaActual.Year - fechaNac.Year;
+            DateTime fechaActual = DateTime.Today;
+            int años = fechaActual.Year - dtFechaNac.Value.Year;
+            int meses = fechaActual.Month - dtFechaNac.Value.Month;
+            int dias = fechaActual.Day - dtFechaNac.Value.Day;
 
             if (string.IsNullOrEmpty(txtNombre.Text))
             {
@@ -101,16 +108,23 @@ namespace Kevin2024.Windows.Formularios
                     errorProvider1.SetError(txtDni, "Ingrese el número de documento");
                 }
             }
-            if(fechaActual < fechaNac.AddYears(años))
-            {
-                años--;
-            }
-            if(años < 18)
+            if (años < 18)
             {
                 valido = false;
                 errorProvider1.SetError(dtFechaNac, "El empledo es menor de edad");
             }
+            else if (meses < 0)
+            {
 
+                valido = false;
+                errorProvider1.SetError(dtFechaNac, "El empledo es menor de edad");
+
+            }
+            else if (dias < 0)
+            {
+                valido = false;
+                errorProvider1.SetError(dtFechaNac, "El empledo es menor de edad");
+            }
             if (dtFechaContrato.Value > DateTime.Now)
             {
                 valido = false;
@@ -121,14 +135,6 @@ namespace Kevin2024.Windows.Formularios
                 valido = false;
                 errorProvider1.SetError(cboGeneros, "Seleccione el genero");
             }
-            if(!string.IsNullOrEmpty(txtTelefono.Text))
-            {
-                if (!telefono.IsMatch(txtTelefono.Text))
-                {
-                    valido = false;
-                    errorProvider1.SetError(txtTelefono, "Ingrese un número válido");
-                }
-            }
 
             return valido;
         }
@@ -136,6 +142,7 @@ namespace Kevin2024.Windows.Formularios
         private void frmEmpleadosAE_Load(object sender, EventArgs e)
         {
             CombosHelper.CargarComboGeneros(ref cboGeneros, _serviceProvider);
+
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
@@ -154,7 +161,7 @@ namespace Kevin2024.Windows.Formularios
                 dtFechaNac.Value = empleado.FechaNac;
                 dtFechaContrato.Value = empleado.FechaContrato;
                 nupSalario.Value = (decimal)empleado.Salario;
-                cboGeneros.SelectedValue = (int)empleado.GeneroId;
+                cboGeneros.SelectedIndex = (int)empleado.GeneroId;
                 checkBox1.Checked = empleado.Suspendido;
                 if (empleado.Imagen != string.Empty)
                 {
@@ -172,8 +179,6 @@ namespace Kevin2024.Windows.Formularios
                 {
                     picImagen.Image = Image.FromFile(imagenNoDisponible);
                 }
-                txtTelefono.Text = empleado.Telefono;
-                txtDireccion.Text = empleado.Direccion;
             }
 
         }
@@ -195,6 +200,11 @@ namespace Kevin2024.Windows.Formularios
                 picImagen.Image = Image.FromFile(openFileDialog1.FileName);
                 archivoImagen = openFileDialog1.SafeFileName;
             }
+        }
+
+        private void btnAgregarT_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }

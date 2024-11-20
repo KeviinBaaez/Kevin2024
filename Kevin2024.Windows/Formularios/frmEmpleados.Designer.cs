@@ -38,6 +38,7 @@
             toolStripSeparator1 = new ToolStripSeparator();
             tsbFiltrar = new ToolStripDropDownButton();
             busquedaToolStripMenuItem = new ToolStripMenuItem();
+            génerosToolStripMenuItem = new ToolStripMenuItem();
             tsbActualizar = new ToolStripButton();
             toolStripSeparator2 = new ToolStripSeparator();
             toolStripButton7 = new ToolStripDropDownButton();
@@ -125,7 +126,7 @@
             // 
             // tsbFiltrar
             // 
-            tsbFiltrar.DropDownItems.AddRange(new ToolStripItem[] { busquedaToolStripMenuItem });
+            tsbFiltrar.DropDownItems.AddRange(new ToolStripItem[] { busquedaToolStripMenuItem, génerosToolStripMenuItem });
             tsbFiltrar.Font = new Font("Constantia", 14.25F, FontStyle.Bold);
             tsbFiltrar.Image = Properties.Resources.lista;
             tsbFiltrar.ImageTransparentColor = Color.Magenta;
@@ -140,6 +141,14 @@
             busquedaToolStripMenuItem.Size = new Size(170, 28);
             busquedaToolStripMenuItem.Text = "Busqueda";
             busquedaToolStripMenuItem.Click += busquedaToolStripMenuItem_Click;
+            // 
+            // génerosToolStripMenuItem
+            // 
+            génerosToolStripMenuItem.Image = Properties.Resources.usuarios_alt;
+            génerosToolStripMenuItem.Name = "génerosToolStripMenuItem";
+            génerosToolStripMenuItem.Size = new Size(170, 28);
+            génerosToolStripMenuItem.Text = "Géneros";
+            génerosToolStripMenuItem.Click += génerosToolStripMenuItem_Click;
             // 
             // tsbActualizar
             // 
@@ -426,5 +435,6 @@
         private DataGridViewTextBoxColumn ColDni;
         private DataGridViewTextBoxColumn ColSalario;
         private DataGridViewCheckBoxColumn ColSuspendido;
+        private ToolStripMenuItem génerosToolStripMenuItem;
     }
 }

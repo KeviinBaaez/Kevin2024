@@ -14,8 +14,8 @@ namespace Kevin2024.Datos.Repositorios
     {
         public void Agregar(SqlConnection conn, Empleados empleado, SqlTransaction tran)
         {
-            string insertQuery = @"INSERT INTO EMpleados (Nombre, Apellido, Dni, FechaNac, FechaContrato, Salario, Suspendido) 
-                                VALUES (@Nombre, @Apellido, @Dni, @FechaNac, @FechaContrato, @Salario, @Suspendido);
+            string insertQuery = @"INSERT INTO Empleados (Nombre, Apellido, Dni, FechaNac, FechaContrato, Salario, Suspendido, GeneroId, Imagen, Telefono, Direccion) 
+                                VALUES (@Nombre, @Apellido, @Dni, @FechaNac, @FechaContrato, @Salario, @Suspendido, @GeneroId, @Imagen, @Telefono, @Direccion));
                                 SELECT CAST(SCOPE_IDENTITY() AS INT)";
             int primarykey = conn.QuerySingle<int>(insertQuery, new
             {
@@ -26,7 +26,11 @@ namespace Kevin2024.Datos.Repositorios
                 FechaNac = empleado.FechaNac,
                 FechaContrato= empleado.FechaContrato,
                 Salario =empleado.Salario,
-                Suspendido = empleado.Suspendido
+                Suspendido = empleado.Suspendido,
+                GeneroId = empleado.GeneroId,
+                Imagen = empleado.Imagen,
+                Telefono = empleado.Telefono,
+                Direccion = empleado.Direccion
             }, tran);
             if (primarykey > 0)
             {
@@ -35,6 +39,7 @@ namespace Kevin2024.Datos.Repositorios
             }
             throw new Exception("No se pudo agregar el Empleado");
         }
+
 
         public void Borrar(SqlConnection conn, int empleadoId, SqlTransaction tran)
         {
@@ -54,7 +59,11 @@ namespace Kevin2024.Datos.Repositorios
                                                     FechaNac = @FechaNac,
                                                     FechaContrato = @FechaContrato, 
                                                     Salario = @Salario, 
-                                                    Suspendido = @Suspendido
+                                                    Suspendido = @Suspendido,
+                                                    GeneroId = @GeneroId,
+                                                    Imagen = @Imagen,
+                                                    Telefono = @Telefono,
+                                                    Direccion = @Direccion
                                     WHERE EmpleadoId=@EmpleadoId";
             int registrosAfectados = conn.Execute(updateQuery, new
             {
@@ -65,13 +74,18 @@ namespace Kevin2024.Datos.Repositorios
                empleado.FechaNac,
                empleado.FechaContrato,
                empleado.Salario,
-               empleado.Suspendido
+               empleado.Suspendido,
+               empleado.GeneroId,
+               empleado.Imagen,
+               empleado.Telefono,
+               empleado.Direccion
             }, tran);
             if (registrosAfectados == 0)
             {
                 throw new Exception("No se pudo editar los datos del Empleado");
             }
         }
+
 
         public bool Existe(SqlConnection conn, Empleados empleado)
         {
@@ -90,11 +104,19 @@ namespace Kevin2024.Datos.Repositorios
             return conn.QuerySingle<int>(finalQuery, empleado) > 0;
         }
 
-        public int GetCantidad(SqlConnection conn, Func<EmpleadosListDto, bool>? filter)
+        public int GetCantidad(SqlConnection conn, Func<EmpleadosListDto, bool>? filter, TiposDeDatos? generoFiltro = null)
         {
             var lista = new List<EmpleadosListDto>();
-            string selectQuery = @"SELECT EmpleadoId, Nombre, Apellido, Dni, Salario, Suspendido FROM Empleados";
-            var listaEmpleados = conn.Query<EmpleadosListDto>(selectQuery).ToList();
+            var conditions = string.Empty;
+            var finalQuery = string.Empty;
+            string selectQuery = @"SELECT EmpleadoId, Nombre, Apellido, Dni, Salario, 
+                                Suspendido, g.Descripcion, Imagen, Telefono, Direccion FROM Empleados e 
+                                INNER JOIN Generos g on g.GeneroId = e.GeneroId";
+            if(generoFiltro != null)
+            {
+                conditions = selectQuery += " WHERE e.GeneroId = @GeneroId";
+            }
+            var listaEmpleados = conn.Query<EmpleadosListDto>(selectQuery, new { GeneroId = generoFiltro?.TipoId }).ToList();
             lista.AddRange(listaEmpleados);
             if (filter != null)
             {
@@ -106,20 +128,26 @@ namespace Kevin2024.Datos.Repositorios
         public Empleados? GetEmpleadoPorId(SqlConnection conn, int empleadoId)
         {
             string selectQuery = @"SELECT EmpleadoId, Nombre, Apellido, Dni, FechaNac, 
-                                FechaContrato, Salario, Suspendido FROM Empleados
+                                FechaContrato, Salario, Suspendido, GeneroId, Imagen, Telefono, Direccion FROM Empleados
                                                  WHERE EmpleadoId=@EmpleadoId";
             return conn.QuerySingleOrDefault<Empleados>(selectQuery, new { @EmpleadoId = empleadoId });
         }
 
-        public List<EmpleadosListDto>? GetLista(SqlConnection conn, int currentPage, int pageSize, Orden orden, Func<EmpleadosListDto, bool>? filter)
+        public List<EmpleadosListDto>? GetLista(SqlConnection conn, int currentPage, int pageSize, Orden orden, Func<EmpleadosListDto, bool>? filter, TiposDeDatos? generoFitro = null)
         {
             var lista = new List<EmpleadosListDto>();
             var finalQuery = string.Empty;
             var ordenQuery = string.Empty;
+            var conditions = string.Empty;
             string selectQuery = @"SELECT EmpleadoId, CONCAT(Nombre,' ', Apellido) AS Nombre , Apellido, Dni, 
-                            Salario, Suspendido FROM Empleados";
-
-            if(orden == Orden.Ninguno)
+                            Salario, g.Descripcion, Suspendido, Imagen FROM Empleados e
+                            INNER JOIN Generos g on g.GeneroId = e.GeneroId";
+            
+            if (generoFitro != null)
+            {
+                conditions = " WHERE e.GeneroId = @GeneroId";
+            }
+            if (orden == Orden.Ninguno)
             {
                 ordenQuery = @" ORDER BY Nombre";
             }
@@ -131,8 +159,10 @@ namespace Kevin2024.Datos.Repositorios
             {
                 ordenQuery = @" ORDER BY Nombre Desc";
             }
-            finalQuery = string.Concat(selectQuery, ordenQuery);
-            var listaEmpleados = conn.Query<EmpleadosListDto>(finalQuery).ToList();
+
+            
+            finalQuery = string.Concat(selectQuery,conditions, ordenQuery);
+            var listaEmpleados = conn.Query<EmpleadosListDto>(finalQuery, new { GeneroId = generoFitro?.TipoId }).ToList();
             lista.AddRange(listaEmpleados);
             if (filter != null)
             {

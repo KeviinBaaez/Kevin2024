@@ -1,11 +1,6 @@
 ﻿using Kevin2024.Entidades;
 using Kevin2024.Entidades.Dtos;
 using Kevin2024.Entidades.Enumeraciones;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Kevin2024.Servicios.Interfaces
 {

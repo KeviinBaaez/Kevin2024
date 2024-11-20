@@ -430,7 +430,6 @@
             txtPaginas.ReadOnly = true;
             txtPaginas.Size = new Size(79, 23);
             txtPaginas.TabIndex = 0;
-            txtPaginas.TextChanged += txtPaginas_TextChanged;
             // 
             // frmProductos
             // 

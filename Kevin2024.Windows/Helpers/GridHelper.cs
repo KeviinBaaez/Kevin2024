@@ -51,18 +51,6 @@ namespace Kevin2024.Windows.Helpers
         {
             switch (obj)
             {
-                case Marcas m:
-                    r.Cells[0].Value = m.MarcaId;
-                    r.Cells[1].Value = m.Nombre;
-                    break;
-                case Categorias c:
-                    r.Cells[0].Value = c.CategoriaId;
-                    r.Cells[1].Value = c.Descripcion;
-                    break;
-                case Tamanio t:
-                    r.Cells[0].Value = t.TamanioId;
-                    r.Cells[1].Value = t.Descripcion;
-                    break;
                 case ProductosListDto p:
                     r.Cells[0].Value = p.ProductoId;
                     r.Cells[1].Value = p.Nombre;
@@ -81,7 +69,10 @@ namespace Kevin2024.Windows.Helpers
                     r.Cells[3].Value = e.Salario;
                     r.Cells[4].Value = e.Suspendido;
                     break;
-
+                case TiposDeDatos tiposDeDatos:
+                    r.Cells[0].Value = tiposDeDatos.TipoId;
+                    r.Cells[1].Value = tiposDeDatos.Descripcion;
+                    break;
             }
             r.Tag = obj;
         }

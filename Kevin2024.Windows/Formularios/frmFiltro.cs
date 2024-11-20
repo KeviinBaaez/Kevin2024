@@ -1,13 +1,4 @@
 ﻿using Kevin2024.Entidades.Enumeraciones;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Kevin2024.Windows.Formularios
 {
@@ -32,6 +23,7 @@ namespace Kevin2024.Windows.Formularios
             panelCategorias.Visible = false;
             panelMarcas.Visible = false;
             panelTamanios.Visible = false;
+            panelGeneros.Visible = false;
             PanelBusqueda.Visible = false;
         }
 
@@ -49,6 +41,10 @@ namespace Kevin2024.Windows.Formularios
             if (_tipo == Tipos.Tamanio)
             {
                 panelTamanios.Visible = true;
+            }
+            if (_tipo == Tipos.Genero)
+            {
+                panelGeneros.Visible = true;
             }
             if (_tipo == Tipos.Ninguno)
             {
@@ -87,6 +83,18 @@ namespace Kevin2024.Windows.Formularios
                 if (!string.IsNullOrEmpty(txtTamanios.Text.Trim()))
                 {
                     textoFiltro = txtTamanios.Text;
+                    DialogResult = DialogResult.OK;
+                }
+                else
+                {
+                    errorProvider1.SetError(txtTamanios, Text = "Ingrese al menos un caracter");
+                }
+            }
+            if (_tipo == Tipos.Genero)
+            {
+                if (!string.IsNullOrEmpty(txtGenero.Text.Trim()))
+                {
+                    textoFiltro = txtGenero.Text;
                     DialogResult = DialogResult.OK;
                 }
                 else

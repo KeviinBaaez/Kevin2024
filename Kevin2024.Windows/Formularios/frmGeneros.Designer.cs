@@ -1,6 +1,6 @@
 ﻿namespace Kevin2024.Windows.Formularios
 {
-    partial class frmMarcas
+    partial class frmGeneros
     {
         /// <summary>
         /// Required designer variable.
@@ -28,21 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmGeneros));
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMarcas));
-            panel1 = new Panel();
-            panel4 = new Panel();
-            dgvDatos = new DataGridView();
-            ColMarcaId = new DataGridViewTextBoxColumn();
-            ColMarca = new DataGridViewTextBoxColumn();
-            panel3 = new Panel();
-            btnUltimo = new Button();
-            btnSiguiente = new Button();
-            btnAnterior = new Button();
-            btnPrimero = new Button();
-            label1 = new Label();
-            cboPaginas = new ComboBox();
-            txtPaginas = new TextBox();
             panel2 = new Panel();
             toolStrip1 = new ToolStrip();
             tsbNuevo = new ToolStripButton();
@@ -57,156 +44,22 @@
             ordenZAToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator3 = new ToolStripSeparator();
             tsbSalir = new ToolStripButton();
-            panel1.SuspendLayout();
-            panel4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvDatos).BeginInit();
-            panel3.SuspendLayout();
+            panel3 = new Panel();
+            btnUltimo = new Button();
+            btnSiguiente = new Button();
+            btnAnterior = new Button();
+            btnPrimero = new Button();
+            label1 = new Label();
+            cboPaginas = new ComboBox();
+            txtPaginas = new TextBox();
+            dgvDatos = new DataGridView();
+            ColMarcaId = new DataGridViewTextBoxColumn();
+            ColMarca = new DataGridViewTextBoxColumn();
             panel2.SuspendLayout();
             toolStrip1.SuspendLayout();
+            panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvDatos).BeginInit();
             SuspendLayout();
-            // 
-            // panel1
-            // 
-            panel1.Controls.Add(panel4);
-            panel1.Controls.Add(panel3);
-            panel1.Controls.Add(panel2);
-            panel1.Dock = DockStyle.Fill;
-            panel1.Location = new Point(0, 0);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(900, 475);
-            panel1.TabIndex = 3;
-            // 
-            // panel4
-            // 
-            panel4.Controls.Add(dgvDatos);
-            panel4.Dock = DockStyle.Fill;
-            panel4.Location = new Point(0, 0);
-            panel4.Name = "panel4";
-            panel4.Size = new Size(678, 411);
-            panel4.TabIndex = 6;
-            // 
-            // dgvDatos
-            // 
-            dgvDatos.AllowUserToAddRows = false;
-            dgvDatos.AllowUserToDeleteRows = false;
-            dgvDatos.BorderStyle = BorderStyle.None;
-            dgvDatos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvDatos.Columns.AddRange(new DataGridViewColumn[] { ColMarcaId, ColMarca });
-            dgvDatos.Dock = DockStyle.Fill;
-            dgvDatos.Location = new Point(0, 0);
-            dgvDatos.MultiSelect = false;
-            dgvDatos.Name = "dgvDatos";
-            dgvDatos.ReadOnly = true;
-            dgvDatos.RowHeadersVisible = false;
-            dgvDatos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvDatos.Size = new Size(678, 411);
-            dgvDatos.TabIndex = 0;
-            // 
-            // ColMarcaId
-            // 
-            ColMarcaId.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            ColMarcaId.HeaderText = "MarcaId";
-            ColMarcaId.Name = "ColMarcaId";
-            ColMarcaId.ReadOnly = true;
-            ColMarcaId.Visible = false;
-            ColMarcaId.Width = 150;
-            // 
-            // ColMarca
-            // 
-            ColMarca.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle1.Font = new Font("Constantia", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            ColMarca.DefaultCellStyle = dataGridViewCellStyle1;
-            ColMarca.HeaderText = "Marca";
-            ColMarca.Name = "ColMarca";
-            ColMarca.ReadOnly = true;
-            // 
-            // panel3
-            // 
-            panel3.Controls.Add(btnUltimo);
-            panel3.Controls.Add(btnSiguiente);
-            panel3.Controls.Add(btnAnterior);
-            panel3.Controls.Add(btnPrimero);
-            panel3.Controls.Add(label1);
-            panel3.Controls.Add(cboPaginas);
-            panel3.Controls.Add(txtPaginas);
-            panel3.Dock = DockStyle.Bottom;
-            panel3.Location = new Point(0, 411);
-            panel3.Name = "panel3";
-            panel3.Size = new Size(678, 64);
-            panel3.TabIndex = 5;
-            // 
-            // btnUltimo
-            // 
-            btnUltimo.FlatStyle = FlatStyle.Flat;
-            btnUltimo.Image = Properties.Resources.angulo_doble_derecha__1_;
-            btnUltimo.Location = new Point(592, 6);
-            btnUltimo.Name = "btnUltimo";
-            btnUltimo.Size = new Size(49, 49);
-            btnUltimo.TabIndex = 3;
-            btnUltimo.UseVisualStyleBackColor = true;
-            btnUltimo.Click += btnUltimo_Click;
-            // 
-            // btnSiguiente
-            // 
-            btnSiguiente.FlatStyle = FlatStyle.Flat;
-            btnSiguiente.Image = Properties.Resources.angulo_pequeno_derecho__1_;
-            btnSiguiente.Location = new Point(535, 8);
-            btnSiguiente.Name = "btnSiguiente";
-            btnSiguiente.Size = new Size(51, 44);
-            btnSiguiente.TabIndex = 3;
-            btnSiguiente.UseVisualStyleBackColor = true;
-            btnSiguiente.Click += btnSiguiente_Click;
-            // 
-            // btnAnterior
-            // 
-            btnAnterior.FlatStyle = FlatStyle.Flat;
-            btnAnterior.Image = Properties.Resources.angulo_pequeno_izquierdo__1_;
-            btnAnterior.Location = new Point(478, 8);
-            btnAnterior.Name = "btnAnterior";
-            btnAnterior.Size = new Size(51, 44);
-            btnAnterior.TabIndex = 3;
-            btnAnterior.UseVisualStyleBackColor = true;
-            btnAnterior.Click += btnAnterior_Click;
-            // 
-            // btnPrimero
-            // 
-            btnPrimero.FlatStyle = FlatStyle.Flat;
-            btnPrimero.Image = Properties.Resources.angulo_doble_izquierda__1_;
-            btnPrimero.Location = new Point(423, 7);
-            btnPrimero.Name = "btnPrimero";
-            btnPrimero.Size = new Size(49, 47);
-            btnPrimero.TabIndex = 3;
-            btnPrimero.UseVisualStyleBackColor = true;
-            btnPrimero.Click += btnPrimero_Click;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Constantia", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(108, 33);
-            label1.Name = "label1";
-            label1.Size = new Size(26, 19);
-            label1.TabIndex = 2;
-            label1.Text = "de";
-            // 
-            // cboPaginas
-            // 
-            cboPaginas.DropDownStyle = ComboBoxStyle.DropDownList;
-            cboPaginas.FormattingEnabled = true;
-            cboPaginas.Location = new Point(23, 29);
-            cboPaginas.Name = "cboPaginas";
-            cboPaginas.Size = new Size(79, 23);
-            cboPaginas.TabIndex = 1;
-            cboPaginas.SelectedIndexChanged += CboPaginas_SelectedIndexChanged;
-            // 
-            // txtPaginas
-            // 
-            txtPaginas.CausesValidation = false;
-            txtPaginas.Location = new Point(140, 29);
-            txtPaginas.Name = "txtPaginas";
-            txtPaginas.ReadOnly = true;
-            txtPaginas.Size = new Size(79, 23);
-            txtPaginas.TabIndex = 0;
             // 
             // panel2
             // 
@@ -216,7 +69,7 @@
             panel2.Location = new Point(678, 0);
             panel2.Name = "panel2";
             panel2.Size = new Size(222, 475);
-            panel2.TabIndex = 4;
+            panel2.TabIndex = 7;
             // 
             // toolStrip1
             // 
@@ -332,7 +185,7 @@
             // 
             ordenToolStripMenuItem.Image = (Image)resources.GetObject("ordenToolStripMenuItem.Image");
             ordenToolStripMenuItem.Name = "ordenToolStripMenuItem";
-            ordenToolStripMenuItem.Size = new Size(155, 22);
+            ordenToolStripMenuItem.Size = new Size(180, 22);
             ordenToolStripMenuItem.Text = "Orden(A-Z)";
             ordenToolStripMenuItem.Click += ordenAZToolStripMenuItem_Click;
             // 
@@ -340,7 +193,7 @@
             // 
             ordenZAToolStripMenuItem.Image = (Image)resources.GetObject("ordenZAToolStripMenuItem.Image");
             ordenZAToolStripMenuItem.Name = "ordenZAToolStripMenuItem";
-            ordenZAToolStripMenuItem.Size = new Size(155, 22);
+            ordenZAToolStripMenuItem.Size = new Size(180, 22);
             ordenZAToolStripMenuItem.Text = "Orden(Z-A)";
             ordenZAToolStripMenuItem.Click += ordenZAToolStripMenuItem_Click;
             // 
@@ -364,41 +217,154 @@
             tsbSalir.TextImageRelation = TextImageRelation.Overlay;
             tsbSalir.Click += tsbSalir_Click;
             // 
-            // frmMarcas
+            // panel3
+            // 
+            panel3.Controls.Add(btnUltimo);
+            panel3.Controls.Add(btnSiguiente);
+            panel3.Controls.Add(btnAnterior);
+            panel3.Controls.Add(btnPrimero);
+            panel3.Controls.Add(label1);
+            panel3.Controls.Add(cboPaginas);
+            panel3.Controls.Add(txtPaginas);
+            panel3.Dock = DockStyle.Bottom;
+            panel3.Location = new Point(0, 411);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(678, 64);
+            panel3.TabIndex = 8;
+            // 
+            // btnUltimo
+            // 
+            btnUltimo.FlatStyle = FlatStyle.Flat;
+            btnUltimo.Image = Properties.Resources.angulo_doble_derecha__1_;
+            btnUltimo.Location = new Point(592, 6);
+            btnUltimo.Name = "btnUltimo";
+            btnUltimo.Size = new Size(49, 49);
+            btnUltimo.TabIndex = 3;
+            btnUltimo.UseVisualStyleBackColor = true;
+            btnUltimo.Click += btnUltimo_Click;
+            // 
+            // btnSiguiente
+            // 
+            btnSiguiente.FlatStyle = FlatStyle.Flat;
+            btnSiguiente.Image = Properties.Resources.angulo_pequeno_derecho__1_;
+            btnSiguiente.Location = new Point(535, 8);
+            btnSiguiente.Name = "btnSiguiente";
+            btnSiguiente.Size = new Size(51, 44);
+            btnSiguiente.TabIndex = 3;
+            btnSiguiente.UseVisualStyleBackColor = true;
+            btnSiguiente.Click += btnSiguiente_Click;
+            // 
+            // btnAnterior
+            // 
+            btnAnterior.FlatStyle = FlatStyle.Flat;
+            btnAnterior.Image = Properties.Resources.angulo_pequeno_izquierdo__1_;
+            btnAnterior.Location = new Point(478, 8);
+            btnAnterior.Name = "btnAnterior";
+            btnAnterior.Size = new Size(51, 44);
+            btnAnterior.TabIndex = 3;
+            btnAnterior.UseVisualStyleBackColor = true;
+            btnAnterior.Click += btnAnterior_Click;
+            // 
+            // btnPrimero
+            // 
+            btnPrimero.FlatStyle = FlatStyle.Flat;
+            btnPrimero.Image = Properties.Resources.angulo_doble_izquierda__1_;
+            btnPrimero.Location = new Point(423, 7);
+            btnPrimero.Name = "btnPrimero";
+            btnPrimero.Size = new Size(49, 47);
+            btnPrimero.TabIndex = 3;
+            btnPrimero.UseVisualStyleBackColor = true;
+            btnPrimero.Click += btnPrimero_Click;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Constantia", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label1.Location = new Point(108, 33);
+            label1.Name = "label1";
+            label1.Size = new Size(26, 19);
+            label1.TabIndex = 2;
+            label1.Text = "de";
+            // 
+            // cboPaginas
+            // 
+            cboPaginas.DropDownStyle = ComboBoxStyle.DropDownList;
+            cboPaginas.FormattingEnabled = true;
+            cboPaginas.Location = new Point(23, 29);
+            cboPaginas.Name = "cboPaginas";
+            cboPaginas.Size = new Size(79, 23);
+            cboPaginas.TabIndex = 1;
+            cboPaginas.SelectedIndexChanged += cboPaginas_SelectedIndexChanged;
+            // 
+            // txtPaginas
+            // 
+            txtPaginas.CausesValidation = false;
+            txtPaginas.Location = new Point(140, 29);
+            txtPaginas.Name = "txtPaginas";
+            txtPaginas.ReadOnly = true;
+            txtPaginas.Size = new Size(79, 23);
+            txtPaginas.TabIndex = 0;
+            // 
+            // dgvDatos
+            // 
+            dgvDatos.AllowUserToAddRows = false;
+            dgvDatos.AllowUserToDeleteRows = false;
+            dgvDatos.BorderStyle = BorderStyle.None;
+            dgvDatos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvDatos.Columns.AddRange(new DataGridViewColumn[] { ColMarcaId, ColMarca });
+            dgvDatos.Dock = DockStyle.Fill;
+            dgvDatos.Location = new Point(0, 0);
+            dgvDatos.MultiSelect = false;
+            dgvDatos.Name = "dgvDatos";
+            dgvDatos.ReadOnly = true;
+            dgvDatos.RowHeadersVisible = false;
+            dgvDatos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvDatos.Size = new Size(678, 411);
+            dgvDatos.TabIndex = 9;
+            // 
+            // ColMarcaId
+            // 
+            ColMarcaId.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            ColMarcaId.HeaderText = "GeneroId";
+            ColMarcaId.Name = "ColMarcaId";
+            ColMarcaId.ReadOnly = true;
+            ColMarcaId.Visible = false;
+            ColMarcaId.Width = 150;
+            // 
+            // ColMarca
+            // 
+            ColMarca.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle1.Font = new Font("Constantia", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            ColMarca.DefaultCellStyle = dataGridViewCellStyle1;
+            ColMarca.HeaderText = "Géneros";
+            ColMarca.Name = "ColMarca";
+            ColMarca.ReadOnly = true;
+            // 
+            // frmGeneros
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(1, 95, 168);
             ClientSize = new Size(900, 475);
-            Controls.Add(panel1);
+            Controls.Add(dgvDatos);
+            Controls.Add(panel3);
+            Controls.Add(panel2);
             FormBorderStyle = FormBorderStyle.None;
-            Name = "frmMarcas";
-            Text = "frmMarcas";
-            Load += frmMarcas_Load;
-            panel1.ResumeLayout(false);
-            panel4.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dgvDatos).EndInit();
-            panel3.ResumeLayout(false);
-            panel3.PerformLayout();
+            Name = "frmGeneros";
+            Text = "frmGeneros";
+            Load += frmGeneros_Load;
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
             toolStrip1.ResumeLayout(false);
             toolStrip1.PerformLayout();
+            panel3.ResumeLayout(false);
+            panel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvDatos).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
-        private Panel panel1;
-        private Panel panel3;
-        private Button btnUltimo;
-        private Button btnSiguiente;
-        private Button btnAnterior;
-        private Button btnPrimero;
-        private Label label1;
-        private ComboBox cboPaginas;
-        private TextBox txtPaginas;
-        private Panel panel4;
-        private DataGridView dgvDatos;
+
         private Panel panel2;
         private ToolStrip toolStrip1;
         private ToolStripButton tsbNuevo;
@@ -413,6 +379,15 @@
         private ToolStripMenuItem ordenZAToolStripMenuItem;
         private ToolStripSeparator toolStripSeparator3;
         private ToolStripButton tsbSalir;
+        private Panel panel3;
+        private Button btnUltimo;
+        private Button btnSiguiente;
+        private Button btnAnterior;
+        private Button btnPrimero;
+        private Label label1;
+        private ComboBox cboPaginas;
+        private TextBox txtPaginas;
+        private DataGridView dgvDatos;
         private DataGridViewTextBoxColumn ColMarcaId;
         private DataGridViewTextBoxColumn ColMarca;
     }

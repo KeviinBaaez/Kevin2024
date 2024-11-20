@@ -23,23 +23,15 @@
             panelFormularios.Visible = false;
             btnVentas.Enabled = false;
             btnClientes.Enabled = false;
-            toolStrip1.Enabled= false;
+            toolStrip1.Enabled = false;
             btnUsuario.Enabled = false;
+            btnCombos.Enabled = false;
         }
-
-        //private void OcultarMenuDespegable()
-        //{
-        //    if (panelDespegable.Visible == true)
-        //    {
-        //        panelDespegable.Visible = false;
-        //    }
-        //}
 
         private void MostrarMenu(Panel menu)
         {
             if (menu.Visible == false)
             {
-                // OcultarMenuDespegable();
                 menu.Visible = true;
             }
             else
@@ -156,6 +148,11 @@
         private void btnEmpleados_Click(object sender, EventArgs e)
         {
             AbrirFormularios(new frmEmpleados(_serviceProvider));
+        }
+
+        private void btnGeneros_Click(object sender, EventArgs e)
+        {
+            AbrirFormularios(new frmGeneros(_serviceProvider));
         }
     }
 }

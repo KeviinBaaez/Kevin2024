@@ -6,9 +6,7 @@ namespace Kevin2024.Windows.Formularios
     public partial class frmNuevoTipoAE : Form
     {
         private readonly IServiceProvider? _serviceProvider;
-        private Marcas? marca;
-        private Categorias? categoria;
-        private Tamanio? tamanio;
+        private TiposDeDatos? tiposDeDatos;
 
         private Tipos _tipo = Tipos.Ninguno;
         public frmNuevoTipoAE(IServiceProvider? serviceProvider, Tipos tipo)
@@ -24,45 +22,54 @@ namespace Kevin2024.Windows.Formularios
             panelCategorias.Visible = false;
             panelMarcas.Visible = false;
             panelTamanios.Visible = false;
+            panelGeneros.Visible = false;
         }
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            if (ValidarDaros())
+            if (ValidarDatos())
             {
                 if (_tipo == Tipos.Categoria)
                 {
-                    if (categoria is null)
+                    if (tiposDeDatos is null)
                     {
-                        categoria = new Categorias();
+                        tiposDeDatos = new TiposDeDatos();
                     }
-                    categoria.Descripcion = txtCategoria.Text;
+                    tiposDeDatos.Descripcion = txtCategoria.Text;
                 }
                 if (_tipo == Tipos.Marcas)
                 {
-                    if (marca is null)
+                    if (tiposDeDatos is null)
                     {
-                        marca = new Marcas();
+                        tiposDeDatos = new TiposDeDatos();
                     }
-                    marca.Nombre = txtMarca.Text;
+                    tiposDeDatos.Descripcion = txtMarca.Text;
                 }
                 if (_tipo == Tipos.Tamanio)
                 {
-                    if (tamanio is null)
+                    if (tiposDeDatos is null)
                     {
-                        tamanio = new Tamanio();
+                        tiposDeDatos = new TiposDeDatos();
                     }
-                    tamanio.Descripcion = txtTamanio.Text;
+                    tiposDeDatos.Descripcion = txtTamanio.Text;
+                }
+                if(_tipo == Tipos.Genero)
+                {
+                    if(tiposDeDatos is null)
+                    {
+                        tiposDeDatos = new TiposDeDatos();
+                    }
+                    tiposDeDatos.Descripcion = txtGenero.Text;
                 }
                 DialogResult = DialogResult.OK;
             }
         }
 
-        private bool ValidarDaros()
+        private bool ValidarDatos()
         {
             errorProvider1.Clear();
             bool valido = true;
-            if(_tipo == Tipos.Marcas)
+            if (_tipo == Tipos.Marcas)
             {
                 if (string.IsNullOrEmpty(txtMarca.Text))
                 {
@@ -80,10 +87,18 @@ namespace Kevin2024.Windows.Formularios
             }
             if (_tipo == Tipos.Tamanio)
             {
-                if(string.IsNullOrEmpty(txtTamanio.Text))
+                if (string.IsNullOrEmpty(txtTamanio.Text))
                 {
                     valido = false;
                     errorProvider1.SetError(txtTamanio, "Ingrese el nombre del Tamaño");
+                }
+            }
+            if(_tipo == Tipos.Genero)
+            {
+                if(string.IsNullOrEmpty(txtGenero.Text))
+                {
+                    valido = false;
+                    errorProvider1.SetError(txtTamanio, "Ingrese el nombre del genero");
                 }
             }
             return valido;
@@ -103,6 +118,10 @@ namespace Kevin2024.Windows.Formularios
             {
                 panelTamanios.Visible = true;
             }
+            if(_tipo == Tipos.Genero)
+            {
+                panelGeneros.Visible = true;
+            }
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
@@ -110,31 +129,15 @@ namespace Kevin2024.Windows.Formularios
             DialogResult = DialogResult.Cancel;
         }
 
-        public Marcas? GetMarca()
+        public TiposDeDatos? GetTipoDeDato()
         {
-            return marca;
-        }
 
-        public Categorias? GetCategoria()
-        {
-            return categoria;
-        }
+            return tiposDeDatos;
 
-        public Tamanio? GetTamanio()
-        {
-            return tamanio;
         }
-        public void SetMarca(Marcas marca)
+        public void SetTipoDeDato(TiposDeDatos tiposDeDato)
         {
-            this.marca = marca;
-        }
-        public void SetCategoria(Categorias categoria)
-        {
-            this.categoria = categoria;
-        }
-        public void SetTamanio(Tamanio tamanio)
-        {
-            this.tamanio = tamanio;
+            tiposDeDatos = tiposDeDato;
         }
 
         protected override void OnLoad(EventArgs e)
@@ -143,23 +146,30 @@ namespace Kevin2024.Windows.Formularios
 
             if (_tipo == Tipos.Categoria)
             {
-                if (categoria != null)
+                if (tiposDeDatos != null)
                 {
-                    txtCategoria.Text = categoria.Descripcion ;
+                    txtCategoria.Text = tiposDeDatos.Descripcion;
                 }
             }
             if (_tipo == Tipos.Marcas)
             {
-                if (marca != null)
+                if (tiposDeDatos != null)
                 {
-                    txtMarca.Text = marca.Nombre;
+                    txtMarca.Text = tiposDeDatos.Descripcion;
                 }
             }
             if (_tipo == Tipos.Tamanio)
             {
-                if (tamanio != null)
+                if (tiposDeDatos != null)
                 {
-                    txtTamanio.Text = tamanio.Descripcion;
+                    txtTamanio.Text = tiposDeDatos.Descripcion;
+                }
+            }
+            if(_tipo == Tipos.Genero)
+            {
+                if(tiposDeDatos != null)
+                {
+                    txtGenero.Text = tiposDeDatos.Descripcion;
                 }
             }
         }

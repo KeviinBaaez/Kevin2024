@@ -1,5 +1,5 @@
-﻿using Kevin2024.Entidades;
-using Kevin2024.Entidades.Entidades;
+﻿using Kevin2024.Entidades.Entidades;
+using Kevin2024.Entidades.Enumeraciones;
 using Kevin2024.Servicios.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -8,7 +8,7 @@ namespace Kevin2024.Windows.Helpers
     public static class CombosHelper
     {
         private static IServiceProvider? _serviceProvider;
-
+        private static Tipos tipo;
         public static void CargarComboPaginas(ref ComboBox cbo, int totalPages)
         {
             cbo.Items.Clear();
@@ -18,54 +18,74 @@ namespace Kevin2024.Windows.Helpers
             }
         }
 
-        public static void CargarComboMarcas(ref ComboBox cbo, IServiceProvider? serviceProvider)
+        public static void CargarComboMarcas(ref ComboBox cbo,  IServiceProvider? serviceProvider)
         {
+            tipo = Tipos.Marcas;
             _serviceProvider = serviceProvider;
-            IServiciosMarcas? servicio = _serviceProvider!.GetService<IServiciosMarcas>();
-            var lista = servicio!.GetLista();
-            var defaultTipo = new Marcas()
+            IServiciosTipos? servicio = _serviceProvider!.GetService<IServiciosTipos>();
+            var lista = servicio!.GetLista(tipo);
+            var defaultTipo = new TiposDeDatos()
             {
-                MarcaId = 0,
-                Nombre = "Seleccione"
+                TipoId = 0,
+                Descripcion = "Seleccione"
             };
             lista?.Insert(0, defaultTipo);
             cbo.DataSource = lista;
-            cbo.DisplayMember = "Nombre";
-            cbo.ValueMember = "MarcaId";
+            cbo.DisplayMember = "Descripcion";
+            cbo.ValueMember = "TipoId";
             cbo.SelectedIndex = 0;
         }
 
         public static void CargarComboCategorias(ref ComboBox cbo, IServiceProvider? serviceProvider)
         {
+            tipo = Tipos.Categoria;
             _serviceProvider = serviceProvider;
-            IServiciosCategorias? servicio = _serviceProvider!.GetService<IServiciosCategorias>();
-            var lista = servicio!.GetLista();
-            var defaultTipo = new Categorias()
+            IServiciosTipos? servicio = _serviceProvider!.GetService<IServiciosTipos>();
+            var lista = servicio!.GetLista(tipo);
+            var defaultTipo = new TiposDeDatos()
             {
-                CategoriaId = 0,
+                TipoId = 0,
                 Descripcion = "Seleccione"
             };
             lista?.Insert(0, defaultTipo);
             cbo.DataSource = lista;
             cbo.DisplayMember = "Descripcion";
-            cbo.ValueMember = "CategoriaId";
+            cbo.ValueMember = "TipoId";
             cbo.SelectedIndex = 0;
         }
 
         public static void CargarComboTamanios(ref ComboBox cbo, IServiceProvider? serviceProvider)
         {
+            tipo = Tipos.Tamanio;
             _serviceProvider = serviceProvider;
-            IServiciosTamanios? servicio = _serviceProvider!.GetService<IServiciosTamanios>();
-            var lista = servicio!.GetLista();
-            var defaultTipo = new Tamanio()
+            IServiciosTipos? servicio = _serviceProvider!.GetService<IServiciosTipos>();
+            var lista = servicio!.GetLista(tipo);
+            var defaultTipo = new TiposDeDatos()
             {
-                TamanioId = 0,
+                TipoId = 0,
                 Descripcion = "Seleccione"
             };
             lista?.Insert(0, defaultTipo);
             cbo.DataSource = lista;
             cbo.DisplayMember = "Descripcion";
-            cbo.ValueMember = "TamanioId";
+            cbo.ValueMember = "TipoId";
+            cbo.SelectedIndex = 0;
+        }
+        public static void CargarComboGeneros(ref ComboBox cbo, IServiceProvider? serviceProvider)
+        {
+            tipo = Tipos.Genero;
+            _serviceProvider = serviceProvider;
+            IServiciosTipos? servicio = _serviceProvider!.GetService<IServiciosTipos>();
+            var lista = servicio!.GetLista(tipo);
+            var defaultTipo = new TiposDeDatos()
+            {
+                TipoId = 0,
+                Descripcion = "Seleccione"
+            };
+            lista?.Insert(0, defaultTipo);
+            cbo.DataSource = lista;
+            cbo.DisplayMember = "Descripcion";
+            cbo.ValueMember = "TipoId";
             cbo.SelectedIndex = 0;
         }
     }
