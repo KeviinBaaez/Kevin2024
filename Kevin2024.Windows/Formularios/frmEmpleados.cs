@@ -32,8 +32,7 @@ namespace Kevin2024.Windows.Formularios
             _servicios = _serviceProvider?.GetService<IServiciosEmpleados>() ??
                 throw new ApplicationException("Dependencias no cargadas!!");
         }
-
-        private void frmPostre_Load(object sender, EventArgs e)
+        private void frmEmpleados_Load(object sender, EventArgs e)
         {
             RecargarGrilla();
         }
@@ -200,7 +199,7 @@ namespace Kevin2024.Windows.Formularios
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
 
-        }        
+        }
 
         private void tsbActualizar_Click(object sender, EventArgs e)
         {
@@ -217,7 +216,7 @@ namespace Kevin2024.Windows.Formularios
         }
         private void busquedaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmFiltro frm = new frmFiltro(Tipos.Ninguno) { Text = "Escriba para buscar" };
+            frmFiltro frm = new frmFiltro(Archivo.Ninguno) { Text = "Escriba para buscar" };
             DialogResult dr = frm.ShowDialog(this);
             try
             {
@@ -324,5 +323,7 @@ namespace Kevin2024.Windows.Formularios
             currentPage = int.Parse(cboPaginas.Text);
             LoadData(filter);
         }
+
+
     }
 }

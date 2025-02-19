@@ -1,8 +1,19 @@
-﻿namespace Kevin2024.Windows.Formularios
+﻿using Kevin2024.Entidades.Entidades;
+using System.Windows.Forms;
+
+namespace Kevin2024.Windows.Formularios
 {
     public partial class frmPrincipal : Form
     {
         private readonly IServiceProvider? _serviceProvider;
+        private Form? FormularioAbierto = null;
+        private Usuario? usuario;
+
+        private string imagenNoDisponible = Environment.CurrentDirectory + @"\ImágenesUsuarios\SinImagenDisponible.jpg";
+        private string archivoNoEncontrado = Environment.CurrentDirectory + @"\ImágenesUsuarios\ArchivoNoEncontrado.jpg";
+        private string? archivoImagen = string.Empty;
+        private string carpetaImagen = Environment.CurrentDirectory + @"\ImágenesUsuarios\";
+
         public frmPrincipal(IServiceProvider? serviceProvider)
         {
             InitializeComponent();
@@ -12,7 +23,25 @@
         }
         private void frmPrincipal_Load(object sender, EventArgs e)
         {
-
+            lblNombreusuario.Text = usuario!.NombreUsuario;
+            if (usuario.Imagen != string.Empty)
+            {
+                if (!File.Exists($"{carpetaImagen}{usuario.Imagen}"))
+                {
+                    picImgUsuario.Image = Image.FromFile(archivoNoEncontrado);
+                }
+                else
+                {
+                    picImgUsuario.Image = Image.FromFile($"{carpetaImagen}{usuario.Imagen}");
+                    archivoImagen = usuario.Imagen;
+                }
+            }
+            else
+            {
+                picImgUsuario.Image = Image.FromFile(imagenNoDisponible);
+            }
+            this.FormBorderStyle = FormBorderStyle.None;
+            this.WindowState = FormWindowState.Maximized;
         }
         private void PersonalizarInicio()
         {
@@ -21,11 +50,7 @@
             panel1.Size = new Size(60, 634);
             toolStrip3.Visible = false;
             panelFormularios.Visible = false;
-            btnVentas.Enabled = false;
-            btnClientes.Enabled = false;
-            toolStrip1.Enabled = false;
-            btnUsuario.Enabled = false;
-            btnCombos.Enabled = false;
+            tsbSentingsUsers.Enabled = true;
         }
 
         private void MostrarMenu(Panel menu)
@@ -54,12 +79,12 @@
                 OcultarTsb();
                 tsb.Visible = true;
                 panelFormularios.Visible = false;
-                flowLayoutPanel1.Size = new Size(1036, 271);
+                flowLayoutPanel1.Size = new Size(1036, 344);
             }
             else
             {
                 tsb.Visible = false;
-                flowLayoutPanel1.Size = new Size(1036, 75);
+                flowLayoutPanel1.Size = new Size(1036, 72);
                 if (FormularioAbierto == null)
                 {
                     return;
@@ -79,7 +104,6 @@
             panel1.Size = new Size(282, 634);
             panel2.Size = new Size(814, 634);
         }
-
         private void btnAplegar_Click(object sender, EventArgs e)
         {
             MostrarMenu(panelDespegable);
@@ -89,12 +113,6 @@
             panel2.Size = new Size(1036, 634);
         }
 
-        private void btnProductos_Click(object sender, EventArgs e)
-        {
-            AbrirFormularios(new frmProductos(_serviceProvider));
-        }
-
-        private Form FormularioAbierto = null;
         private void AbrirFormularios(Form formulario)
         {
             if (FormularioAbierto != null)
@@ -125,6 +143,11 @@
 
         }
 
+        private void btnProductos_Click(object sender, EventArgs e)
+        {
+            AbrirFormularios(new frmProductos(_serviceProvider));
+        }
+
         private void btnOtros_Click(object sender, EventArgs e)
         {
             MostrarTsb(toolStrip3);
@@ -153,6 +176,88 @@
         private void btnGeneros_Click(object sender, EventArgs e)
         {
             AbrirFormularios(new frmGeneros(_serviceProvider));
+        }
+
+        private void btnCombos_Click(object sender, EventArgs e)
+        {
+            AbrirFormularios(new frmCombos(_serviceProvider));
+        }
+
+        private void btnVentas_Click(object sender, EventArgs e)
+        {
+            AbrirFormularios(new frmVentasAE(_serviceProvider));
+        }
+
+        private void btnClientes_Click(object sender, EventArgs e)
+        {
+            AbrirFormularios(new frmClientes(_serviceProvider));
+        }
+
+        private void btnTiposTelefonos_Click(object sender, EventArgs e)
+        {
+            AbrirFormularios(new frmTiposTelefonos(_serviceProvider));
+        }
+
+        private void btnTiposDirecciones_Click(object sender, EventArgs e)
+        {
+            AbrirFormularios(new frmTiposDirecciones(_serviceProvider));
+        }
+
+        private void btnUsuario_Click(object sender, EventArgs e)
+        {
+            AbrirFormularios(new frmUsuarios(_serviceProvider));
+        }
+
+        private void toolStripButton5_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        public void SetUsuario(Usuario usuario)
+        {
+            this.usuario = usuario;
+        }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            HabilitarMenu();
+        }
+        private void HabilitarMenu()
+        {
+            btnProductos.Enabled = false;
+            btnCombos.Enabled = false;
+            btnVentas.Enabled = false;
+            btnClientes.Enabled = false;
+            btnEmpleados.Enabled = false;
+            btnOtros.Enabled = false;
+            foreach (var item in usuario!.Rol!.Permisos)
+            {
+                if(item.Permiso!.Menu == "Productos")
+                {
+                    btnProductos.Enabled = true;
+                }
+                if (item.Permiso.Menu == "Combos")
+                {
+                    btnCombos.Enabled = true;
+                }
+                if (item.Permiso.Menu == "Ventas")
+                {
+                    btnVentas.Enabled = true;
+                }
+                if (item.Permiso.Menu == "Clientes")
+                {
+                    btnClientes.Enabled = true;
+                }
+                if (item.Permiso.Menu == "Empleados")
+                {
+                    btnEmpleados.Enabled = true;
+                }
+                if (item.Permiso.Menu == "Archivos")
+                {
+                    btnOtros.Enabled = true;
+                }
+            }
         }
     }
 }

@@ -9,6 +9,7 @@
         public string? Tamanio { get; set; }
         public int CategoriaId { get; set; }
         public string? Categoria { get; set; }
+        public int? Cantidad { get; set; }
         public decimal PrecioVenta { get; set; }
         public int Stock { get; set; }
         public bool Suspendido { get; set; }

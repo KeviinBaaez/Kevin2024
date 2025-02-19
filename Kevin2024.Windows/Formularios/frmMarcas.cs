@@ -9,7 +9,7 @@ namespace Kevin2024.Windows.Formularios
     public partial class frmMarcas : Form
     {
         private readonly IServiceProvider? _serviceProvider;
-        private readonly IServiciosTipos? _servicios;
+        private readonly IServiciosArchivos? _servicios;
         private List<TiposDeDatos>? lista;
 
         //Paginación
@@ -25,13 +25,13 @@ namespace Kevin2024.Windows.Formularios
         private Orden orden = Orden.Ninguno;
 
         //Tipo para busqueda
-        Tipos tipo = Tipos.Marcas;
+        Archivo archivo = Archivo.Marcas;
 
         public frmMarcas(IServiceProvider? serviceProvider)
         {
             InitializeComponent();
             _serviceProvider = serviceProvider;
-            _servicios = _serviceProvider?.GetService<IServiciosTipos>() ??
+            _servicios = _serviceProvider?.GetService<IServiciosArchivos>() ??
                 throw new ApplicationException("Dependencias no cargadas!!");
         }
 
@@ -43,9 +43,8 @@ namespace Kevin2024.Windows.Formularios
         {
             try
             {
-                totalRecords = _servicios!.GetCantidad(tipo, filter);
+                totalRecords = _servicios!.GetCantidad(archivo, filter);
                 totalPages = (int)Math.Ceiling((decimal)totalRecords / pageSize);
-                currentPage = totalPages;
                 LoadData(filter);
             }
             catch (Exception)
@@ -58,7 +57,7 @@ namespace Kevin2024.Windows.Formularios
         {
             try
             {
-                lista = _servicios!.GetLista(tipo, currentPage, pageSize, orden, filter);
+                lista = _servicios!.GetLista(archivo, currentPage, pageSize, orden, filter);
                 if (lista!.Count > 0)
                 {
                     GridHelper.MostrarDatosEnGrilla<TiposDeDatos>(lista, dgvDatos);
@@ -91,19 +90,19 @@ namespace Kevin2024.Windows.Formularios
 
         private void tsbNuevo_Click(object sender, EventArgs e)
         {
-            frmNuevoTipoAE frm = new frmNuevoTipoAE(_serviceProvider, tipo) { Text = "Nueva Marca" };
-            DialogResult dr = frm.ShowDialog(this);
+            frmNuevoTipoAE frm = new frmNuevoTipoAE(_serviceProvider, archivo) { Text = "Nueva Marca" };
+            DialogResult dr = frm.ShowDialog();
             if (dr == DialogResult.Cancel) return;
             try
             {
                 TiposDeDatos? marca = frm.GetTipoDeDato();
                 if (marca is null) return;
-                if (!_servicios!.Existe(tipo, marca))
+                if(!_servicios!.Existe(archivo, marca))
                 {
-                    _servicios.Guardar(tipo, marca);
-                    totalRecords = _servicios!.GetCantidad(tipo, filter);
+                    _servicios!.Guardar(archivo, marca);
+                    totalRecords = _servicios.GetCantidad(archivo, filter);
                     totalPages = (int)Math.Ceiling((decimal)totalRecords / pageSize);
-                    currentPage = _servicios.GetPaginaPorRegistro(tipo, marca.Descripcion, pageSize);
+                    currentPage = _servicios.GetPaginaPorRegistro(archivo , marca.Descripcion, pageSize);
                     LoadData(filter);
 
                     MessageBox.Show("Registro agregado",
@@ -132,16 +131,17 @@ namespace Kevin2024.Windows.Formularios
             var r = dgvDatos.SelectedRows[0];
             if (r.Tag is null) return;
             TiposDeDatos? marca = (TiposDeDatos)r.Tag;
-            frmNuevoTipoAE frm = new frmNuevoTipoAE(_serviceProvider, tipo) { Text = "Editar Marca" };
+            frmNuevoTipoAE frm = new frmNuevoTipoAE(_serviceProvider, archivo) { Text = "Editar Marca" };
             frm.SetTipoDeDato(marca);
             DialogResult dr = frm.ShowDialog(this);
             if (dr == DialogResult.Cancel) return;
             marca = frm.GetTipoDeDato();
+            if (marca == null) return;
             try
             {
-                if (!_servicios!.Existe(tipo, marca))
+                if (!_servicios!.Existe(archivo, marca))
                 {
-                    _servicios.Guardar(tipo, marca);
+                    _servicios.Guardar(archivo, marca);
                     GridHelper.SetearFila(r, marca);
                     MessageBox.Show("Registro modificado satisfactoriamente",
                         "Mensaje",
@@ -188,10 +188,10 @@ namespace Kevin2024.Windows.Formularios
             }
             try
             {
-                if (!_servicios!.EstaRelacionado(tipo, marca.TipoId))
+                if (!_servicios!.EstaRelacionado(archivo, marca.TipoId))
                 {
-                    _servicios!.Borrar(tipo, marca.TipoId);
-                    totalRecords = _servicios!.GetCantidad(tipo, filter);
+                    _servicios!.Borrar(archivo, marca.TipoId);
+                    totalRecords = _servicios!.GetCantidad(archivo, filter);
                     totalPages = (int)Math.Ceiling((decimal)totalRecords / pageSize);
                     if (currentPage > totalPages)
                     {
@@ -235,14 +235,14 @@ namespace Kevin2024.Windows.Formularios
 
         private void tsbFiltrar_Click(object sender, EventArgs e)
         {
-            frmFiltro frm = new frmFiltro(tipo) { Text = "Ingresar texto para buscar..." };
+            frmFiltro frm = new frmFiltro(archivo) { Text = "Ingresar texto para buscar..." };
             DialogResult dr = frm.ShowDialog(this);
             try
             {
                 var textoFiltro = frm.GetTexto();
                 if (textoFiltro is null || textoFiltro == string.Empty) return;
                 filter = b => b.Descripcion!.ToUpper().Contains(textoFiltro.ToUpper());
-                totalRecords = _servicios!.GetCantidad(tipo, filter);
+                totalRecords = _servicios!.GetCantidad(archivo, filter);
                 currentPage = 1;
                 if (totalRecords > 0)
                 {

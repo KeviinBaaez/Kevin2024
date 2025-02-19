@@ -15,23 +15,9 @@ namespace Kevin2024.Datos.Repositorios
         public void Agregar(SqlConnection conn, Empleados empleado, SqlTransaction tran)
         {
             string insertQuery = @"INSERT INTO Empleados (Nombre, Apellido, Dni, FechaNac, FechaContrato, Salario, Suspendido, GeneroId, Imagen, Telefono, Direccion) 
-                                VALUES (@Nombre, @Apellido, @Dni, @FechaNac, @FechaContrato, @Salario, @Suspendido, @GeneroId, @Imagen, @Telefono, @Direccion));
+                                VALUES (@Nombre, @Apellido, @Dni, @FechaNac, @FechaContrato, @Salario, @Suspendido, @GeneroId, @Imagen, @Telefono, @Direccion);
                                 SELECT CAST(SCOPE_IDENTITY() AS INT)";
-            int primarykey = conn.QuerySingle<int>(insertQuery, new
-            {
-                EmpleadoId = empleado.EmpleadoId,
-                Nombre = empleado.Nombre,
-                Apellido = empleado.Apellido,
-                Dni = empleado.Dni,
-                FechaNac = empleado.FechaNac,
-                FechaContrato= empleado.FechaContrato,
-                Salario =empleado.Salario,
-                Suspendido = empleado.Suspendido,
-                GeneroId = empleado.GeneroId,
-                Imagen = empleado.Imagen,
-                Telefono = empleado.Telefono,
-                Direccion = empleado.Direccion
-            }, tran);
+            int primarykey = conn.QuerySingle<int>(insertQuery, empleado, tran);
             if (primarykey > 0)
             {
                 empleado.EmpleadoId = primarykey;

@@ -14,7 +14,8 @@ namespace Kevin2024.Windows
         {
             _serviceProvider = DI.ConfigurarServicios();
             ApplicationConfiguration.Initialize();
-            Application.Run(new frmPrincipal(_serviceProvider));
+            Application.Run(new frmLogin(_serviceProvider));
+            //Application.Run(new frmPrincipal(_serviceProvider));
             //Application.Run(new frmMenuPrincipal(_serviceProvider));
         }
     }

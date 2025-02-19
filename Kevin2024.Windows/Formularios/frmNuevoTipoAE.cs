@@ -8,12 +8,12 @@ namespace Kevin2024.Windows.Formularios
         private readonly IServiceProvider? _serviceProvider;
         private TiposDeDatos? tiposDeDatos;
 
-        private Tipos _tipo = Tipos.Ninguno;
-        public frmNuevoTipoAE(IServiceProvider? serviceProvider, Tipos tipo)
+        private Archivo archivo = Archivo.Ninguno;
+        public frmNuevoTipoAE(IServiceProvider? serviceProvider, Archivo archivo)
         {
             InitializeComponent();
             _serviceProvider = serviceProvider;
-            _tipo = tipo;
+            this.archivo = archivo;
             OcultarPaneles();
         }
 
@@ -23,13 +23,15 @@ namespace Kevin2024.Windows.Formularios
             panelMarcas.Visible = false;
             panelTamanios.Visible = false;
             panelGeneros.Visible = false;
+            panelTipotelefono.Visible = false;
+            panelTipoDireccion.Visible = false;
         }
 
         private void btnOK_Click(object sender, EventArgs e)
         {
             if (ValidarDatos())
             {
-                if (_tipo == Tipos.Categoria)
+                if (archivo == Archivo.Categoria)
                 {
                     if (tiposDeDatos is null)
                     {
@@ -37,7 +39,7 @@ namespace Kevin2024.Windows.Formularios
                     }
                     tiposDeDatos.Descripcion = txtCategoria.Text;
                 }
-                if (_tipo == Tipos.Marcas)
+                if (archivo == Archivo.Marcas)
                 {
                     if (tiposDeDatos is null)
                     {
@@ -45,7 +47,7 @@ namespace Kevin2024.Windows.Formularios
                     }
                     tiposDeDatos.Descripcion = txtMarca.Text;
                 }
-                if (_tipo == Tipos.Tamanio)
+                if (archivo == Archivo.Tamanio)
                 {
                     if (tiposDeDatos is null)
                     {
@@ -53,13 +55,29 @@ namespace Kevin2024.Windows.Formularios
                     }
                     tiposDeDatos.Descripcion = txtTamanio.Text;
                 }
-                if(_tipo == Tipos.Genero)
+                if (archivo == Archivo.Genero)
                 {
-                    if(tiposDeDatos is null)
+                    if (tiposDeDatos is null)
                     {
                         tiposDeDatos = new TiposDeDatos();
                     }
                     tiposDeDatos.Descripcion = txtGenero.Text;
+                }
+                if (archivo == Archivo.Telefono)
+                {
+                    if (tiposDeDatos is null)
+                    {
+                        tiposDeDatos = new TiposDeDatos();
+                    }
+                    tiposDeDatos.Descripcion = txtTelefono.Text;
+                }
+                if (archivo == Archivo.Direccion)
+                {
+                    if (tiposDeDatos is null)
+                    {
+                        tiposDeDatos = new TiposDeDatos();
+                    }
+                    tiposDeDatos.Descripcion = txtDireccion.Text;
                 }
                 DialogResult = DialogResult.OK;
             }
@@ -69,7 +87,7 @@ namespace Kevin2024.Windows.Formularios
         {
             errorProvider1.Clear();
             bool valido = true;
-            if (_tipo == Tipos.Marcas)
+            if (archivo == Archivo.Marcas)
             {
                 if (string.IsNullOrEmpty(txtMarca.Text))
                 {
@@ -77,7 +95,7 @@ namespace Kevin2024.Windows.Formularios
                     errorProvider1.SetError(txtMarca, "Ingrese el nombre de la marca");
                 }
             }
-            if (_tipo == Tipos.Categoria)
+            if (archivo == Archivo.Categoria)
             {
                 if (string.IsNullOrEmpty(txtCategoria.Text))
                 {
@@ -85,7 +103,7 @@ namespace Kevin2024.Windows.Formularios
                     errorProvider1.SetError(txtCategoria, "Ingrese el nombre de la categoría");
                 }
             }
-            if (_tipo == Tipos.Tamanio)
+            if (archivo == Archivo.Tamanio)
             {
                 if (string.IsNullOrEmpty(txtTamanio.Text))
                 {
@@ -93,12 +111,28 @@ namespace Kevin2024.Windows.Formularios
                     errorProvider1.SetError(txtTamanio, "Ingrese el nombre del Tamaño");
                 }
             }
-            if(_tipo == Tipos.Genero)
+            if (archivo == Archivo.Genero)
             {
-                if(string.IsNullOrEmpty(txtGenero.Text))
+                if (string.IsNullOrEmpty(txtGenero.Text))
                 {
                     valido = false;
                     errorProvider1.SetError(txtTamanio, "Ingrese el nombre del genero");
+                }
+            }
+            if (archivo == Archivo.Telefono)
+            {
+                if (string.IsNullOrEmpty(txtTelefono.Text))
+                {
+                    valido = false;
+                    errorProvider1.SetError(txtTelefono, "Ingrese la descripcion del tipo de teléfono");
+                }
+            }
+            if (archivo == Archivo.Direccion)
+            {
+                if (string.IsNullOrEmpty(txtDireccion.Text))
+                {
+                    valido = false;
+                    errorProvider1.SetError(txtDireccion, "Ingrese la descripcion del tipo de dirección");
                 }
             }
             return valido;
@@ -106,21 +140,29 @@ namespace Kevin2024.Windows.Formularios
 
         private void frmMarcasAE_Load(object sender, EventArgs e)
         {
-            if (_tipo == Tipos.Categoria)
+            if (archivo == Archivo.Categoria)
             {
                 panelCategorias.Visible = true;
             }
-            if (_tipo == Tipos.Marcas)
+            if (archivo == Archivo.Marcas)
             {
                 panelMarcas.Visible = true;
             }
-            if (_tipo == Tipos.Tamanio)
+            if (archivo == Archivo.Tamanio)
             {
                 panelTamanios.Visible = true;
             }
-            if(_tipo == Tipos.Genero)
+            if (archivo == Archivo.Genero)
             {
                 panelGeneros.Visible = true;
+            }
+            if (archivo == Archivo.Telefono)
+            {
+                panelTipotelefono.Visible = true;
+            }
+            if (archivo == Archivo.Direccion)
+            {
+                panelTipoDireccion.Visible = true;
             }
         }
 
@@ -144,34 +186,50 @@ namespace Kevin2024.Windows.Formularios
         {
             base.OnLoad(e);
 
-            if (_tipo == Tipos.Categoria)
+            if (archivo == Archivo.Categoria)
             {
                 if (tiposDeDatos != null)
                 {
                     txtCategoria.Text = tiposDeDatos.Descripcion;
                 }
             }
-            if (_tipo == Tipos.Marcas)
+            if (archivo == Archivo.Marcas)
             {
                 if (tiposDeDatos != null)
                 {
                     txtMarca.Text = tiposDeDatos.Descripcion;
                 }
             }
-            if (_tipo == Tipos.Tamanio)
+            if (archivo == Archivo.Tamanio)
             {
                 if (tiposDeDatos != null)
                 {
                     txtTamanio.Text = tiposDeDatos.Descripcion;
                 }
             }
-            if(_tipo == Tipos.Genero)
+            if (archivo == Archivo.Genero)
             {
-                if(tiposDeDatos != null)
+                if (tiposDeDatos != null)
                 {
                     txtGenero.Text = tiposDeDatos.Descripcion;
                 }
             }
+            if(archivo == Archivo.Telefono)
+            {
+                if(tiposDeDatos != null)
+                {
+                    txtTelefono.Text = tiposDeDatos.Descripcion;
+                }
+            }
+            if (archivo == Archivo.Direccion)
+            {
+                if (tiposDeDatos != null)
+                {
+                    txtDireccion.Text = tiposDeDatos.Descripcion;
+                }
+            }
         }
+
+
     }
 }

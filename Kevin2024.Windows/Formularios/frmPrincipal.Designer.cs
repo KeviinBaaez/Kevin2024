@@ -56,10 +56,12 @@
             btnCategoria = new ToolStripButton();
             btnUsuario = new ToolStripButton();
             btnGeneros = new ToolStripButton();
+            btnTiposTelefonos = new ToolStripButton();
+            btnTiposDirecciones = new ToolStripButton();
             btnOtros = new Button();
             panel1 = new Panel();
             panelDespegable = new Panel();
-            toolStrip1 = new ToolStrip();
+            tsbSentingsUsers = new ToolStrip();
             toolStripSeparator2 = new ToolStripSeparator();
             toolStripButton1 = new ToolStripButton();
             toolStripButton2 = new ToolStripButton();
@@ -88,7 +90,7 @@
             toolStrip3.SuspendLayout();
             panel1.SuspendLayout();
             panelDespegable.SuspendLayout();
-            toolStrip1.SuspendLayout();
+            tsbSentingsUsers.SuspendLayout();
             panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picImgUsuario).BeginInit();
             panelAplegar.SuspendLayout();
@@ -248,7 +250,7 @@
             btnCombos.Text = "Combos";
             btnCombos.TextAlign = ContentAlignment.BottomCenter;
             btnCombos.UseVisualStyleBackColor = true;
-            btnCombos.Click += btnProductos_Click;
+            btnCombos.Click += btnCombos_Click;
             // 
             // PanelVentas
             // 
@@ -273,6 +275,7 @@
             btnVentas.Text = "Ventas";
             btnVentas.TextAlign = ContentAlignment.BottomCenter;
             btnVentas.UseVisualStyleBackColor = true;
+            btnVentas.Click += btnVentas_Click;
             // 
             // panelClientes
             // 
@@ -297,7 +300,7 @@
             btnClientes.Text = "Clientes";
             btnClientes.TextAlign = ContentAlignment.BottomCenter;
             btnClientes.UseVisualStyleBackColor = true;
-            btnClientes.Click += btnProductos_Click;
+            btnClientes.Click += btnClientes_Click;
             // 
             // panelEmpleados
             // 
@@ -338,7 +341,7 @@
             toolStrip3.BackColor = Color.FromArgb(0, 59, 103);
             toolStrip3.Dock = DockStyle.Fill;
             toolStrip3.GripStyle = ToolStripGripStyle.Hidden;
-            toolStrip3.Items.AddRange(new ToolStripItem[] { btnMarcas, btnTamanio, btnCategoria, btnUsuario, btnGeneros });
+            toolStrip3.Items.AddRange(new ToolStripItem[] { btnMarcas, btnTamanio, btnCategoria, btnUsuario, btnGeneros, btnTiposTelefonos, btnTiposDirecciones });
             toolStrip3.LayoutStyle = ToolStripLayoutStyle.VerticalStackWithOverflow;
             toolStrip3.Location = new Point(0, 65);
             toolStrip3.Name = "toolStrip3";
@@ -362,7 +365,7 @@
             btnTamanio.Font = new Font("Constantia", 12F, FontStyle.Bold);
             btnTamanio.Image = (Image)resources.GetObject("btnTamanio.Image");
             btnTamanio.ImageTransparentColor = Color.Magenta;
-            btnTamanio.Margin = new Padding(0, 15, 0, 2);
+            btnTamanio.Margin = new Padding(0, 10, 0, 2);
             btnTamanio.Name = "btnTamanio";
             btnTamanio.Size = new Size(158, 23);
             btnTamanio.Text = "Tamaños";
@@ -373,7 +376,7 @@
             btnCategoria.Font = new Font("Constantia", 12F, FontStyle.Bold);
             btnCategoria.Image = (Image)resources.GetObject("btnCategoria.Image");
             btnCategoria.ImageTransparentColor = Color.Magenta;
-            btnCategoria.Margin = new Padding(0, 15, 0, 2);
+            btnCategoria.Margin = new Padding(0, 10, 0, 2);
             btnCategoria.Name = "btnCategoria";
             btnCategoria.Size = new Size(158, 23);
             btnCategoria.Text = "Categorias";
@@ -384,21 +387,44 @@
             btnUsuario.Font = new Font("Constantia", 12F, FontStyle.Bold);
             btnUsuario.Image = (Image)resources.GetObject("btnUsuario.Image");
             btnUsuario.ImageTransparentColor = Color.Magenta;
-            btnUsuario.Margin = new Padding(0, 15, 0, 2);
+            btnUsuario.Margin = new Padding(0, 10, 0, 2);
             btnUsuario.Name = "btnUsuario";
             btnUsuario.Size = new Size(158, 23);
             btnUsuario.Text = "Usuarios";
+            btnUsuario.Click += btnUsuario_Click;
             // 
             // btnGeneros
             // 
             btnGeneros.Font = new Font("Constantia", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnGeneros.Image = (Image)resources.GetObject("btnGeneros.Image");
             btnGeneros.ImageTransparentColor = Color.Magenta;
-            btnGeneros.Margin = new Padding(0, 15, 0, 2);
+            btnGeneros.Margin = new Padding(0, 10, 0, 2);
             btnGeneros.Name = "btnGeneros";
             btnGeneros.Size = new Size(158, 23);
             btnGeneros.Text = "Géneros";
             btnGeneros.Click += btnGeneros_Click;
+            // 
+            // btnTiposTelefonos
+            // 
+            btnTiposTelefonos.Font = new Font("Constantia", 12F, FontStyle.Bold);
+            btnTiposTelefonos.Image = Properties.Resources.llamada_telefonica;
+            btnTiposTelefonos.ImageTransparentColor = Color.Magenta;
+            btnTiposTelefonos.Margin = new Padding(0, 10, 0, 2);
+            btnTiposTelefonos.Name = "btnTiposTelefonos";
+            btnTiposTelefonos.Size = new Size(158, 23);
+            btnTiposTelefonos.Text = "T. Teléfonos";
+            btnTiposTelefonos.Click += btnTiposTelefonos_Click;
+            // 
+            // btnTiposDirecciones
+            // 
+            btnTiposDirecciones.Font = new Font("Constantia", 12F, FontStyle.Bold);
+            btnTiposDirecciones.Image = Properties.Resources.direccion_postal;
+            btnTiposDirecciones.ImageTransparentColor = Color.Magenta;
+            btnTiposDirecciones.Margin = new Padding(0, 10, 0, 2);
+            btnTiposDirecciones.Name = "btnTiposDirecciones";
+            btnTiposDirecciones.Size = new Size(158, 23);
+            btnTiposDirecciones.Text = "T. Direcciones";
+            btnTiposDirecciones.Click += btnTiposDirecciones_Click;
             // 
             // btnOtros
             // 
@@ -412,7 +438,7 @@
             btnOtros.Name = "btnOtros";
             btnOtros.Size = new Size(160, 65);
             btnOtros.TabIndex = 2;
-            btnOtros.Text = "Varios";
+            btnOtros.Text = "Archivos";
             btnOtros.TextAlign = ContentAlignment.BottomCenter;
             btnOtros.UseVisualStyleBackColor = true;
             btnOtros.Click += btnOtros_Click;
@@ -432,7 +458,7 @@
             // panelDespegable
             // 
             panelDespegable.BackColor = Color.FromArgb(50, 59, 103);
-            panelDespegable.Controls.Add(toolStrip1);
+            panelDespegable.Controls.Add(tsbSentingsUsers);
             panelDespegable.Controls.Add(panel3);
             panelDespegable.Dock = DockStyle.Fill;
             panelDespegable.Location = new Point(60, 0);
@@ -440,19 +466,19 @@
             panelDespegable.Size = new Size(0, 634);
             panelDespegable.TabIndex = 0;
             // 
-            // toolStrip1
+            // tsbSentingsUsers
             // 
-            toolStrip1.AutoSize = false;
-            toolStrip1.BackColor = Color.FromArgb(0, 59, 103);
-            toolStrip1.Dock = DockStyle.Fill;
-            toolStrip1.Font = new Font("Constantia", 11.25F, FontStyle.Bold);
-            toolStrip1.GripStyle = ToolStripGripStyle.Hidden;
-            toolStrip1.Items.AddRange(new ToolStripItem[] { toolStripSeparator2, toolStripButton1, toolStripButton2, toolStripButton3, toolStripButton4, toolStripSeparator1, toolStripButton5 });
-            toolStrip1.LayoutStyle = ToolStripLayoutStyle.VerticalStackWithOverflow;
-            toolStrip1.Location = new Point(0, 122);
-            toolStrip1.Name = "toolStrip1";
-            toolStrip1.Size = new Size(0, 512);
-            toolStrip1.TabIndex = 1;
+            tsbSentingsUsers.AutoSize = false;
+            tsbSentingsUsers.BackColor = Color.FromArgb(0, 59, 103);
+            tsbSentingsUsers.Dock = DockStyle.Fill;
+            tsbSentingsUsers.Font = new Font("Constantia", 11.25F, FontStyle.Bold);
+            tsbSentingsUsers.GripStyle = ToolStripGripStyle.Hidden;
+            tsbSentingsUsers.Items.AddRange(new ToolStripItem[] { toolStripSeparator2, toolStripButton1, toolStripButton2, toolStripButton3, toolStripButton4, toolStripSeparator1, toolStripButton5 });
+            tsbSentingsUsers.LayoutStyle = ToolStripLayoutStyle.VerticalStackWithOverflow;
+            tsbSentingsUsers.Location = new Point(0, 122);
+            tsbSentingsUsers.Name = "tsbSentingsUsers";
+            tsbSentingsUsers.Size = new Size(0, 512);
+            tsbSentingsUsers.TabIndex = 1;
             // 
             // toolStripSeparator2
             // 
@@ -526,6 +552,7 @@
             toolStripButton5.Size = new Size(0, 22);
             toolStripButton5.Text = "Cerrar sesión";
             toolStripButton5.TextAlign = ContentAlignment.MiddleLeft;
+            toolStripButton5.Click += toolStripButton5_Click;
             // 
             // panel3
             // 
@@ -555,6 +582,7 @@
             picImgUsuario.Location = new Point(-78, 12);
             picImgUsuario.Name = "picImgUsuario";
             picImgUsuario.Size = new Size(151, 84);
+            picImgUsuario.SizeMode = PictureBoxSizeMode.Zoom;
             picImgUsuario.TabIndex = 0;
             picImgUsuario.TabStop = false;
             // 
@@ -642,8 +670,8 @@
             toolStrip3.PerformLayout();
             panel1.ResumeLayout(false);
             panelDespegable.ResumeLayout(false);
-            toolStrip1.ResumeLayout(false);
-            toolStrip1.PerformLayout();
+            tsbSentingsUsers.ResumeLayout(false);
+            tsbSentingsUsers.PerformLayout();
             panel3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)picImgUsuario).EndInit();
             panelAplegar.ResumeLayout(false);
@@ -663,7 +691,7 @@
         private Panel panel3;
         private Label lblNombreusuario;
         private PictureBox picImgUsuario;
-        private ToolStrip toolStrip1;
+        private ToolStrip tsbSentingsUsers;
         private ToolStripButton toolStripButton1;
         private ToolStripButton toolStripButton2;
         private ToolStripButton toolStripButton3;
@@ -700,5 +728,7 @@
         private ToolStripButton btnGeneros;
         private Panel panelCombos;
         private Button btnCombos;
+        private ToolStripButton btnTiposTelefonos;
+        private ToolStripButton btnTiposDirecciones;
     }
 }

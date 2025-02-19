@@ -21,12 +21,38 @@ namespace Kevin2024.IoC
             service.AddScoped<IRepositorioLogin, RepositorioLogin>();
 
             service.AddScoped<IRepositorioEmpleados, RepositorioEmpleados>();
+
+            service.AddScoped<IRepositorioVentas, RepositorioVentas>();
+
+            service.AddScoped<IRepositorioClientes, RepositorioClientes>();
+
+            service.AddScoped<IRepositorioClientesDirecciones, RepositorioClientesDirecciones>();
+
+            service.AddScoped<IRepositorioClientesTelefonos, RepositorioClientesTelefonos>();
+
+            service.AddScoped<IRepositorioTelefonos, RepositorioTelefonos>();
+
+            service.AddScoped<IRepositorioDirecciones, RepositorioDirecciones>();
+
+            service.AddScoped<IRepositorioTiposDeTelefonos, RepositorioTiposDeTelefonos>();
+
+            service.AddScoped<IRepositorioTiposDeDirecciones, RepositorioTiposDeDirecciones>();
             //SERVICE SERVICIOS
             service.AddScoped<IServiciosLogin, ServiciosLogin>();
 
             service.AddScoped<IServiciosEmpleados, ServiciosEmpleados>();
 
-            service.AddScoped<IServiciosTipos, ServiciosTipos>();
+            service.AddScoped<IServiciosArchivos, ServiciosArchivos>();
+
+            service.AddScoped<IServicioConsulta, ServiciosConsulta>();
+
+            service.AddScoped<IServiciosCombos, ServiciosCombos>();
+
+            service.AddScoped<IServiciosVentas, ServiciosVentas>();
+
+            service.AddScoped<IServiciosUsuarios, ServiciosUsuarios>();
+
+
 
             service.AddScoped<IServiciosLogin>(sp =>
             {
@@ -46,10 +72,70 @@ namespace Kevin2024.IoC
                 return new ServiciosEmpleados(repositorio, cadena);
             });
 
-            service.AddScoped<IServiciosTipos>(sp =>
+            service.AddScoped<IServiciosArchivos>(sp =>
             {
-                var repositorio = new RepositorioTipos();
-                return new ServiciosTipos(repositorio, cadena);
+                var repositorio = new RepositorioArchivos();
+                return new ServiciosArchivos(repositorio, cadena);
+            });
+
+            service.AddScoped<IServicioConsulta>(sp =>
+            {
+                var repositorio = new RepositorioConsulta();
+                return new ServiciosConsulta(repositorio, cadena);
+            });
+
+            service.AddScoped<IServiciosCombos>(sp =>
+            {
+                var repositorio = new RepositorioCombos();
+                var repositorioDetalles = new RepositorioDetallesCombos();
+                return new ServiciosCombos(repositorio, repositorioDetalles, cadena);
+            });
+
+            service.AddScoped<IServiciosVentas>(sp =>
+            {
+                var repositorio = new RepositorioVentas();
+                var repositorioDetalles = new RepositorioDetallesVentas();
+                return new ServiciosVentas(repositorio,repositorioDetalles, cadena);
+            });
+
+            service.AddScoped<IServiciosOrden>(sp =>
+            {
+                var repositorio = new RepositorioOrden();
+                var repositorioDetalles = new RepositorioDetalleOrden();
+                return new ServiciosOrden(repositorio, repositorioDetalles, cadena);
+            });
+
+            service.AddScoped<IServiciosClientes>(sp =>
+            {
+                var repositorio = new RepositorioClientes();
+                var repositorioDirecciones = new RepositorioDirecciones();
+                var repositorioTelefonos = new RepositorioTelefonos();
+                var repositorioClientesDirecciones = new RepositorioClientesDirecciones();
+                var repositorioClientesTelefonos = new RepositorioClientesTelefonos();
+                return new ServiciosClientes(repositorio,
+                    repositorioDirecciones,
+                    repositorioTelefonos,
+                    repositorioClientesDirecciones,
+                    repositorioClientesTelefonos,
+                    cadena);
+            });
+
+            service.AddScoped<IServiciosTiposDeDirecciones>(sp =>
+            {
+                var repositorio = new RepositorioTiposDeDirecciones();
+                return new ServiciosTiposDeDirecciones(repositorio, cadena);
+            });
+
+            service.AddScoped<IServiciosTiposDeTelefonos>(sp =>
+            {
+                var repositorio = new RepositorioTiposDeTelefonos();
+                return new ServiciosTiposDeTelefonos(repositorio, cadena);
+            });
+
+            service.AddScoped<IServiciosUsuarios>(sp =>
+            {
+                var repositorio = new RepositorioUsuario();
+                return new ServiciosUsuarios(repositorio, cadena);
             });
 
             return service.BuildServiceProvider();  

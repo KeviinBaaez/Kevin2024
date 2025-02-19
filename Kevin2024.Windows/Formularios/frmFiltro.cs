@@ -5,11 +5,11 @@ namespace Kevin2024.Windows.Formularios
     public partial class frmFiltro : Form
     {
         private string textoFiltro = string.Empty;
-        private Tipos _tipo = Tipos.Ninguno;
-        public frmFiltro(Tipos tipo)
+        private Archivo archivo = Archivo.Ninguno;
+        public frmFiltro(Archivo archivo)
         {
             InitializeComponent();
-            _tipo = tipo;
+            this.archivo = archivo;
             OcultarPaneles();
         }
 
@@ -25,28 +25,38 @@ namespace Kevin2024.Windows.Formularios
             panelTamanios.Visible = false;
             panelGeneros.Visible = false;
             PanelBusqueda.Visible = false;
+            panelTiposTelefonos.Visible = false;
+            panelTiposDirecciones.Visible = false;
         }
 
         private void frmFiltro_Load(object sender, EventArgs e)
         {
 
-            if (_tipo == Tipos.Categoria)
+            if (archivo == Archivo.Categoria)
             {
                 panelCategorias.Visible = true;
             }
-            if (_tipo == Tipos.Marcas)
+            if (archivo == Archivo.Marcas)
             {
                 panelMarcas.Visible = true;
             }
-            if (_tipo == Tipos.Tamanio)
+            if (archivo == Archivo.Tamanio)
             {
                 panelTamanios.Visible = true;
             }
-            if (_tipo == Tipos.Genero)
+            if (archivo == Archivo.Genero)
             {
                 panelGeneros.Visible = true;
             }
-            if (_tipo == Tipos.Ninguno)
+            if (archivo == Archivo.Direccion)
+            {
+                panelTiposDirecciones.Visible = true;
+            }
+            if (archivo == Archivo.Telefono)
+            {
+                panelTiposTelefonos.Visible = true;
+            }
+            if (archivo == Archivo.Ninguno)
             {
                 PanelBusqueda.Visible = true;
             }
@@ -54,7 +64,7 @@ namespace Kevin2024.Windows.Formularios
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-            if (_tipo == Tipos.Categoria)
+            if (archivo == Archivo.Categoria)
             {
                 if (!string.IsNullOrEmpty(txtCategoria.Text.Trim()))
                 {
@@ -66,7 +76,7 @@ namespace Kevin2024.Windows.Formularios
                     errorProvider1.SetError(txtCategoria, Text = "Ingrese al menos un caracter");
                 }
             }
-            if (_tipo == Tipos.Marcas)
+            if (archivo == Archivo.Marcas)
             {
                 if (!string.IsNullOrEmpty(txtMarca.Text.Trim()))
                 {
@@ -78,7 +88,7 @@ namespace Kevin2024.Windows.Formularios
                     errorProvider1.SetError(txtMarca, Text = "Ingrese al menos un caracter");
                 }
             }
-            if (_tipo == Tipos.Tamanio)
+            if (archivo == Archivo.Tamanio)
             {
                 if (!string.IsNullOrEmpty(txtTamanios.Text.Trim()))
                 {
@@ -90,7 +100,7 @@ namespace Kevin2024.Windows.Formularios
                     errorProvider1.SetError(txtTamanios, Text = "Ingrese al menos un caracter");
                 }
             }
-            if (_tipo == Tipos.Genero)
+            if (archivo == Archivo.Genero)
             {
                 if (!string.IsNullOrEmpty(txtGenero.Text.Trim()))
                 {
@@ -102,7 +112,31 @@ namespace Kevin2024.Windows.Formularios
                     errorProvider1.SetError(txtTamanios, Text = "Ingrese al menos un caracter");
                 }
             }
-            if (_tipo == Tipos.Ninguno)
+            if (archivo == Archivo.Telefono)
+            {
+                if (!string.IsNullOrEmpty(txtTelefono.Text.Trim()))
+                {
+                    textoFiltro = txtTelefono.Text;
+                    DialogResult = DialogResult.OK;
+                }
+                else
+                {
+                    errorProvider1.SetError(txtTamanios, Text = "Ingrese al menos un caracter");
+                }
+            }
+            if (archivo == Archivo.Direccion)
+            {
+                if (!string.IsNullOrEmpty(txtDireccion.Text.Trim()))
+                {
+                    textoFiltro = txtDireccion.Text;
+                    DialogResult = DialogResult.OK;
+                }
+                else
+                {
+                    errorProvider1.SetError(txtTamanios, Text = "Ingrese al menos un caracter");
+                }
+            }
+            if (archivo == Archivo.Ninguno)
             {
                 if (!string.IsNullOrEmpty(txtBusqueda.Text.Trim()))
                 {

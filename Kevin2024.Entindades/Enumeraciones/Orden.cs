@@ -12,6 +12,8 @@ namespace Kevin2024.Entidades.Enumeraciones
         OrdenAZ,
         OrdenZA,
         OrdenM,
-        OrdenF
+        OrdenF,
+        Activo,
+        Suspendido
     }
 }

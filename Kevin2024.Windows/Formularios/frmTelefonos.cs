@@ -1,5 +1,5 @@
-﻿using Kevin2024.Entidades.Dtos;
-using Kevin2024.Entidades.Entidades;
+﻿using Kevin2024.Entidades.Entidades;
+using Kevin2024.Entidades.ViewModels;
 using Kevin2024.Servicios.Interfaces;
 using Kevin2024.Windows.Helpers;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,35 +9,51 @@ namespace Kevin2024.Windows.Formularios
     public partial class frmTelefonos : Form
     {
         private readonly IServiceProvider? _serviceProvider;
-        private readonly IServiciosEmpleados? _servicios;
+        TelefonoConTipoVm? telefonoConTipoVm;
+        TipoTelefono? tipoTelefono;
         Telefonos? telefono;
-        
-        public frmTelefonos(IServiceProvider? serviceProvider, IServiciosEmpleados? servicios)
+
+        public frmTelefonos(IServiceProvider? serviceProvider)
         {
             InitializeComponent();
             _serviceProvider = serviceProvider;
-            _servicios = serviceProvider?.GetService<IServiciosEmpleados>() ?? 
-                throw new ApplicationException("Dependencias no cargadas!!");
         }
 
-        public Telefonos? GetTelefono()
+
+
+        public TelefonoConTipoVm? GetTelefonoCliente()
         {
-            return telefono;
+            return telefonoConTipoVm;
         }
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
             if (ValidarDatos())
             {
-                if(telefono is null)
+                var telefono = new Telefonos
                 {
-                    telefono = new Telefonos();
-                }
-                telefono.TipoTelefono = txtTipo.Text;
-                telefono.Numero = txtNumero.Text;
+                    Numero = txtNumero.Text
+                };
 
+                var tipoTelefono = (TipoTelefono?)cboTipoTelefonos.SelectedItem;
+                telefonoConTipoVm = new TelefonoConTipoVm(telefono, tipoTelefono);
+                DialogResult = DialogResult.OK;
             }
+        }
 
+        public void SimularClick()
+        {
+            if (ValidarDatos())
+            {
+                var telefono = new Telefonos
+                {
+                    Numero = txtNumero.Text
+                };
+
+                var tipoTelefono = (TipoTelefono?)cboTipoTelefonos.SelectedItem;
+                telefonoConTipoVm = new TelefonoConTipoVm(telefono, tipoTelefono);
+                DialogResult = DialogResult.OK;
+            }
         }
 
         private bool ValidarDatos()
@@ -48,12 +64,42 @@ namespace Kevin2024.Windows.Formularios
                 valido = false;
                 errorProvider1.SetError(txtNumero, "Ingrese un numero válido");
             }
-            if (string.IsNullOrEmpty(txtTipo.Text))
+            if (cboTipoTelefonos.SelectedIndex == 0)
             {
                 valido = false;
-                errorProvider1.SetError(txtTipo, "Ingrese el tipo de télefono");
+                errorProvider1.SetError(cboTipoTelefonos, "Ingrese el tipo de télefono");
             }
             return valido;
+        }
+
+        private void frmTelefonos_Load(object sender, EventArgs e)
+        {
+            CombosHelper.CargarComboTelefonos(ref cboTipoTelefonos, _serviceProvider);
+        }
+
+        private void cboTipoTelefonos_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            tipoTelefono = cboTipoTelefonos.SelectedIndex > 0 ?
+                (TipoTelefono?)cboTipoTelefonos.SelectedItem : null;
+        }
+
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
+        }
+
+        public void SetTelefono(TelefonoConTipoVm telefonoConTipoVm)
+        {
+            this.telefonoConTipoVm = telefonoConTipoVm;
+        }
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            if(telefonoConTipoVm != null)
+            {
+                cboTipoTelefonos.SelectedValue = (int)telefonoConTipoVm.TipoTelefono!.TipoTelefonoId;
+                txtNumero.Text = telefonoConTipoVm.Telefono.Numero;
+            }
         }
     }
 }

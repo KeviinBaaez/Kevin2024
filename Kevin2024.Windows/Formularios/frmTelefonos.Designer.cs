@@ -36,8 +36,7 @@
             btnCancelar = new Button();
             btnAceptar = new Button();
             errorProvider1 = new ErrorProvider(components);
-            txtTipo = new TextBox();
-            panel2 = new Panel();
+            cboTipoTelefonos = new ComboBox();
             ((System.ComponentModel.ISupportInitialize)errorProvider1).BeginInit();
             SuspendLayout();
             // 
@@ -71,7 +70,7 @@
             // 
             // txtNumero
             // 
-            txtNumero.BackColor = Color.FromArgb(0, 59, 103);
+            txtNumero.BackColor = Color.FromArgb(1, 95, 168);
             txtNumero.BorderStyle = BorderStyle.None;
             txtNumero.ForeColor = Color.White;
             txtNumero.Location = new Point(99, 90);
@@ -84,6 +83,7 @@
             // btnCancelar
             // 
             btnCancelar.BackColor = Color.FromArgb(244, 0, 43);
+            btnCancelar.FlatStyle = FlatStyle.Flat;
             btnCancelar.Font = new Font("Constantia", 12F, FontStyle.Bold);
             btnCancelar.Image = Properties.Resources.circulo_marca_x;
             btnCancelar.Location = new Point(202, 144);
@@ -94,10 +94,12 @@
             btnCancelar.TextAlign = ContentAlignment.MiddleRight;
             btnCancelar.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnCancelar.UseVisualStyleBackColor = false;
+            btnCancelar.Click += btnCancelar_Click;
             // 
             // btnAceptar
             // 
             btnAceptar.BackColor = Color.FromArgb(68, 182, 120);
+            btnAceptar.FlatStyle = FlatStyle.Flat;
             btnAceptar.Font = new Font("Constantia", 12F, FontStyle.Bold);
             btnAceptar.Image = Properties.Resources.caja;
             btnAceptar.Location = new Point(26, 144);
@@ -114,42 +116,36 @@
             // 
             errorProvider1.ContainerControl = this;
             // 
-            // txtTipo
+            // cboTipoTelefonos
             // 
-            txtTipo.BackColor = Color.FromArgb(0, 59, 103);
-            txtTipo.BorderStyle = BorderStyle.None;
-            txtTipo.ForeColor = Color.White;
-            txtTipo.Location = new Point(139, 42);
-            txtTipo.MaxLength = 45;
-            txtTipo.Name = "txtTipo";
-            txtTipo.PlaceholderText = "Tipo Télefono";
-            txtTipo.Size = new Size(184, 16);
-            txtTipo.TabIndex = 27;
-            // 
-            // panel2
-            // 
-            panel2.BackColor = Color.Black;
-            panel2.Location = new Point(139, 62);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(184, 1);
-            panel2.TabIndex = 28;
+            cboTipoTelefonos.DropDownStyle = ComboBoxStyle.DropDownList;
+            cboTipoTelefonos.FormattingEnabled = true;
+            cboTipoTelefonos.ItemHeight = 15;
+            cboTipoTelefonos.Location = new Point(140, 42);
+            cboTipoTelefonos.Margin = new Padding(4);
+            cboTipoTelefonos.Name = "cboTipoTelefonos";
+            cboTipoTelefonos.Size = new Size(183, 23);
+            cboTipoTelefonos.TabIndex = 31;
+            cboTipoTelefonos.SelectedIndexChanged += cboTipoTelefonos_SelectedIndexChanged;
             // 
             // frmTelefonos
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(0, 59, 103);
+            BackColor = Color.FromArgb(1, 95, 168);
             ClientSize = new Size(360, 202);
+            Controls.Add(cboTipoTelefonos);
             Controls.Add(btnCancelar);
             Controls.Add(btnAceptar);
-            Controls.Add(panel2);
             Controls.Add(panel1);
-            Controls.Add(txtTipo);
             Controls.Add(txtNumero);
             Controls.Add(label2);
             Controls.Add(label1);
+            FormBorderStyle = FormBorderStyle.None;
             Name = "frmTelefonos";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "frmTelefonos";
+            Load += frmTelefonos_Load;
             ((System.ComponentModel.ISupportInitialize)errorProvider1).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -164,7 +160,6 @@
         private Button btnCancelar;
         private Button btnAceptar;
         private ErrorProvider errorProvider1;
-        private Panel panel2;
-        private TextBox txtTipo;
+        private ComboBox cboTipoTelefonos;
     }
 }

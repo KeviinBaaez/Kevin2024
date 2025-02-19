@@ -28,10 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCategoria));
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCategoria));
             panel1 = new Panel();
             dgvDatos = new DataGridView();
+            ColCategoriaId = new DataGridViewTextBoxColumn();
+            ColCategoria = new DataGridViewTextBoxColumn();
             panel3 = new Panel();
             btnUltimo = new Button();
             btnSiguiente = new Button();
@@ -54,8 +56,7 @@
             ordenZAToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator3 = new ToolStripSeparator();
             tsbSalir = new ToolStripButton();
-            ColCategoriaId = new DataGridViewTextBoxColumn();
-            ColCategoria = new DataGridViewTextBoxColumn();
+            toolStripButton1 = new ToolStripButton();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvDatos).BeginInit();
             panel3.SuspendLayout();
@@ -87,6 +88,23 @@
             dgvDatos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvDatos.Size = new Size(678, 475);
             dgvDatos.TabIndex = 0;
+            // 
+            // ColCategoriaId
+            // 
+            ColCategoriaId.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            ColCategoriaId.HeaderText = "CategoriaId";
+            ColCategoriaId.Name = "ColCategoriaId";
+            ColCategoriaId.ReadOnly = true;
+            ColCategoriaId.Visible = false;
+            // 
+            // ColCategoria
+            // 
+            ColCategoria.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle1.Font = new Font("Constantia", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            ColCategoria.DefaultCellStyle = dataGridViewCellStyle1;
+            ColCategoria.HeaderText = "Categoria";
+            ColCategoria.Name = "ColCategoria";
+            ColCategoria.ReadOnly = true;
             // 
             // panel3
             // 
@@ -189,7 +207,7 @@
             toolStrip1.Dock = DockStyle.Fill;
             toolStrip1.Font = new Font("Constantia", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             toolStrip1.GripStyle = ToolStripGripStyle.Hidden;
-            toolStrip1.Items.AddRange(new ToolStripItem[] { tsbNuevo, tsbEditar, tsbBorrar, toolStripSeparator1, tsbFiltrar, tsbActualizar, toolStripSeparator2, toolStripButton7, toolStripSeparator3, tsbSalir });
+            toolStrip1.Items.AddRange(new ToolStripItem[] { tsbNuevo, tsbEditar, tsbBorrar, toolStripSeparator1, tsbFiltrar, tsbActualizar, toolStripSeparator2, toolStripButton7, toolStripSeparator3, tsbSalir, toolStripButton1 });
             toolStrip1.LayoutStyle = ToolStripLayoutStyle.VerticalStackWithOverflow;
             toolStrip1.Location = new Point(0, 0);
             toolStrip1.Name = "toolStrip1";
@@ -329,22 +347,15 @@
             tsbSalir.TextImageRelation = TextImageRelation.Overlay;
             tsbSalir.Click += tsbSalir_Click;
             // 
-            // ColCategoriaId
+            // toolStripButton1
             // 
-            ColCategoriaId.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            ColCategoriaId.HeaderText = "CategoriaId";
-            ColCategoriaId.Name = "ColCategoriaId";
-            ColCategoriaId.ReadOnly = true;
-            ColCategoriaId.Visible = false;
-            // 
-            // ColCategoria
-            // 
-            ColCategoria.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle1.Font = new Font("Constantia", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            ColCategoria.DefaultCellStyle = dataGridViewCellStyle1;
-            ColCategoria.HeaderText = "Categoria";
-            ColCategoria.Name = "ColCategoria";
-            ColCategoria.ReadOnly = true;
+            toolStripButton1.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            toolStripButton1.Image = (Image)resources.GetObject("toolStripButton1.Image");
+            toolStripButton1.ImageTransparentColor = Color.Magenta;
+            toolStripButton1.Name = "toolStripButton1";
+            toolStripButton1.Size = new Size(220, 27);
+            toolStripButton1.Text = "Consultar";
+            toolStripButton1.Click += toolStripButton1_Click;
             // 
             // frmCategoria
             // 
@@ -398,5 +409,6 @@
         private ToolStripButton tsbFiltrar;
         private DataGridViewTextBoxColumn ColCategoriaId;
         private DataGridViewTextBoxColumn ColCategoria;
+        private ToolStripButton toolStripButton1;
     }
 }

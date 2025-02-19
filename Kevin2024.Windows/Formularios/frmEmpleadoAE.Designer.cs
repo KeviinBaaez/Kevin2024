@@ -131,6 +131,7 @@
             // btnCancelar
             // 
             btnCancelar.BackColor = Color.FromArgb(244, 0, 43);
+            btnCancelar.FlatStyle = FlatStyle.Flat;
             btnCancelar.Font = new Font("Constantia", 12F, FontStyle.Bold);
             btnCancelar.Image = Properties.Resources.circulo_marca_x;
             btnCancelar.Location = new Point(415, 390);
@@ -146,6 +147,7 @@
             // btnBuscar
             // 
             btnBuscar.BackColor = Color.FromArgb(1, 95, 168);
+            btnBuscar.FlatStyle = FlatStyle.Popup;
             btnBuscar.Image = (Image)resources.GetObject("btnBuscar.Image");
             btnBuscar.ImageAlign = ContentAlignment.MiddleRight;
             btnBuscar.Location = new Point(462, 279);
@@ -161,6 +163,7 @@
             // btnAceptar
             // 
             btnAceptar.BackColor = Color.FromArgb(68, 182, 120);
+            btnAceptar.FlatStyle = FlatStyle.Flat;
             btnAceptar.Font = new Font("Constantia", 12F, FontStyle.Bold);
             btnAceptar.Image = Properties.Resources.caja;
             btnAceptar.Location = new Point(96, 390);

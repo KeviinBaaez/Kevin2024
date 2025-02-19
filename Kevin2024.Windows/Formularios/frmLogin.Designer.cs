@@ -1,6 +1,6 @@
 ﻿namespace Kevin2024.Windows.Formularios
 {
-    partial class frmUsuario
+    partial class frmLogin
     {
         /// <summary>
         /// Required designer variable.
@@ -41,17 +41,17 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Stencil", 20.25F, FontStyle.Underline, GraphicsUnit.Point, 0);
-            label1.ForeColor = Color.LightCoral;
-            label1.Location = new Point(122, 81);
+            label1.Font = new Font("Stencil", 27.75F, FontStyle.Underline, GraphicsUnit.Point, 0);
+            label1.ForeColor = Color.FromArgb(1, 95, 168);
+            label1.Location = new Point(89, 59);
             label1.Name = "label1";
-            label1.Size = new Size(173, 32);
+            label1.Size = new Size(237, 44);
             label1.TabIndex = 0;
             label1.Text = "BIENVENIDO";
             // 
             // txtUsuario
             // 
-            txtUsuario.BackColor = Color.LightCoral;
+            txtUsuario.BackColor = Color.FromArgb(1, 95, 168);
             txtUsuario.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtUsuario.ForeColor = SystemColors.WindowText;
             txtUsuario.Location = new Point(32, 143);
@@ -65,7 +65,7 @@
             // 
             // txtPassword
             // 
-            txtPassword.BackColor = Color.LightCoral;
+            txtPassword.BackColor = Color.FromArgb(1, 95, 168);
             txtPassword.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtPassword.ForeColor = SystemColors.WindowText;
             txtPassword.Location = new Point(89, 195);
@@ -78,7 +78,7 @@
             // 
             // btnOK
             // 
-            btnOK.BackColor = Color.LightCoral;
+            btnOK.BackColor = Color.FromArgb(1, 95, 168);
             btnOK.FlatStyle = FlatStyle.Flat;
             btnOK.Location = new Point(33, 266);
             btnOK.MaximumSize = new Size(350, 36);
@@ -92,7 +92,7 @@
             // 
             // btnCancelar
             // 
-            btnCancelar.BackColor = Color.LightCoral;
+            btnCancelar.BackColor = Color.FromArgb(1, 95, 168);
             btnCancelar.FlatStyle = FlatStyle.Popup;
             btnCancelar.Location = new Point(32, 317);
             btnCancelar.Margin = new Padding(0);
@@ -103,18 +103,19 @@
             btnCancelar.TabIndex = 4;
             btnCancelar.Text = "Cancelar";
             btnCancelar.UseVisualStyleBackColor = false;
+            btnCancelar.Click += btnCancelar_Click;
             // 
             // errorProvider1
             // 
             errorProvider1.ContainerControl = this;
             // 
-            // frmUsuario
+            // frmLogin
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
             AutoValidate = AutoValidate.EnablePreventFocusChange;
-            BackColor = Color.Brown;
+            BackColor = Color.FromArgb(0, 59, 103);
             ClientSize = new Size(409, 421);
             Controls.Add(btnCancelar);
             Controls.Add(btnOK);
@@ -123,7 +124,7 @@
             Controls.Add(label1);
             MaximumSize = new Size(425, 460);
             MinimumSize = new Size(425, 460);
-            Name = "frmUsuario";
+            Name = "frmLogin";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Usuario";
             ((System.ComponentModel.ISupportInitialize)errorProvider1).EndInit();

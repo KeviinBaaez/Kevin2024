@@ -55,9 +55,11 @@
             tamañoToolStripMenuItem = new ToolStripMenuItem();
             tsbActualizar = new ToolStripButton();
             toolStripSeparator2 = new ToolStripSeparator();
-            toolStripButton7 = new ToolStripDropDownButton();
+            tsbSuspendidoSi = new ToolStripDropDownButton();
             ordenAZToolStripMenuItem = new ToolStripMenuItem();
             ordenZAToolStripMenuItem = new ToolStripMenuItem();
+            suspendidoSiToolStripMenuItem = new ToolStripMenuItem();
+            suspendidoNoToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator3 = new ToolStripSeparator();
             tsbSalir = new ToolStripButton();
             panel3 = new Panel();
@@ -193,7 +195,7 @@
             toolStrip1.BackColor = Color.FromArgb(1, 95, 168);
             toolStrip1.Dock = DockStyle.Fill;
             toolStrip1.GripStyle = ToolStripGripStyle.Hidden;
-            toolStrip1.Items.AddRange(new ToolStripItem[] { tsbNuevo, tsbEditar, tsbBorrar, toolStripSeparator1, tsbFiltrar, tsbActualizar, toolStripSeparator2, toolStripButton7, toolStripSeparator3, tsbSalir });
+            toolStrip1.Items.AddRange(new ToolStripItem[] { tsbNuevo, tsbEditar, tsbBorrar, toolStripSeparator1, tsbFiltrar, tsbActualizar, toolStripSeparator2, tsbSuspendidoSi, toolStripSeparator3, tsbSalir });
             toolStrip1.Location = new Point(0, 0);
             toolStrip1.Name = "toolStrip1";
             toolStrip1.RenderMode = ToolStripRenderMode.System;
@@ -300,21 +302,21 @@
             toolStripSeparator2.Name = "toolStripSeparator2";
             toolStripSeparator2.Size = new Size(6, 72);
             // 
-            // toolStripButton7
+            // tsbSuspendidoSi
             // 
-            toolStripButton7.DropDownItems.AddRange(new ToolStripItem[] { ordenAZToolStripMenuItem, ordenZAToolStripMenuItem });
-            toolStripButton7.Font = new Font("Constantia", 14.25F, FontStyle.Bold);
-            toolStripButton7.Image = Properties.Resources.ordenar_alt;
-            toolStripButton7.ImageTransparentColor = Color.Magenta;
-            toolStripButton7.Name = "toolStripButton7";
-            toolStripButton7.Size = new Size(115, 69);
-            toolStripButton7.Text = "Ordenar";
+            tsbSuspendidoSi.DropDownItems.AddRange(new ToolStripItem[] { ordenAZToolStripMenuItem, ordenZAToolStripMenuItem, suspendidoSiToolStripMenuItem, suspendidoNoToolStripMenuItem });
+            tsbSuspendidoSi.Font = new Font("Constantia", 14.25F, FontStyle.Bold);
+            tsbSuspendidoSi.Image = Properties.Resources.ordenar_alt;
+            tsbSuspendidoSi.ImageTransparentColor = Color.Magenta;
+            tsbSuspendidoSi.Name = "tsbSuspendidoSi";
+            tsbSuspendidoSi.Size = new Size(115, 69);
+            tsbSuspendidoSi.Text = "Ordenar";
             // 
             // ordenAZToolStripMenuItem
             // 
             ordenAZToolStripMenuItem.Image = Properties.Resources.ordenar_alfa_arriba;
             ordenAZToolStripMenuItem.Name = "ordenAZToolStripMenuItem";
-            ordenAZToolStripMenuItem.Size = new Size(183, 28);
+            ordenAZToolStripMenuItem.Size = new Size(225, 28);
             ordenAZToolStripMenuItem.Text = "Orden(A-Z)";
             ordenAZToolStripMenuItem.Click += ordenAZToolStripMenuItem_Click;
             // 
@@ -322,9 +324,25 @@
             // 
             ordenZAToolStripMenuItem.Image = Properties.Resources.ordenar_alfa_abajo_alt;
             ordenZAToolStripMenuItem.Name = "ordenZAToolStripMenuItem";
-            ordenZAToolStripMenuItem.Size = new Size(183, 28);
+            ordenZAToolStripMenuItem.Size = new Size(225, 28);
             ordenZAToolStripMenuItem.Text = "Orden(Z-A)";
             ordenZAToolStripMenuItem.Click += ordenZAToolStripMenuItem_Click;
+            // 
+            // suspendidoSiToolStripMenuItem
+            // 
+            suspendidoSiToolStripMenuItem.Image = Properties.Resources.evaluacion_alternativa;
+            suspendidoSiToolStripMenuItem.Name = "suspendidoSiToolStripMenuItem";
+            suspendidoSiToolStripMenuItem.Size = new Size(225, 28);
+            suspendidoSiToolStripMenuItem.Text = "Suspendido(Si)";
+            suspendidoSiToolStripMenuItem.Click += suspendidoSiToolStripMenuItem_Click;
+            // 
+            // suspendidoNoToolStripMenuItem
+            // 
+            suspendidoNoToolStripMenuItem.Image = Properties.Resources.evaluacion_alternativa;
+            suspendidoNoToolStripMenuItem.Name = "suspendidoNoToolStripMenuItem";
+            suspendidoNoToolStripMenuItem.Size = new Size(225, 28);
+            suspendidoNoToolStripMenuItem.Text = "Suspendido(No)";
+            suspendidoNoToolStripMenuItem.Click += suspendidoNoToolStripMenuItem_Click;
             // 
             // toolStripSeparator3
             // 
@@ -479,7 +497,7 @@
         private Button btnAnterior;
         private Button btnPrimero;
         private ToolStripMenuItem busquedaToolStripMenuItem;
-        private ToolStripDropDownButton toolStripButton7;
+        private ToolStripDropDownButton tsbSuspendidoSi;
         private ToolStripMenuItem ordenAZToolStripMenuItem;
         private ToolStripMenuItem ordenZAToolStripMenuItem;
         private ToolStripMenuItem categoriaToolStripMenuItem;
@@ -494,5 +512,7 @@
         private DataGridViewTextBoxColumn ColPrecioVenta;
         private DataGridViewTextBoxColumn ColStock;
         private DataGridViewCheckBoxColumn ColSuspendido;
+        private ToolStripMenuItem suspendidoSiToolStripMenuItem;
+        private ToolStripMenuItem suspendidoNoToolStripMenuItem;
     }
 }

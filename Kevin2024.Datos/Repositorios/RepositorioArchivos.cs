@@ -6,24 +6,24 @@ using System.Data.SqlClient;
 
 namespace Kevin2024.Datos.Repositorios
 {
-    public class RepositorioTipos : IRepositorioTipos
+    public class RepositorioArchivos : IRepositorioArchivos
     {
 
-        public void Agregar(SqlConnection conn, Tipos tipo, TiposDeDatos tiposDeDatos, SqlTransaction tran)
+        public void Agregar(SqlConnection conn, Archivo archivo, TiposDeDatos tiposDeDatos, SqlTransaction tran)
         {
             int primarykey = 0;
             string insertQuery = string.Empty;
-            if (tipo == Tipos.Genero)
+            if (archivo == Archivo.Genero)
             {
                 insertQuery = @"INSERT INTO Generos (Descripcion) 
                             VALUES(@Descripcion) SELECT CAST(SCOPE_IDENTITY() AS int)";
-                int primaryKey = conn.QuerySingle<int>(insertQuery, new
+                primarykey = conn.QuerySingle<int>(insertQuery, new
                 {
                     GeneroId = tiposDeDatos.TipoId,
                     Descripcion = tiposDeDatos.Descripcion
                 }, tran);
             }
-            if (tipo == Tipos.Marcas)
+            if (archivo == Archivo.Marcas)
             {
                 insertQuery = @"INSERT INTO Marcas (Nombre) 
                                 VALUES (@Nombre);
@@ -35,7 +35,7 @@ namespace Kevin2024.Datos.Repositorios
                 }, tran);
 
             }
-            if (tipo == Tipos.Categoria)
+            if (archivo == Archivo.Categoria)
             {
                 insertQuery = @"INSERT INTO Categorias (Descripcion) 
                                 VALUES (@Descripcion);
@@ -46,7 +46,7 @@ namespace Kevin2024.Datos.Repositorios
                     Descripcion = tiposDeDatos.Descripcion
                 }, tran);
             }
-            if (tipo == Tipos.Tamanio)
+            if (archivo == Archivo.Tamanio)
             {
                 insertQuery = @"INSERT INTO Tamaños (Descripcion) 
                                     VALUES (@Descripcion);
@@ -54,6 +54,28 @@ namespace Kevin2024.Datos.Repositorios
                 primarykey = conn.QuerySingle<int>(insertQuery, new
                 {
                     TamanioId = tiposDeDatos.TipoId,
+                    Descripcion = tiposDeDatos.Descripcion,
+                }, tran);
+            }
+            if (archivo == Archivo.Telefono)
+            {
+                insertQuery = @"INSERT INTO TiposTelefonos (Descripcion) 
+                                    VALUES (@Descripcion);
+                                    SELECT CAST(SCOPE_IDENTITY() AS INT)";
+                primarykey = conn.QuerySingle<int>(insertQuery, new
+                {
+                    TipoTelefonoId = tiposDeDatos.TipoId,
+                    Descripcion = tiposDeDatos.Descripcion,
+                }, tran);
+            }
+            if (archivo == Archivo.Direccion)
+            {
+                insertQuery = @"INSERT INTO TiposDirecciones (Descripcion) 
+                                    VALUES (@Descripcion);
+                                    SELECT CAST(SCOPE_IDENTITY() AS INT)";
+                primarykey = conn.QuerySingle<int>(insertQuery, new
+                {
+                    TipoDireccionId = tiposDeDatos.TipoId,
                     Descripcion = tiposDeDatos.Descripcion,
                 }, tran);
             }
@@ -66,26 +88,34 @@ namespace Kevin2024.Datos.Repositorios
 
         }
 
-        public void Borrar(SqlConnection conn, Tipos tipo, int tipoId, SqlTransaction tran)
+        public void Borrar(SqlConnection conn, Archivo archivo, int tipoId, SqlTransaction tran)
         {
             var deleteQuery = string.Empty;
-            if (tipo == Tipos.Genero)
+            if (archivo == Archivo.Genero)
             {
                 deleteQuery = @"DELETE FROM Generos WHERE GeneroId=@TipoId";
 
             }
-            if (tipo == Tipos.Marcas)
+            if (archivo == Archivo.Marcas)
             {
                 deleteQuery = @"DELETE FROM Marcas WHERE MarcaId=@TipoId";
 
             }
-            if (tipo == Tipos.Categoria)
+            if (archivo == Archivo.Categoria)
             {
                 deleteQuery = @"DELETE FROM Categorias WHERE CategoriaId=@TipoId";
             }
-            if (tipo == Tipos.Tamanio)
+            if (archivo == Archivo.Tamanio)
             {
                 deleteQuery = @"DELETE FROM Tamaños WHERE TamanioId=@TipoId";
+            }
+            if (archivo == Archivo.Telefono)
+            {
+                deleteQuery = @"DELETE FROM TiposTelefonos WHERE TipoTelefonoId=@TipoId";
+            }
+            if (archivo == Archivo.Direccion)
+            {
+                deleteQuery = @"DELETE FROM TiposDirecciones WHERE TipoDireccionId=@TipoId";
             }
             int registrosAfectados = conn.Execute(deleteQuery, new { tipoId }, tran);
             if (registrosAfectados == 0)
@@ -94,28 +124,38 @@ namespace Kevin2024.Datos.Repositorios
             }
         }
 
-        public void Editar(SqlConnection conn, Tipos tipo, TiposDeDatos tiposDeDatos, SqlTransaction tran)
+        public void Editar(SqlConnection conn, Archivo archivo, TiposDeDatos tiposDeDatos, SqlTransaction tran)
         {
             string updateQuery = string.Empty;
-            if (tipo == Tipos.Genero)
+            if (archivo == Archivo.Genero)
             {
                 updateQuery = @"UPDATE Generos SET Descripcion=@Descripcion 
                                 WHERE GeneroId=@TipoId";
             }
-            if (tipo == Tipos.Marcas)
+            if (archivo == Archivo.Marcas)
             {
                 updateQuery = @"UPDATE Marcas SET Nombre=@Descripcion 
                                     WHERE MarcaId=@TipoId";
             }
-            if (tipo == Tipos.Categoria)
+            if (archivo == Archivo.Categoria)
             {
                 updateQuery = @"UPDATE Categorias SET Descripcion=@Descripcion 
                                     WHERE CategoriaId=@TipoId";
             }
-            if (tipo == Tipos.Tamanio)
+            if (archivo == Archivo.Tamanio)
             {
                 updateQuery = @"UPDATE Tamaños SET Descripcion=@Descripcion 
                                     WHERE TamanioId=@TipoId";
+            }
+            if (archivo == Archivo.Telefono)
+            {
+                updateQuery = @"UPDATE TiposTelefonos SET Descripcion=@Descripcion 
+                                    WHERE TipoTelefonoId=@TipoId";
+            }
+            if (archivo == Archivo.Direccion)
+            {
+                updateQuery = @"UPDATE TiposDirecciones SET Descripcion=@Descripcion 
+                                    WHERE TipoDireccionId=@TipoId";
             }
             int registrosAfectados = conn.Execute(updateQuery, new
             {
@@ -128,39 +168,49 @@ namespace Kevin2024.Datos.Repositorios
             }
         }
 
-        public bool EstaRelacionado(SqlConnection conn, Tipos tipo, int tipoId)
+        public bool EstaRelacionado(SqlConnection conn, Archivo archivo, int tipoId)
         {
             string selectQuery = string.Empty;
-            if (tipo == Tipos.Genero)
+            if (archivo == Archivo.Genero)
             {
                 selectQuery = @"SELECT COUNT(*) FROM Empleados
                                     WHERE GeneroId=@TipoId";
 
             }
-            if (tipo == Tipos.Marcas)
+            if (archivo == Archivo.Marcas)
             {
                 selectQuery = @"SELECT COUNT(*) FROM Productos 
                                     WHERE MarcaId=@TipoId";
             }
-            if (tipo == Tipos.Categoria)
+            if (archivo == Archivo.Categoria)
             {
                 selectQuery = @"SELECT COUNT(*) FROM Productos 
                                     WHERE CategoriaId=@TipoId";
             }
-            if (tipo == Tipos.Tamanio)
+            if (archivo == Archivo.Tamanio)
             {
                 selectQuery = @"SELECT COUNT(*) FROM Productos 
                                     WHERE TamanioId=@TipoId";
             }
+            if (archivo == Archivo.Telefono)
+            {
+                selectQuery = @"SELECT COUNT(*) FROM ClientesTelefonos 
+                                    WHERE TipoTelefonoId=@TipoId";
+            }
+            if (archivo == Archivo.Direccion)
+            {
+                selectQuery = @"SELECT COUNT(*) FROM Clientes 
+                                    WHERE TipoDireccionId=@TipoId";
+            }
             return conn.QuerySingle<int>(selectQuery, new { tipoId }) > 0;
         }
 
-        public bool Existe(SqlConnection conn, Tipos tipo, TiposDeDatos tiposDeDatos)
+        public bool Existe(SqlConnection conn, Archivo archivo, TiposDeDatos tiposDeDatos)
         {
             string selectQuery = string.Empty;
             string finalQuery = string.Empty;
             string conditional = string.Empty;
-            if (tipo == Tipos.Genero)
+            if (archivo == Archivo.Genero)
             {
                 selectQuery = @"SELECT COUNT(*) FROM Generos";
                 if (tiposDeDatos.TipoId == 0)
@@ -172,7 +222,7 @@ namespace Kevin2024.Datos.Repositorios
                     conditional = " WHERE Descripcion = @Descripcion AND GeneroId<>@TipoId";
                 }
             }
-            if (tipo == Tipos.Marcas)
+            if (archivo == Archivo.Marcas)
             {
                 selectQuery = @"SELECT COUNT(*) FROM Marcas";
 
@@ -186,7 +236,7 @@ namespace Kevin2024.Datos.Repositorios
                 }
 
             }
-            if (tipo == Tipos.Categoria)
+            if (archivo == Archivo.Categoria)
             {
                 selectQuery = @"SELECT COUNT(*) FROM Categorias";
                 if (tiposDeDatos.TipoId == 0)
@@ -198,7 +248,7 @@ namespace Kevin2024.Datos.Repositorios
                     conditional = " WHERE Descripcion = @Descripcion AND CategoriaId<>@TipoId";
                 }
             }
-            if (tipo == Tipos.Tamanio)
+            if (archivo == Archivo.Tamanio)
             {
                 selectQuery = @"SELECT COUNT(*) FROM Tamaños";
                 if (tiposDeDatos.TipoId == 0)
@@ -210,29 +260,61 @@ namespace Kevin2024.Datos.Repositorios
                     conditional = " WHERE Descripcion=@Descripcion AND TamanioId<>@TipoId";
                 }
             }
+            if (archivo == Archivo.Telefono)
+            {
+                selectQuery = @"SELECT COUNT(*) FROM ArchivoTelefonos";
+                if (tiposDeDatos.TipoId == 0)
+                {
+                    conditional = " WHERE Descripcion=@Descripcion";
+                }
+                else
+                {
+                    conditional = " WHERE Descripcion=@Descripcion AND TipoTelefonoId<>@TipoId";
+                }
+            }
+            if (archivo == Archivo.Direccion)
+            {
+                selectQuery = @"SELECT COUNT(*) FROM TiposDirecciones";
+                if (tiposDeDatos.TipoId == 0)
+                {
+                    conditional = " WHERE Descripcion=@Descripcion";
+                }
+                else
+                {
+                    conditional = " WHERE Descripcion=@Descripcion AND TipoDireccionId<>@TipoId";
+                }
+            }
             finalQuery = string.Concat(selectQuery, conditional);
             return conn.QuerySingle<int>(finalQuery, tiposDeDatos) > 0;
         }
 
-        public int GetCantidad(SqlConnection conn, Tipos tipo, Func<TiposDeDatos, bool>? filter)
+        public int GetCantidad(SqlConnection conn, Archivo archivo, Func<TiposDeDatos, bool>? filter)
         {
             var lista = new List<TiposDeDatos>();
             var selectQuery = string.Empty;
-            if (tipo == Tipos.Genero)
+            if (archivo == Archivo.Genero)
             {
                 selectQuery = @"SELECT GeneroId, Descripcion FROM Generos";
             }
-            if (tipo == Tipos.Marcas)
+            if (archivo == Archivo.Marcas)
             {
                 selectQuery = @"SELECT MarcaId As TipoId, Nombre As Descripcion FROM Marcas";
             }
-            if (tipo == Tipos.Categoria)
+            if (archivo == Archivo.Categoria)
             {
                 selectQuery = "SELECT CategoriaId, Descripcion FROM Categorias";
             }
-            if (tipo == Tipos.Tamanio)
+            if (archivo == Archivo.Tamanio)
             {
                 selectQuery = @"SELECT TamanioId, Descripcion FROM Tamaños";
+            }
+            if (archivo == Archivo.Telefono)
+            {
+                selectQuery = @"SELECT TipoTelefonoId, Descripcion FROM TiposTelefonos";
+            }
+            if (archivo == Archivo.Direccion)
+            {
+                selectQuery = @"SELECT TipoDireccionId, Descripcion FROM TiposDirecciones";
             }
             var listaTipos = conn.Query<TiposDeDatos>(selectQuery).ToList();
             lista.AddRange(listaTipos);
@@ -243,13 +325,13 @@ namespace Kevin2024.Datos.Repositorios
             return lista.Count;
         }
 
-        public List<TiposDeDatos>? GetLista(SqlConnection conn, Tipos tipo, int currentPage, int pageSize, Orden orden, Func<TiposDeDatos, bool>? filter)
+        public List<TiposDeDatos>? GetLista(SqlConnection conn, Archivo archivo, int currentPage, int pageSize, Orden orden, Func<TiposDeDatos, bool>? filter)
         {
             var listaTipos = new List<TiposDeDatos>();
             var ordenQuery = string.Empty;
             var finalQuery = string.Empty;
             var selectQuery = string.Empty;
-            if (tipo == Tipos.Genero)
+            if (archivo == Archivo.Genero)
             {
                 selectQuery = @"SELECT GeneroId As TipoId, Descripcion FROM Generos";
                 if (orden == Orden.OrdenAZ)
@@ -262,7 +344,7 @@ namespace Kevin2024.Datos.Repositorios
                 }
 
             }
-            if (tipo == Tipos.Marcas)
+            if (archivo == Archivo.Marcas)
             {
                 selectQuery = @"SELECT MarcaId As TipoId, Nombre As Descripcion From Marcas";
 
@@ -276,7 +358,7 @@ namespace Kevin2024.Datos.Repositorios
                 }
 
             }
-            if (tipo == Tipos.Categoria)
+            if (archivo == Archivo.Categoria)
             {
                 selectQuery = @"SELECT CategoriaId As TipoId, Descripcion From Categorias";
 
@@ -289,10 +371,36 @@ namespace Kevin2024.Datos.Repositorios
                     ordenQuery = @" ORDER BY Descripcion Desc";
                 }
             }
-            if (tipo == Tipos.Tamanio)
+            if (archivo == Archivo.Tamanio)
             {
                 selectQuery = @"SELECT TamanioId AS TipoId, 
                                     Descripcion From Tamaños";
+                if (orden == Orden.OrdenAZ)
+                {
+                    ordenQuery = " ORDER BY Descripcion";
+                }
+                if (orden == Orden.OrdenZA)
+                {
+                    ordenQuery = " ORDER BY Descripcion DESC";
+                }
+            }
+            if (archivo == Archivo.Telefono)
+            {
+                selectQuery = @"SELECT TipoTelefonoId AS TipoId, 
+                                    Descripcion From TiposTelefonos";
+                if (orden == Orden.OrdenAZ)
+                {
+                    ordenQuery = " ORDER BY Descripcion";
+                }
+                if (orden == Orden.OrdenZA)
+                {
+                    ordenQuery = " ORDER BY Descripcion DESC";
+                }
+            }
+            if (archivo == Archivo.Direccion)
+            {
+                selectQuery = @"SELECT TipoDireccionId AS TipoId, 
+                                    Descripcion From TiposDirecciones";
                 if (orden == Orden.OrdenAZ)
                 {
                     ordenQuery = " ORDER BY Descripcion";
@@ -312,57 +420,87 @@ namespace Kevin2024.Datos.Repositorios
             return listaTipos.Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
         }
 
-        public List<TiposDeDatos>? GetLista(SqlConnection conn, Tipos tipo)
+        public List<TiposDeDatos>? GetLista(SqlConnection conn, Archivo archivo)
         {
             var listaTipos = new List<TiposDeDatos>();
            
             var selectQuery = string.Empty;
-            if (tipo == Tipos.Genero)
+            if (archivo == Archivo.Genero)
             {
                 selectQuery = @"SELECT GeneroId As TipoId, Descripcion FROM Generos";
             }
-            if (tipo == Tipos.Marcas)
+            if (archivo == Archivo.Marcas)
             {
                 selectQuery = @"SELECT MarcaId As TipoId, Nombre As Descripcion From Marcas";
             }
-            if (tipo == Tipos.Categoria)
+            if (archivo == Archivo.Categoria)
             {
                 selectQuery = @"SELECT CategoriaId As TipoId, Descripcion From Categorias";
             }
-            if (tipo == Tipos.Tamanio)
+            if (archivo == Archivo.Tamanio)
             {
                 selectQuery = @"SELECT TamanioId AS TipoId, 
                                     Descripcion From Tamaños";
+            }
+            if (archivo == Archivo.Telefono)
+            {
+                selectQuery = @"SELECT TipoTelefonoId AS TipoId, 
+                                    Descripcion From TiposTelefonos";
+            }
+            if (archivo == Archivo.Direccion)
+            {
+                selectQuery = @"SELECT TipoDireccionId AS TipoId, 
+                                    Descripcion From TiposDirecciones";
+            }
+            if (archivo == Archivo.Roles)
+            {
+                selectQuery = @"SELECT RolId AS TipoId, 
+                                    Nombre As Descripcion From Roles";
+            }
+            if (archivo == Archivo.FormasDePago)
+            {
+                selectQuery = @"SELECT FormaDePagoId AS TipoId, 
+                                    Descripcion From FormasDePagos";
+            }
+            if (archivo == Archivo.EstadoOrden)
+            {
+                selectQuery = @"SELECT EstadoOrdenId AS TipoId, 
+                                    Descripcion From EstadoOrden";
+            }
+            if (archivo == Archivo.EstadoPago)
+            {
+                selectQuery = @"SELECT EstadoPagoId As TipoId,
+                                    Descripcion From EstadoPagos";
             }
             var lista = conn.Query<TiposDeDatos>(selectQuery).ToList();
             listaTipos.AddRange(lista);
             return listaTipos;
         }
 
-        public int GetPaginaPorRegistro(SqlConnection conn, Tipos tipo, string? descripcion, int pageSize)
+        public int GetPaginaPorRegistro(SqlConnection conn, Archivo archivo, string? descripcion, int pageSize)
         {
             string positionQuery = string.Empty;
-            if (tipo == Tipos.Genero)
+            if (archivo == Archivo.Genero)
             {
                 positionQuery = @"WITH GenerosOrdenados As (SELECT ROW_NUMBER() OVER (ORDER BY Descripcion) 
                         AS RowNum, Descripcion FROM Generos)
                         SELECT RowNum FROM GenerosOrdenados WHERE Descripcion = @Descripcion";
             }
-            if (tipo == Tipos.Marcas)
+            if (archivo == Archivo.Marcas)
             {
                 positionQuery = @"WITH MarcasOrdenadas As (SELECT ROW_NUMBER() 
                             OVER (ORDER BY Nombre) As RowNum, Nombre FROM Marcas)
                             SELECT RowNum FROM MarcasOrdenadas 
                                 WHERE Nombre=@Descripcion";
             }
-            if (tipo == Tipos.Categoria)
+            if (archivo == Archivo.Categoria)
             {
                 positionQuery = @"WITH CategoriasOrdenadas As (SELECT ROW_NUMBER() 
                             OVER (ORDER BY Descripcion) As RowNum, Descripcion FROM Categorias)
                             SELECT RowNum FROM CategoriasOrdenadas 
                                 WHERE Descripcion=@Descripcion";
             }
-            if (tipo == Tipos.Tamanio)
+            if (archivo == Archivo.Tamanio)
             {
                 positionQuery = @"WITH TamanioOrdenado AS (SELECT ROW_NUMBER() 
                                     OVER (ORDER BY Descripcion) AS RowNum, Descripcion 
@@ -370,7 +508,22 @@ namespace Kevin2024.Datos.Repositorios
                                     SELECT RowNum FROM TamanioOrdenado
                                     WHERE Descripcion=@Descripcion";
             }
-
+            if (archivo == Archivo.Telefono)
+            {
+                positionQuery = @"WITH TelefonoOrdenado AS (SELECT ROW_NUMBER() 
+                                    OVER (ORDER BY Descripcion) AS RowNum, Descripcion 
+                                        FROM TiposTelefonos)
+                                    SELECT RowNum FROM TelefonoOrdenado
+                                    WHERE Descripcion=@Descripcion";
+            }
+            if (archivo == Archivo.Direccion)
+            {
+                positionQuery = @"WITH DireccionOrdenada AS (SELECT ROW_NUMBER() 
+                                    OVER (ORDER BY Descripcion) AS RowNum, Descripcion 
+                                        FROM TiposDirecciones)
+                                    SELECT RowNum FROM DireccionOrdenada
+                                    WHERE Descripcion=@Descripcion";
+            }
             int position = conn.ExecuteScalar<int>(positionQuery, new { Descripcion = descripcion });
             return (int)Math.Ceiling((decimal)position / pageSize);
         }

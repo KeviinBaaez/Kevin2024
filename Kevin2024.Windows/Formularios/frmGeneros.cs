@@ -10,7 +10,7 @@ namespace Kevin2024.Windows.Formularios
     public partial class frmGeneros : Form
     {
         private readonly IServiceProvider? _serviceProvider;
-        private readonly IServiciosTipos? _servicios;
+        private readonly IServiciosArchivos? _servicios;
         private List<TiposDeDatos>? lista;
 
         //Paginación
@@ -20,7 +20,7 @@ namespace Kevin2024.Windows.Formularios
         private int totalRecords = 0;
 
         //Tipo
-        private Tipos tipo = Tipos.Genero;
+        private Archivo archivo = Archivo.Genero;
 
         //Filtro
         private Func<TiposDeDatos, bool>? filter = null;
@@ -32,7 +32,7 @@ namespace Kevin2024.Windows.Formularios
         {
             InitializeComponent();
             _serviceProvider = serviceProvider;
-            _servicios = _serviceProvider?.GetService<IServiciosTipos>() ?? throw new ArgumentException("Dependencias No Cargadas!!!");
+            _servicios = _serviceProvider?.GetService<IServiciosArchivos>() ?? throw new ArgumentException("Dependencias No Cargadas!!!");
         }
 
         private void frmGeneros_Load(object sender, EventArgs e)
@@ -44,7 +44,7 @@ namespace Kevin2024.Windows.Formularios
         {
             try
             {
-                totalRecords = _servicios!.GetCantidad(tipo, filter);
+                totalRecords = _servicios!.GetCantidad(archivo, filter);
                 totalPages = (int)Math.Ceiling((decimal)totalRecords / pageSize);
                 currentPage = totalPages;
                 LoadData(filter);
@@ -60,7 +60,7 @@ namespace Kevin2024.Windows.Formularios
         {
             try
             {
-                lista = _servicios!.GetLista(tipo, currentPage, pageSize, orden, filter);
+                lista = _servicios!.GetLista(archivo, currentPage, pageSize, orden, filter);
                 if (lista!.Count > 0)
                 {
                     GridHelper.MostrarDatosEnGrilla<TiposDeDatos>(lista, dgvDatos);
@@ -94,19 +94,19 @@ namespace Kevin2024.Windows.Formularios
 
         private void tsbNuevo_Click(object sender, EventArgs e)
         {
-            frmNuevoTipoAE frm = new frmNuevoTipoAE(_serviceProvider, tipo) { Text = "Nuevo Género" };
+            frmNuevoTipoAE frm = new frmNuevoTipoAE(_serviceProvider, archivo) { Text = "Nuevo Género" };
             DialogResult dr = frm.ShowDialog(this);
             if (dr == DialogResult.Cancel) return;
             try
             {
                 TiposDeDatos? tiposDeDatos = frm.GetTipoDeDato();
                 if (tiposDeDatos is null) return;
-                if (!_servicios!.Existe(tipo, tiposDeDatos))
+                if (!_servicios!.Existe(archivo, tiposDeDatos))
                 {
-                    _servicios.Guardar(tipo, tiposDeDatos);
-                    totalRecords = _servicios!.GetCantidad(tipo, filter);
+                    _servicios.Guardar(archivo, tiposDeDatos);
+                    totalRecords = _servicios!.GetCantidad(archivo, filter);
                     totalPages = (int)Math.Ceiling((decimal)totalRecords / pageSize);
-                    currentPage = _servicios.GetPaginaPorRegistro(tipo, tiposDeDatos.Descripcion, pageSize);
+                    currentPage = _servicios.GetPaginaPorRegistro(archivo, tiposDeDatos.Descripcion, pageSize);
                     LoadData(filter);
                     MessageBox.Show("Registro agregado",
                         "Mensaje",
@@ -133,17 +133,18 @@ namespace Kevin2024.Windows.Formularios
             if (dgvDatos.SelectedRows.Count == 0) return;
             var r = dgvDatos.SelectedRows[0];
             if (r.Tag is null) return;
-            TiposDeDatos tiposDeDato = (TiposDeDatos)r.Tag;
-            frmNuevoTipoAE frm = new frmNuevoTipoAE(_serviceProvider, tipo) { Text = "Editar Genero" };
+            TiposDeDatos? tiposDeDato = (TiposDeDatos)r.Tag;
+            frmNuevoTipoAE frm = new frmNuevoTipoAE(_serviceProvider, archivo) { Text = "Editar Genero" };
             frm.SetTipoDeDato(tiposDeDato);
             DialogResult dr = frm.ShowDialog();
             if (dr == DialogResult.Cancel) return;
             tiposDeDato = frm.GetTipoDeDato();
+            if (tiposDeDato == null) return;
             try
             {
-                if (!_servicios!.Existe(tipo, tiposDeDato))
+                if (!_servicios!.Existe(archivo, tiposDeDato))
                 {
-                    _servicios!.Guardar(tipo, tiposDeDato);
+                    _servicios!.Guardar(archivo, tiposDeDato);
                     GridHelper.SetearFila(r, tiposDeDato);
                     MessageBox.Show("Registro modificado satisfactoriamente",
                         "Mensaje",
@@ -180,10 +181,10 @@ namespace Kevin2024.Windows.Formularios
             if (dr == DialogResult.Cancel) return;
             try
             {
-                if (!_servicios!.EstaRelacionado(tipo, tiposDeDato.TipoId))
+                if (!_servicios!.EstaRelacionado(archivo, tiposDeDato.TipoId))
                 {
-                    _servicios.Borrar(tipo, tiposDeDato.TipoId);
-                    totalRecords = _servicios!.GetCantidad(tipo, filter);
+                    _servicios.Borrar(archivo, tiposDeDato.TipoId);
+                    totalRecords = _servicios!.GetCantidad(archivo, filter);
                     totalPages = (int)Math.Ceiling((decimal)totalRecords / pageSize);
                     if (currentPage > totalPages)
                     {
@@ -231,14 +232,14 @@ namespace Kevin2024.Windows.Formularios
 
         private void tsbFiltrar_Click(object sender, EventArgs e)
         {
-            frmFiltro frm = new frmFiltro(tipo) { Text = "Ingresar texto para buscar..." };
+            frmFiltro frm = new frmFiltro(archivo) { Text = "Ingresar texto para buscar..." };
             DialogResult dr = frm.ShowDialog(this);
             try
             {
                 var textoFiltro = frm.GetTexto();
                 if (textoFiltro is null || textoFiltro == string.Empty) return;
                 filter = b => b.Descripcion!.ToUpper().Contains(textoFiltro.ToUpper());
-                totalRecords = _servicios!.GetCantidad(tipo, filter);
+                totalRecords = _servicios!.GetCantidad(archivo, filter);
                 currentPage = 1;
                 if (totalRecords > 0)
                 {

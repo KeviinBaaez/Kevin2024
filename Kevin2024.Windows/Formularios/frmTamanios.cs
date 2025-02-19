@@ -9,7 +9,7 @@ namespace Kevin2024.Windows.Formularios
     public partial class frmTamanios : Form
     {
         private readonly IServiceProvider? _serviceProvider;
-        private readonly IServiciosTipos? _servicios;
+        private readonly IServiciosArchivos? _servicios;
         private List<TiposDeDatos>? lista;
         //Paginación
         private int currentPage = 1;
@@ -24,12 +24,12 @@ namespace Kevin2024.Windows.Formularios
         private Orden orden = Orden.Ninguno;
 
         //Tipo para busqueda
-        Tipos tipo = Tipos.Tamanio;
+        Archivo archivo = Archivo.Tamanio;
         public frmTamanios(IServiceProvider? serviceProvider)
         {
             InitializeComponent();
             _serviceProvider = serviceProvider;
-            _servicios = _serviceProvider?.GetService<IServiciosTipos>() ??
+            _servicios = _serviceProvider?.GetService<IServiciosArchivos>() ??
                 throw new ApplicationException("Dependencias no cargadas!!");
         }
 
@@ -42,7 +42,7 @@ namespace Kevin2024.Windows.Formularios
         {
             try
             {
-                totalRecords = _servicios!.GetCantidad(tipo, filter);
+                totalRecords = _servicios!.GetCantidad(archivo, filter);
                 totalPages = (int)Math.Ceiling((decimal)totalRecords / pageSize);
                 LoadData(filter);
             }
@@ -57,7 +57,7 @@ namespace Kevin2024.Windows.Formularios
         {
             try
             {
-                lista = _servicios!.GetLista(tipo, currentPage, pageSize, orden, filter);
+                lista = _servicios!.GetLista(archivo, currentPage, pageSize, orden, filter);
                 if (lista!.Count > 0)
                 {
                     GridHelper.MostrarDatosEnGrilla<TiposDeDatos>(lista, dgvDatos);
@@ -89,19 +89,19 @@ namespace Kevin2024.Windows.Formularios
         }
         private void tsbNuevo_Click(object sender, EventArgs e)
         {
-            frmNuevoTipoAE frm = new frmNuevoTipoAE(_serviceProvider, tipo) { Text = "Nuevo Tamaño" };
+            frmNuevoTipoAE frm = new frmNuevoTipoAE(_serviceProvider, archivo) { Text = "Nuevo Tamaño" };
             DialogResult dr = frm.ShowDialog(this);
             if (dr == DialogResult.Cancel) return;
             try
             {
                 TiposDeDatos? tamanio = frm.GetTipoDeDato();
                 if (tamanio is null) return;
-                if (!_servicios!.Existe(tipo, tamanio))
+                if (!_servicios!.Existe(archivo, tamanio))
                 {
-                    _servicios.Guardar(tipo, tamanio);
-                    totalRecords = _servicios!.GetCantidad(tipo, filter);
+                    _servicios.Guardar(archivo, tamanio);
+                    totalRecords = _servicios!.GetCantidad(archivo, filter);
                     totalPages = (int)Math.Ceiling((decimal)totalRecords / pageSize);
-                    currentPage = _servicios.GetPaginaPorRegistro(tipo, tamanio.Descripcion, pageSize);
+                    currentPage = _servicios.GetPaginaPorRegistro(archivo, tamanio.Descripcion, pageSize);
                     LoadData(filter);
 
                     MessageBox.Show("Registro agregado",
@@ -130,7 +130,7 @@ namespace Kevin2024.Windows.Formularios
             var r = dgvDatos.SelectedRows[0];
             if (r.Tag is null) return;
             TiposDeDatos? tamanio = (TiposDeDatos)r.Tag;
-            frmNuevoTipoAE frm = new frmNuevoTipoAE(_serviceProvider, tipo) { Text = "Editar Tamanio" };
+            frmNuevoTipoAE frm = new frmNuevoTipoAE(_serviceProvider, archivo) { Text = "Editar Tamanio" };
             frm.SetTipoDeDato(tamanio);
             DialogResult dr = frm.ShowDialog(this);
             if (dr == DialogResult.Cancel) return;
@@ -138,9 +138,9 @@ namespace Kevin2024.Windows.Formularios
             try
             {
                 if (tamanio is null) return;
-                if (!_servicios!.Existe(tipo, tamanio))
+                if (!_servicios!.Existe(archivo, tamanio))
                 {
-                    _servicios.Guardar(tipo, tamanio);
+                    _servicios.Guardar(archivo, tamanio);
                     GridHelper.SetearFila(r, tamanio);
                     MessageBox.Show("Registro modificado satisfactoriamente",
                         "Mensaje",
@@ -187,10 +187,10 @@ namespace Kevin2024.Windows.Formularios
             }
             try
             {
-                if (!_servicios!.EstaRelacionado(tipo, tamanio.TipoId))
+                if (!_servicios!.EstaRelacionado(archivo, tamanio.TipoId))
                 {
-                    _servicios!.Borrar(tipo, tamanio.TipoId);
-                    totalRecords = _servicios!.GetCantidad(tipo, filter);
+                    _servicios!.Borrar(archivo, tamanio.TipoId);
+                    totalRecords = _servicios!.GetCantidad(archivo, filter);
                     totalPages = (int)Math.Ceiling((decimal)totalRecords / pageSize);
                     if (currentPage > totalPages)
                     {
@@ -233,14 +233,14 @@ namespace Kevin2024.Windows.Formularios
         }
         private void busquedaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmFiltro frm = new frmFiltro(tipo) { Text = "Ingresar texto para buscar..." };
+            frmFiltro frm = new frmFiltro(archivo) { Text = "Ingresar texto para buscar..." };
             DialogResult dr = frm.ShowDialog(this);
             try
             {
                 var textoFiltro = frm.GetTexto();
                 if (textoFiltro is null || textoFiltro == string.Empty) return;
-                filter = t => t.Descripcion.ToUpper().Contains(textoFiltro.ToUpper());
-                totalRecords = _servicios!.GetCantidad(tipo, filter);
+                filter = t => t.Descripcion!.ToUpper().Contains(textoFiltro.ToUpper());
+                totalRecords = _servicios!.GetCantidad(archivo, filter);
                 currentPage = 1;
                 if (totalRecords > 0)
                 {

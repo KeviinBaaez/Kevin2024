@@ -1,5 +1,6 @@
 ﻿using Kevin2024.Entidades;
 using Kevin2024.Entidades.Dtos;
+using Kevin2024.Entidades.Entidades;
 using Kevin2024.Entidades.Enumeraciones;
 using Kevin2024.Servicios.Interfaces;
 using Kevin2024.Windows.Helpers;
@@ -20,12 +21,13 @@ namespace Kevin2024.Windows.Formularios
 
         //Filtro
         private Func<ProductosListDto, bool>? filter = null;
+        private TiposDeDatos? consulta;
 
         //Orden
         private Orden orden = Orden.Ninguno;
 
         //Tipo para busqueda
-        Tipos tipo = Tipos.Ninguno;
+        Archivo archivo = Archivo.Ninguno;
 
         public frmProductos(IServiceProvider? serviceProvider)
         {
@@ -43,7 +45,7 @@ namespace Kevin2024.Windows.Formularios
         {
             try
             {
-                totalRecords = _servicios!.GetCantidad(filter);
+                totalRecords = _servicios!.GetCantidad(filter, orden, consulta);
                 totalPages = (int)Math.Ceiling((decimal)totalRecords / pageSize);
                 LoadData(filter);
             }
@@ -57,7 +59,7 @@ namespace Kevin2024.Windows.Formularios
         {
             try
             {
-                lista = _servicios!.GetLista(currentPage, pageSize, orden, filter);
+                lista = _servicios!.GetLista(currentPage, pageSize, orden, filter, consulta);
                 if (lista!.Count > 0)
                 {
                     GridHelper.MostrarDatosEnGrilla<ProductosListDto>(lista, dgvDatos);
@@ -136,7 +138,7 @@ namespace Kevin2024.Windows.Formularios
             var r = dgvDatos.SelectedRows[0];
             if (r.Tag == null) return;
             ProductosListDto pListDto = (ProductosListDto)r.Tag;
-            Productos? producto = _servicios!.GetProductoPorId(pListDto.ProductoId);
+            Productos? producto = _servicios!.GetProductoPorId(TipoProducto.Productos, pListDto.ProductoId);
             if (producto is null) return;
             frmProductosAE frm = new frmProductosAE(_serviceProvider) { Text = "Editar Producto" };
             frm.SetProducto(producto);
@@ -150,7 +152,7 @@ namespace Kevin2024.Windows.Formularios
                 {
                     _servicios!.Guardar(producto);
                     currentPage = _servicios!.GetPaginaPorRegistro(producto.Nombre, pageSize);
-                    LoadData();
+                    LoadData(filter);
                     int row = GridHelper.ObtenerRowIndex(dgvDatos, producto.ProductoId);
                     GridHelper.MarcarRow(dgvDatos, row);
                     MessageBox.Show("Registro modificado satisfactoriamente!",
@@ -200,7 +202,7 @@ namespace Kevin2024.Windows.Formularios
                     {
                         currentPage = totalPages;
                     }
-                    LoadData();
+                    LoadData(filter);
                     MessageBox.Show("Registro eliminado satisfactoriamente",
                             "Mensaje",
                             MessageBoxButtons.OK,
@@ -247,19 +249,62 @@ namespace Kevin2024.Windows.Formularios
             orden = Orden.OrdenZA;
             LoadData(filter);
         }
+        private void suspendidoSiToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            orden = Orden.Suspendido;
+            totalRecords = _servicios!.GetCantidad(filter, orden, consulta);
+            currentPage = 1;
+            if (totalRecords > 0)
+            {
+                totalPages = (int)Math.Ceiling((decimal)totalRecords / pageSize);
+                tsbFiltrar.Enabled = false;
+                LoadData(filter);
+            }
+            else
+            {
+                MessageBox.Show("No se encontraron registros..",
+                    "Mensaje",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                filter = null;
+            }
+        }
+        private void suspendidoNoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            orden = Orden.Activo;
+            totalRecords = _servicios!.GetCantidad(filter, orden, consulta);
+            currentPage = 1;
+            if (totalRecords > 0)
+            {
+                totalPages = (int)Math.Ceiling((decimal)totalRecords / pageSize);
+                tsbFiltrar.Enabled = false;
+                LoadData(filter);
+            }
+            else
+            {
+                MessageBox.Show("No se encontraron registros..",
+                    "Mensaje",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                filter = null;
+            }
+        }
 
         private void busquedaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            tipo = Tipos.Ninguno;
-            frmFiltro frm = new frmFiltro(tipo) { Text = "Ingresar texto para buscar..." };
+            archivo = Archivo.Ninguno;
+            frmFiltro frm = new frmFiltro(archivo) { Text = "Ingresar texto para buscar..." };
             DialogResult dr = frm.ShowDialog(this);
             try
             {
                 var textoFiltro = frm.GetTexto();
                 if (textoFiltro is null || textoFiltro == string.Empty) return;
 
-                filter = b => (b.Nombre.ToUpper().Contains(textoFiltro.ToUpper()) ||
-                (b.CodBarras.ToString().Contains(textoFiltro)));
+                filter = b => (b.Nombre.ToUpper().Contains(textoFiltro.ToUpper())) ||
+                (b.CodBarras.ToString().Contains(textoFiltro)) ||
+                (b.Marca!.ToUpper().Contains(textoFiltro.ToUpper())) ||
+                (b.Categoria!.ToUpper().Contains(textoFiltro.ToUpper())) ||
+                (b.Tamanio!.ToUpper().Contains(textoFiltro.ToUpper()));
                 totalRecords = _servicios!.GetCantidad(filter);
                 currentPage = 1;
                 if (totalRecords > 0)
@@ -285,8 +330,8 @@ namespace Kevin2024.Windows.Formularios
         }
         private void categoriaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            tipo = Tipos.Categoria;
-            frmFiltro frm = new frmFiltro(tipo) { Text = "Ingresar texto para buscar..." };
+            archivo = Archivo.Categoria;
+            frmFiltro frm = new frmFiltro(archivo) { Text = "Ingresar texto para buscar..." };
 
             DialogResult dr = frm.ShowDialog(this);
             try
@@ -294,6 +339,7 @@ namespace Kevin2024.Windows.Formularios
                 var textoFiltro = frm.GetTexto();
                 if (textoFiltro is null || textoFiltro == string.Empty) return;
                 filter = p => p.Categoria!.ToUpper().Contains(textoFiltro.ToUpper());
+                totalRecords = _servicios!.GetCantidad(filter);
                 if (totalRecords > 0)
                 {
                     totalPages = (int)Math.Ceiling((decimal)totalRecords / pageSize);
@@ -316,8 +362,8 @@ namespace Kevin2024.Windows.Formularios
         }
         private void marcaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            tipo = Tipos.Marcas;
-            frmFiltro frm = new frmFiltro(tipo) { Text = "Ingresar texto para buscar..." };
+            archivo = Archivo.Marcas;
+            frmFiltro frm = new frmFiltro(archivo) { Text = "Ingresar texto para buscar..." };
 
             DialogResult dr = frm.ShowDialog(this);
             try
@@ -325,6 +371,7 @@ namespace Kevin2024.Windows.Formularios
                 var textoFiltro = frm.GetTexto();
                 if (textoFiltro is null || textoFiltro == string.Empty) return;
                 filter = p => p.Marca!.ToUpper().Contains(textoFiltro.ToUpper());
+                totalRecords = _servicios!.GetCantidad(filter);
                 if (totalRecords > 0)
                 {
                     totalPages = (int)Math.Ceiling((decimal)totalRecords / pageSize);
@@ -347,8 +394,8 @@ namespace Kevin2024.Windows.Formularios
         }
         private void tamañoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            tipo = Tipos.Tamanio;
-            frmFiltro frm = new frmFiltro(tipo) { Text = "Ingresar texto para buscar..." };
+            archivo = Archivo.Tamanio;
+            frmFiltro frm = new frmFiltro(archivo) { Text = "Ingresar texto para buscar..." };
 
             DialogResult dr = frm.ShowDialog(this);
             try
@@ -356,6 +403,7 @@ namespace Kevin2024.Windows.Formularios
                 var textoFiltro = frm.GetTexto();
                 if (textoFiltro is null || textoFiltro == string.Empty) return;
                 filter = p => p.Tamanio!.ToUpper().Contains(textoFiltro.ToUpper());
+                totalRecords = _servicios!.GetCantidad(filter);
                 if (totalRecords > 0)
                 {
                     totalPages = (int)Math.Ceiling((decimal)totalRecords / pageSize);
@@ -408,5 +456,12 @@ namespace Kevin2024.Windows.Formularios
             currentPage = int.Parse(cboPaginas.Text);
             LoadData(filter);
         }
+
+        public void SetConsulta(TiposDeDatos consulta)
+        {
+            this.consulta = consulta;
+        }
+
+
     }
 }

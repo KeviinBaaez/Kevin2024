@@ -1,13 +1,15 @@
-﻿using Kevin2024.Servicios.Interfaces;
+﻿using Kevin2024.Entidades.Entidades;
+using Kevin2024.Servicios.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Kevin2024.Windows.Formularios
 {
-    public partial class frmUsuario : Form
+    public partial class frmLogin : Form
     {
         private readonly IServiceProvider? _serviceProvider;
         private readonly IServiciosLogin? _servicio;
-        public frmUsuario(IServiceProvider? serviceProvider)
+        private Usuario? usuario;
+        public frmLogin(IServiceProvider? serviceProvider)
         {
             InitializeComponent();
             _serviceProvider = serviceProvider;
@@ -15,39 +17,49 @@ namespace Kevin2024.Windows.Formularios
         }
         private void btnOK_Click(object sender, EventArgs e)
         {
-
-
             if (ValidarDatos())
             {
-                string usuario = txtUsuario.Text;
+                string user = txtUsuario.Text;
                 string clave = txtPassword.Text;
+                usuario = _servicio!.GetUsuario(user, clave);
 
-
-                if (_servicio!.Conectar(usuario, clave))
+                if (usuario != null)
                 {
-                    //MessageBox.Show("BIENVENIDO",
-                    //    "Inicio Perfecto",
-                    //    MessageBoxButtons.OK,
-                    //    MessageBoxIcon.Information);
-                    frmProductos frm = new frmProductos(_serviceProvider);
-                    frm.ShowDialog(this);
+                    Hide();
+                    frmPrincipal frm = new frmPrincipal(_serviceProvider);
+                    frm.FormClosing += Frm_FormClosing;
+                    frm.SetUsuario(usuario);
+                    frm.Show();
                 }
                 else
                 {
-                    MessageBox.Show("Error",
+                    MessageBox.Show("Ingrese un nombre de usuario y contraseña correctos.\nTenga en cuenta que ambos campos pueden distinguir\nentre mayúsculas y minúsculas",
                         "Error de Inicio",
                         MessageBoxButtons.OK,
-                        MessageBoxIcon.Exclamation);
+                        MessageBoxIcon.Error);
                     txtPassword.Clear();
-                } 
+                }
             }
+        }
+
+        private void Frm_FormClosing(object? sender, FormClosingEventArgs e)
+        {
+            this.Show();
+            LimpiarTextos();
+        }
+
+        private void LimpiarTextos()
+        {
+            txtUsuario.Clear();
+            txtPassword.Clear();
+            txtUsuario.Focus();
         }
 
         private bool ValidarDatos()
         {
             errorProvider1.Clear();
             bool valido = true;
-            if(string.IsNullOrEmpty(txtUsuario.Text))
+            if (string.IsNullOrEmpty(txtUsuario.Text))
             {
                 valido = false;
                 errorProvider1.SetError(txtUsuario, "Debes ingresar tu nombre de usuario");
@@ -58,6 +70,13 @@ namespace Kevin2024.Windows.Formularios
                 errorProvider1.SetError(txtPassword, "Ingrese su contraseña");
             }
             return valido;
+        }
+
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            txtUsuario.Clear();
+            txtPassword.Clear();
+            txtUsuario.Focus();
         }
     }
 }

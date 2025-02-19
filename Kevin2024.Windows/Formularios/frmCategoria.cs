@@ -9,7 +9,7 @@ namespace Kevin2024.Windows.Formularios
     public partial class frmCategoria : Form
     {
         private readonly IServiceProvider? _serviceProvider;
-        private readonly IServiciosTipos? _servicios;
+        private readonly IServiciosArchivos? _servicios;
         private List<TiposDeDatos>? lista;
 
         //Paginación
@@ -26,13 +26,13 @@ namespace Kevin2024.Windows.Formularios
         private Orden orden = Orden.Ninguno;
 
         //Tipo para busqueda
-        Tipos tipo = Tipos.Categoria;
+        Archivo archivo = Archivo.Categoria;
 
         public frmCategoria(IServiceProvider? serviceProvider)
         {
             InitializeComponent();
             _serviceProvider = serviceProvider;
-            _servicios = _serviceProvider?.GetService<IServiciosTipos>() ??
+            _servicios = _serviceProvider?.GetService<IServiciosArchivos>() ??
                 throw new ApplicationException("Dependencias no cargadas!!");
         }
 
@@ -44,7 +44,7 @@ namespace Kevin2024.Windows.Formularios
         {
             try
             {
-                totalRecords = _servicios!.GetCantidad(tipo, filter);
+                totalRecords = _servicios!.GetCantidad(archivo, filter);
                 totalPages = (int)Math.Ceiling((decimal)totalRecords / pageSize);
                 LoadData(filter);
             }
@@ -58,7 +58,7 @@ namespace Kevin2024.Windows.Formularios
         {
             try
             {
-                lista = _servicios!.GetLista(tipo, currentPage, pageSize, orden, filter);
+                lista = _servicios!.GetLista(archivo, currentPage, pageSize, orden, filter);
                 if (lista!.Count > 0)
                 {
                     GridHelper.MostrarDatosEnGrilla<TiposDeDatos>(lista, dgvDatos);
@@ -91,19 +91,19 @@ namespace Kevin2024.Windows.Formularios
 
         private void tsbNuevo_Click(object sender, EventArgs e)
         {
-            frmNuevoTipoAE frm = new frmNuevoTipoAE(_serviceProvider, tipo) { Text = "Nueva Categoria" };
+            frmNuevoTipoAE frm = new frmNuevoTipoAE(_serviceProvider, archivo) { Text = "Nueva Categoria" };
             DialogResult dr = frm.ShowDialog(this);
             if (dr == DialogResult.Cancel) return;
             try
             {
                 TiposDeDatos? categoria = frm.GetTipoDeDato();
                 if (categoria is null) return;
-                if (!_servicios!.Existe(tipo, categoria))
+                if (!_servicios!.Existe(archivo, categoria))
                 {
-                    _servicios.Guardar(tipo, categoria);
-                    totalRecords = _servicios!.GetCantidad(tipo, filter);
+                    _servicios.Guardar(archivo, categoria);
+                    totalRecords = _servicios!.GetCantidad(archivo, filter);
                     totalPages = (int)Math.Ceiling((decimal)totalRecords / pageSize);
-                    currentPage = _servicios.GetPaginaPorRegistro(tipo, categoria.Descripcion, pageSize);
+                    currentPage = _servicios.GetPaginaPorRegistro(archivo, categoria.Descripcion, pageSize);
                     LoadData(filter);
 
                     MessageBox.Show("Registro agregado",
@@ -132,17 +132,17 @@ namespace Kevin2024.Windows.Formularios
             var r = dgvDatos.SelectedRows[0];
             if (r.Tag is null) return;
             TiposDeDatos? categoria = (TiposDeDatos)r.Tag;
-            frmNuevoTipoAE frm = new frmNuevoTipoAE(_serviceProvider, tipo) { Text = "Editar Categoría" };
+            frmNuevoTipoAE frm = new frmNuevoTipoAE(_serviceProvider, archivo) { Text = "Editar Categoría" };
             frm.SetTipoDeDato(categoria);
             DialogResult dr = frm.ShowDialog(this);
             if (dr == DialogResult.Cancel) return;
             categoria = frm.GetTipoDeDato();
-            if(categoria is null) return;
+            if (categoria is null) return;
             try
             {
-                if (!_servicios!.Existe(tipo, categoria))
+                if (!_servicios!.Existe(archivo, categoria))
                 {
-                    _servicios.Guardar(tipo, categoria);
+                    _servicios.Guardar(archivo, categoria);
                     GridHelper.SetearFila(r, categoria);
                     MessageBox.Show("Registro modificado satisfactoriamente",
                         "Mensaje",
@@ -189,10 +189,10 @@ namespace Kevin2024.Windows.Formularios
             }
             try
             {
-                if (!_servicios!.EstaRelacionado(tipo, categoria.TipoId))
+                if (!_servicios!.EstaRelacionado(archivo, categoria.TipoId))
                 {
-                    _servicios!.Borrar(tipo, categoria.TipoId);
-                    totalRecords = _servicios!.GetCantidad(tipo, filter);
+                    _servicios!.Borrar(archivo, categoria.TipoId);
+                    totalRecords = _servicios!.GetCantidad(archivo, filter);
                     totalPages = (int)Math.Ceiling((decimal)totalRecords / pageSize);
                     if (currentPage > totalPages)
                     {
@@ -234,14 +234,14 @@ namespace Kevin2024.Windows.Formularios
 
         private void busquedaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmFiltro frm = new frmFiltro(tipo) { Text = "Ingresar texto para buscar..." };
+            frmFiltro frm = new frmFiltro(archivo) { Text = "Ingresar texto para buscar..." };
             DialogResult dr = frm.ShowDialog(this);
             try
             {
                 var textoFiltro = frm.GetTexto();
                 if (textoFiltro is null || textoFiltro == string.Empty) return;
                 filter = b => b.Descripcion!.ToUpper().Contains(textoFiltro.ToUpper());
-                totalRecords = _servicios!.GetCantidad(tipo, filter);
+                totalRecords = _servicios!.GetCantidad(archivo, filter);
                 currentPage = 1;
                 if (totalRecords > 0)
                 {
@@ -310,5 +310,18 @@ namespace Kevin2024.Windows.Formularios
                 LoadData(filter);
             }
         }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            if (dgvDatos.SelectedRows.Count == 0) return;
+            var r = dgvDatos.SelectedRows[0];
+            if (r.Tag == null) return;
+            TiposDeDatos consulta = (TiposDeDatos)r.Tag;
+            frmProductos frm = new frmProductos(_serviceProvider);
+            frm.SetConsulta(consulta);
+            frm.ShowDialog();
+        }
+
+
     }
 }

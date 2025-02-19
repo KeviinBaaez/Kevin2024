@@ -2,6 +2,7 @@
 using Kevin2024.Datos.Interfaces;
 using Kevin2024.Entidades;
 using Kevin2024.Entidades.Dtos;
+using Kevin2024.Entidades.Entidades;
 using Kevin2024.Entidades.Enumeraciones;
 using System.Data.SqlClient;
 
@@ -122,9 +123,11 @@ namespace Kevin2024.Datos.Repositorios
             return conn.QuerySingle<int>(finalQuery, producto) > 0;
         }
 
-        public int GetCantidad(SqlConnection conn, Func<ProductosListDto, bool>? filter = null)
+        public int GetCantidad(SqlConnection conn, Func<ProductosListDto, bool>? filter = null, Orden? orden = null, TiposDeDatos? consulta = null)
         {
             var listaProductos = new List<ProductosListDto>();
+            string finalQuery = string.Empty;
+            string conditions = string.Empty;
             string selectQuery = @"SELECT ProductoId AS ProductoId,
                                 p.Nombre,
 								m.Nombre AS Marca,
@@ -142,7 +145,27 @@ namespace Kevin2024.Datos.Repositorios
                                 LEFT JOIN Tamaños t on p.TamanioId = t.TamanioId
 
                                 LEFT JOIN Categorias c on p.CategoriaId = c.CategoriaId ";
-            var lista = conn.Query<ProductosListDto>(selectQuery).ToList();
+            if (orden == Orden.Suspendido)
+            {
+                conditions = @" WHERE Suspendido = 1";
+            }
+            if (orden == Orden.Activo)
+            {
+                conditions = @" WHERE Suspendido = 0";
+            }
+            if (consulta != null)
+            {
+                if (orden is Orden.Suspendido || orden is Orden.Activo)
+                {
+                    conditions = conditions + " AND c.CategoriaId = @TipoId";
+                }
+                else
+                {
+                    conditions = " WHERE c.CategoriaId = @TipoId";
+                }
+            }
+            finalQuery = string.Concat(selectQuery, conditions);
+            var lista = conn.Query<ProductosListDto>(finalQuery, new { TipoId = consulta?.TipoId }).ToList();
             listaProductos.AddRange(lista);
 
             if (filter != null)
@@ -152,10 +175,41 @@ namespace Kevin2024.Datos.Repositorios
             return listaProductos.Count;
         }
 
-        public List<ProductosListDto>? GetLista(SqlConnection conn, int currentPage, int pageSize, Orden orden, Func<ProductosListDto, bool>? filter = null)
+        public int GetCantidad(SqlConnection conn, Func<Productos, bool>? filter = null)
+        {
+            var listaProductos = new List<Productos>();
+            string selectQuery = @"SELECT ProductoId AS ProductoId,
+                                p.Nombre,
+								m.Nombre AS Marca,
+								p.CodBarras,
+                                t.Descripcion AS Tamanio,
+								c.Descripcion AS Categoria,
+                                PrecioVenta, 
+                                Stock, 
+                                Suspendido, 
+                                Imagen
+                           FROM Productos p
+
+                                LEFT JOIN Marcas m on p.MarcaId = m.MarcaId
+
+                                LEFT JOIN Tamaños t on p.TamanioId = t.TamanioId
+
+                                LEFT JOIN Categorias c on p.CategoriaId = c.CategoriaId ";
+            var lista = conn.Query<Productos>(selectQuery).ToList();
+            listaProductos.AddRange(lista);
+
+            if (filter != null)
+            {
+                listaProductos = listaProductos.Where(filter).ToList();
+            }
+            return listaProductos.Count;
+        }
+
+        public List<ProductosListDto>? GetLista(SqlConnection conn, int currentPage, int pageSize, Orden orden, Func<ProductosListDto, bool>? filter = null, TiposDeDatos? consulta = null)
         {
             var listaProductos = new List<ProductosListDto>();
             string ordenQuery = string.Empty;
+            string conditions = string.Empty;
             string finalQuery = string.Empty;
             var selectQuery = @"SELECT ProductoId AS ProductoId,
                                 p.Nombre,
@@ -174,9 +228,9 @@ namespace Kevin2024.Datos.Repositorios
                                 LEFT JOIN Tamaños t on p.TamanioId = t.TamanioId
 
                                 LEFT JOIN Categorias c on p.CategoriaId = c.CategoriaId";
-            if(orden == Orden.Ninguno)
+            if (orden == Orden.Ninguno)
             {
-                ordenQuery = @" ORDER BY p.Nombre";
+                ordenQuery = @" ORDER BY Suspendido";
             }
             if (orden == Orden.OrdenAZ)
             {
@@ -186,14 +240,105 @@ namespace Kevin2024.Datos.Repositorios
             {
                 ordenQuery = @" ORDER BY p.Nombre Desc";
             }
-            finalQuery = string.Concat(selectQuery, ordenQuery);
-            var lista = conn.Query<ProductosListDto>(finalQuery).ToList();
+            if (orden == Orden.Suspendido)
+            {
+                conditions = @" WHERE Suspendido = 1";
+            }
+            if (orden == Orden.Activo)
+            {
+                conditions = @" WHERE Suspendido = 0";
+            }
+            if (consulta != null)
+            {
+                if (orden is Orden.Suspendido || orden is Orden.Activo)
+                {
+                    conditions = conditions + " AND c.CategoriaId = @TipoId";
+                }
+                else
+                {
+                    conditions = " WHERE c.CategoriaId = @TipoId";
+                }
+            }
+            finalQuery = string.Concat(selectQuery, conditions, ordenQuery);
+            var lista = conn.Query<ProductosListDto>(finalQuery, new { TipoId = consulta?.TipoId }).ToList();
             listaProductos.AddRange(lista);
             if (filter != null)
             {
                 listaProductos = listaProductos.Where(filter).ToList();
             }
             return listaProductos.Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
+        }
+
+        public List<Productos>? GetListaCombo(SqlConnection conn, Func<Productos, bool>? filter)
+        {
+            var listaProductos = new List<Productos>();
+            var selectQuery = @"SELECT ProductoId AS ProductoId,
+                                p.Nombre,
+								m.Nombre AS Marca,
+								p.CodBarras,
+                                t.Descripcion AS Tamanio,
+								c.Descripcion AS Categoria,
+                                PrecioVenta, 
+                                Stock, 
+                                Suspendido,
+                                Imagen
+                           FROM Productos p
+
+                                LEFT JOIN Marcas m on p.MarcaId = m.MarcaId
+
+                                LEFT JOIN Tamaños t on p.TamanioId = t.TamanioId
+
+                                LEFT JOIN Categorias c on p.CategoriaId = c.CategoriaId";
+
+            var lista = conn.Query<Productos>(selectQuery).ToList();
+            listaProductos.AddRange(lista);
+            if (filter != null)
+            {
+                listaProductos = listaProductos.Where(filter).ToList();
+            }
+            return listaProductos;
+        }
+
+        public List<Productos>? GetListaProductos(SqlConnection conn, TipoProducto tipoProducto)
+        {
+            var listaProductos = new List<Productos>();
+            if (tipoProducto is TipoProducto.Productos)
+            {
+                var selectQuery = @"SELECT ProductoId AS ProductoId,
+                                p.Nombre,
+								m.Nombre AS Marca,
+								p.CodBarras,
+                                t.Descripcion AS Tamanio,
+								c.Descripcion AS Categoria,
+                                PrecioVenta, 
+                                Stock, 
+                                Suspendido,
+                                Imagen
+                           FROM Productos p
+
+                                LEFT JOIN Marcas m on p.MarcaId = m.MarcaId
+
+                                LEFT JOIN Tamaños t on p.TamanioId = t.TamanioId
+
+                                LEFT JOIN Categorias c on p.CategoriaId = c.CategoriaId
+                            WHERE Suspendido = 0";
+
+                var lista = conn.Query<Productos>(selectQuery).ToList();
+                return lista;
+            }
+            else
+            {
+                string selectQuery = @"SELECT c.ComboId AS ProductoId, 
+                                    c.Nombre AS Nombre, t.Descripcion AS Tamanio, 
+                                   c.PrecioVenta, 
+                                c.Stock, c.Suspendido FROM Combos c 
+                                INNER JOIN Tamaños t ON t.TamanioId = c.TamanioId
+                                WHERE Suspendido = 0";
+
+                var listaCombo = conn.Query<Combo>(selectQuery).ToList();
+                listaProductos.AddRange(listaCombo);
+                return listaProductos;
+            }
         }
 
         public int GetPaginaPorRegistro(SqlConnection conn, string nombre, int pageSize)
@@ -207,59 +352,63 @@ namespace Kevin2024.Datos.Repositorios
             return (int)Math.Ceiling((decimal)position / pageSize);
         }
 
-        public Productos? GetProductoPorId(SqlConnection conn, int productoId)
+        public Productos? GetProductoPorId(SqlConnection conn, TipoProducto tipoProducto, int productoId)
         {
-            string selectQuery = @"SELECT ProductoId AS ProductoId,
-                            Nombre, Descripcion, 
-                                                     MarcaId, Sabor, 
-                                                     CodBarras, TamanioId, CategoriaId, 
-                                                 PrecioCosto, PrecioVenta, 
-                                                 Stock, NivelDeReposicion, 
-                                                 Suspendido, Imagen
+            if (tipoProducto is TipoProducto.Productos)
+            {
+                string selectQuery = @"SELECT ProductoId AS ProductoId,
+                                                Nombre, Descripcion, 
+                                                MarcaId, Sabor, 
+                                                CodBarras, TamanioId, CategoriaId, 
+                                                PrecioCosto, PrecioVenta, 
+                                                Stock, NivelDeReposicion, 
+                                                Suspendido, Imagen
                                FROM Productos
                                                  WHERE ProductoId=@ProductoId";
-            return conn.QuerySingleOrDefault<Productos>(selectQuery, new { @ProductoId = productoId });
+                return conn.QuerySingleOrDefault<Productos>(selectQuery, new { @ProductoId = productoId });
+            }
+            else if (tipoProducto is TipoProducto.Combos)
+            {
+                string selectQuery = @"SELECT 
+                           c.ComboId AS ProductoId, 
+                           c.Nombre AS Nombre, 
+                           c.Descripcion, 
+                           c.PrecioCosto, 
+                           c.PrecioVenta, 
+                           c.Stock,
+                           c.FechaFin,
+						   c.FechaFin,
+                           c.NivelDeReposicion, 
+                           c.Imagen, 
+                           c.Suspendido,
+						   dc.DetalleComboId,
+						   dc.ComboId,
+						   dc.ProductoId,
+						   dc.Cantidad,
+						   p.ProductoId As ProductoId,
+						   p.Nombre As Nombre
+						   FROM Combos c
+						   INNER JOIN DetallesCombos dc ON c.ComboId=dc.ComboId
+						   INNER JOIN Productos p ON p.ProductoId=dc.ProductoId
+						WHERE c.ComboId=@ComboId";
+                var comboDictionary = new Dictionary<int, Combo>();
+                var resultado = conn.Query<Combo, DetallesCombos, Productos, Combo>(
+                    selectQuery, (combo, detalle, producto) =>
+                    {
+                        if (!comboDictionary.TryGetValue(combo.ProductoId, out var comboEntry))
+                        {
+                            comboEntry = combo;
+                            comboEntry.DetallesCombos = new List<DetallesCombos>();
+                            comboDictionary.Add(combo.ProductoId, comboEntry);
+                        };
+                        detalle.Producto = producto;
+                        comboEntry.DetallesCombos.Add(detalle);
+                        return comboEntry;
+                    }, new { @ComboId = productoId },
+                    splitOn: "DetalleComboId,ProductoId");
+                return comboDictionary.Values.FirstOrDefault();
+            }
+            return null;
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-    //public Productos? GetProductoPorId(SqlConnection conn, int productoId)
-    //    {
-    //       // if (tipoProducto == TipoProducto.Bebidas)
-    //       // {
-    //       //     string selectQuery = @"SELECT BebidaId AS ProductoId,
-    //							//MarcaId, Sabor, CodBarras, CategoriaId, 
-    //       //                             TamanioId, 
-    //       //                         PrecioCosto, PrecioVenta, 
-    //       //                         Stock, NivelDeReposicion, 
-    //       //                         Suspendido
-    //				   //     FROM Bebidas
-    //       //                         WHERE BebidaId=@BebidaId";
-    //       //     return conn.QuerySingleOrDefault<Bebidas>(selectQuery, new { @BebidaId = productoId });
-    //       // }
-
-    //       // if (tipoProducto == TipoProducto.Postres)
-    //       // {
-    //       //     string selectQuery = @"SELECT PostreId AS ProductoId,
-    //							//Nombre, Descripcion, 
-    //       //                             MarcaId, Sabor, 
-    //       //                             CodBarras, TamanioId, CategoriaId, 
-    //       //                         PrecioCosto, PrecioVenta, 
-    //       //                         Stock, NivelDeReposicion, 
-    //       //                         Suspendido
-    //				   //     FROM Postres
-    //       //                         WHERE PostreId=@PostreId";
-    //       //     return conn.QuerySingleOrDefault<Postre>(selectQuery, new { @PostreId = productoId });
-    //       // }
-    //        return null;
-    //    }
 }

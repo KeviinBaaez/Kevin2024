@@ -3,16 +3,16 @@ using Kevin2024.Entidades.Enumeraciones;
 
 namespace Kevin2024.Servicios.Interfaces
 {
-    public interface IServiciosTipos
+    public interface IServiciosArchivos
     {
-        void Borrar(Tipos tipo, int tipoId);
-        bool EstaRelacionado(Tipos tipo, int tipoId);
-        bool Existe(Tipos tipo, TiposDeDatos tiposDeDatos);
-        public int GetCantidad(Tipos tipo, Func<TiposDeDatos, bool>? filter);
+        void Borrar(Archivo archivo, int tipoId);
+        bool EstaRelacionado(Archivo tipo, int tipoId);
+        bool Existe(Archivo archivo, TiposDeDatos tiposDeDatos);
+        public int GetCantidad(Archivo archivo, Func<TiposDeDatos, bool>? filter);
 
-        public List<TiposDeDatos>? GetLista(Tipos tipo, int currentPage, int pageSize, Orden orden, Func<TiposDeDatos, bool>? filter);
-        public List<TiposDeDatos> GetLista(Tipos tipo);
-        int GetPaginaPorRegistro(Tipos tipo, string? descripcion, int pageSize);
-        void Guardar(Tipos tipo, TiposDeDatos tiposDeDatos);
+        public List<TiposDeDatos>? GetLista(Archivo archivo, int currentPage, int pageSize, Orden orden, Func<TiposDeDatos, bool>? filter);
+        public List<TiposDeDatos>? GetLista(Archivo archivo);
+        int GetPaginaPorRegistro(Archivo archivo, string? descripcion, int pageSize);
+        void Guardar(Archivo archivo, TiposDeDatos tiposDeDatos);
     }
 }

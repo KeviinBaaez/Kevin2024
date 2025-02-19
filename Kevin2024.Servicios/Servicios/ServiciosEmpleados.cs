@@ -39,15 +39,6 @@ namespace Kevin2024.Servicios.Servicios
             }
         }
 
-        //public bool EstaRelacionado(int empleadoId)
-        //{
-        //    using (var conn = new SqlConnection(_cadena))
-        //    {
-        //        conn.Open();
-        //        return _repositorio!.EstaRelacionado(conn, empleadoId);
-        //    }
-        //}
-
         public bool Existe(Empleados empleado)
         {
             using (var conn = new SqlConnection(_cadena))

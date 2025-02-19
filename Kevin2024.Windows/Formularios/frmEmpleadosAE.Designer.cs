@@ -77,7 +77,7 @@
             btnCancelar.Location = new Point(474, 463);
             btnCancelar.Name = "btnCancelar";
             btnCancelar.Size = new Size(237, 54);
-            btnCancelar.TabIndex = 9;
+            btnCancelar.TabIndex = 12;
             btnCancelar.Text = "Cancelar";
             btnCancelar.TextAlign = ContentAlignment.MiddleRight;
             btnCancelar.TextImageRelation = TextImageRelation.ImageBeforeText;
@@ -92,7 +92,7 @@
             btnAceptar.Location = new Point(155, 463);
             btnAceptar.Name = "btnAceptar";
             btnAceptar.Size = new Size(285, 54);
-            btnAceptar.TabIndex = 8;
+            btnAceptar.TabIndex = 11;
             btnAceptar.Text = "Aceptar";
             btnAceptar.TextAlign = ContentAlignment.MiddleRight;
             btnAceptar.TextImageRelation = TextImageRelation.ImageBeforeText;
@@ -106,12 +106,12 @@
             nupSalario.Maximum = new decimal(new int[] { 10000000, 0, 0, 0 });
             nupSalario.Name = "nupSalario";
             nupSalario.Size = new Size(100, 23);
-            nupSalario.TabIndex = 6;
+            nupSalario.TabIndex = 8;
             // 
             // checkBox1
             // 
             checkBox1.AutoSize = true;
-            checkBox1.Location = new Point(164, 395);
+            checkBox1.Location = new Point(164, 389);
             checkBox1.Name = "checkBox1";
             checkBox1.Size = new Size(15, 14);
             checkBox1.TabIndex = 7;
@@ -240,7 +240,7 @@
             dtFechaContrato.Location = new Point(189, 250);
             dtFechaContrato.Name = "dtFechaContrato";
             dtFechaContrato.Size = new Size(212, 23);
-            dtFechaContrato.TabIndex = 5;
+            dtFechaContrato.TabIndex = 7;
             // 
             // errorProvider1
             // 
@@ -285,17 +285,17 @@
             cboGeneros.DropDownStyle = ComboBoxStyle.DropDownList;
             cboGeneros.Font = new Font("Constantia", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             cboGeneros.FormattingEnabled = true;
-            cboGeneros.Location = new Point(140, 340);
+            cboGeneros.Location = new Point(139, 337);
             cboGeneros.Name = "cboGeneros";
             cboGeneros.Size = new Size(188, 27);
-            cboGeneros.TabIndex = 27;
+            cboGeneros.TabIndex = 9;
             // 
             // dtFechaNac
             // 
             dtFechaNac.Location = new Point(189, 205);
             dtFechaNac.Name = "dtFechaNac";
             dtFechaNac.Size = new Size(212, 23);
-            dtFechaNac.TabIndex = 28;
+            dtFechaNac.TabIndex = 6;
             // 
             // btnBuscar
             // 
@@ -306,7 +306,7 @@
             btnBuscar.Margin = new Padding(4);
             btnBuscar.Name = "btnBuscar";
             btnBuscar.Size = new Size(254, 45);
-            btnBuscar.TabIndex = 30;
+            btnBuscar.TabIndex = 10;
             btnBuscar.Text = "Buscar";
             btnBuscar.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnBuscar.UseVisualStyleBackColor = false;
@@ -368,7 +368,7 @@
             txtTelefono.Name = "txtTelefono";
             txtTelefono.PlaceholderText = "Télefono";
             txtTelefono.Size = new Size(224, 16);
-            txtTelefono.TabIndex = 1;
+            txtTelefono.TabIndex = 4;
             // 
             // txtDireccion
             // 
@@ -380,7 +380,7 @@
             txtDireccion.Name = "txtDireccion";
             txtDireccion.PlaceholderText = "Dirección";
             txtDireccion.Size = new Size(224, 16);
-            txtDireccion.TabIndex = 2;
+            txtDireccion.TabIndex = 5;
             // 
             // panel4
             // 

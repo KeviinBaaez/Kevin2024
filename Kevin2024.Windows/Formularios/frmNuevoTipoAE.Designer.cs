@@ -39,6 +39,18 @@
             panel2 = new Panel();
             panel3 = new Panel();
             panelMarcas = new Panel();
+            panelTipoDireccion = new Panel();
+            panel13 = new Panel();
+            label11 = new Label();
+            txtDireccion = new TextBox();
+            panel14 = new Panel();
+            panelTipotelefono = new Panel();
+            panel11 = new Panel();
+            label9 = new Label();
+            txtTelefono = new TextBox();
+            panel12 = new Panel();
+            label10 = new Label();
+            label12 = new Label();
             panelTamanios = new Panel();
             panel5 = new Panel();
             panel6 = new Panel();
@@ -61,6 +73,10 @@
             panel2.SuspendLayout();
             panel3.SuspendLayout();
             panelMarcas.SuspendLayout();
+            panelTipoDireccion.SuspendLayout();
+            panel13.SuspendLayout();
+            panelTipotelefono.SuspendLayout();
+            panel11.SuspendLayout();
             panelTamanios.SuspendLayout();
             panel5.SuspendLayout();
             panelCategorias.SuspendLayout();
@@ -183,6 +199,140 @@
             panelMarcas.Name = "panelMarcas";
             panelMarcas.Size = new Size(357, 123);
             panelMarcas.TabIndex = 7;
+            // 
+            // panelTipoDireccion
+            // 
+            panelTipoDireccion.Controls.Add(panel13);
+            panelTipoDireccion.Controls.Add(label12);
+            panelTipoDireccion.Location = new Point(0, 0);
+            panelTipoDireccion.Name = "panelTipoDireccion";
+            panelTipoDireccion.Size = new Size(357, 123);
+            panelTipoDireccion.TabIndex = 10;
+            // 
+            // panel13
+            // 
+            panel13.Controls.Add(label11);
+            panel13.Controls.Add(txtDireccion);
+            panel13.Controls.Add(panel14);
+            panel13.Dock = DockStyle.Fill;
+            panel13.Location = new Point(0, 39);
+            panel13.Name = "panel13";
+            panel13.Size = new Size(357, 84);
+            panel13.TabIndex = 6;
+            // 
+            // label11
+            // 
+            label11.Anchor = AnchorStyles.None;
+            label11.AutoSize = true;
+            label11.Font = new Font("Constantia", 12F, FontStyle.Bold);
+            label11.ForeColor = SystemColors.ControlLightLight;
+            label11.Location = new Point(34, 26);
+            label11.Name = "label11";
+            label11.Size = new Size(106, 19);
+            label11.TabIndex = 0;
+            label11.Text = "Descripcion:";
+            // 
+            // txtDireccion
+            // 
+            txtDireccion.Anchor = AnchorStyles.None;
+            txtDireccion.BackColor = Color.FromArgb(0, 59, 103);
+            txtDireccion.BorderStyle = BorderStyle.None;
+            txtDireccion.Font = new Font("Constantia", 12F, FontStyle.Bold);
+            txtDireccion.ForeColor = Color.White;
+            txtDireccion.Location = new Point(152, 24);
+            txtDireccion.Name = "txtDireccion";
+            txtDireccion.PlaceholderText = "Tipo dirección";
+            txtDireccion.Size = new Size(175, 20);
+            txtDireccion.TabIndex = 1;
+            txtDireccion.TextAlign = HorizontalAlignment.Center;
+            // 
+            // panel14
+            // 
+            panel14.Anchor = AnchorStyles.None;
+            panel14.BackColor = Color.Black;
+            panel14.Location = new Point(152, 45);
+            panel14.Name = "panel14";
+            panel14.Size = new Size(175, 1);
+            panel14.TabIndex = 4;
+            // 
+            // panelTipotelefono
+            // 
+            panelTipotelefono.Controls.Add(panel11);
+            panelTipotelefono.Controls.Add(label10);
+            panelTipotelefono.Location = new Point(0, 0);
+            panelTipotelefono.Name = "panelTipotelefono";
+            panelTipotelefono.Size = new Size(356, 123);
+            panelTipotelefono.TabIndex = 9;
+            // 
+            // panel11
+            // 
+            panel11.Controls.Add(label9);
+            panel11.Controls.Add(txtTelefono);
+            panel11.Controls.Add(panel12);
+            panel11.Dock = DockStyle.Fill;
+            panel11.Location = new Point(0, 39);
+            panel11.Name = "panel11";
+            panel11.Size = new Size(356, 84);
+            panel11.TabIndex = 6;
+            // 
+            // label9
+            // 
+            label9.Anchor = AnchorStyles.None;
+            label9.AutoSize = true;
+            label9.Font = new Font("Constantia", 12F, FontStyle.Bold);
+            label9.ForeColor = SystemColors.ControlLightLight;
+            label9.Location = new Point(16, 29);
+            label9.Name = "label9";
+            label9.Size = new Size(106, 19);
+            label9.TabIndex = 0;
+            label9.Text = "Descripcion:";
+            // 
+            // txtTelefono
+            // 
+            txtTelefono.Anchor = AnchorStyles.None;
+            txtTelefono.BackColor = Color.FromArgb(0, 59, 103);
+            txtTelefono.BorderStyle = BorderStyle.None;
+            txtTelefono.Font = new Font("Constantia", 12F, FontStyle.Bold);
+            txtTelefono.ForeColor = Color.White;
+            txtTelefono.Location = new Point(134, 27);
+            txtTelefono.Name = "txtTelefono";
+            txtTelefono.PlaceholderText = "Tipo teléfono";
+            txtTelefono.Size = new Size(175, 20);
+            txtTelefono.TabIndex = 1;
+            txtTelefono.TextAlign = HorizontalAlignment.Center;
+            // 
+            // panel12
+            // 
+            panel12.Anchor = AnchorStyles.None;
+            panel12.BackColor = Color.Black;
+            panel12.Location = new Point(134, 48);
+            panel12.Name = "panel12";
+            panel12.Size = new Size(175, 1);
+            panel12.TabIndex = 4;
+            // 
+            // label10
+            // 
+            label10.Dock = DockStyle.Top;
+            label10.Font = new Font("Constantia", 18F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point, 0);
+            label10.ForeColor = SystemColors.ButtonHighlight;
+            label10.Location = new Point(0, 0);
+            label10.Name = "label10";
+            label10.Size = new Size(356, 39);
+            label10.TabIndex = 1;
+            label10.Text = "¡Nuevo Tipo Teléfono!";
+            label10.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // label12
+            // 
+            label12.Dock = DockStyle.Top;
+            label12.Font = new Font("Constantia", 18F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point, 0);
+            label12.ForeColor = SystemColors.ButtonHighlight;
+            label12.Location = new Point(0, 0);
+            label12.Name = "label12";
+            label12.Size = new Size(357, 39);
+            label12.TabIndex = 1;
+            label12.Text = "¡Nuevo Tipo Dirección!";
+            label12.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // panelTamanios
             // 
@@ -318,7 +468,7 @@
             panelGeneros.Controls.Add(label8);
             panelGeneros.Location = new Point(0, 0);
             panelGeneros.Name = "panelGeneros";
-            panelGeneros.Size = new Size(357, 123);
+            panelGeneros.Size = new Size(356, 123);
             panelGeneros.TabIndex = 7;
             // 
             // panel9
@@ -329,7 +479,7 @@
             panel9.Dock = DockStyle.Fill;
             panel9.Location = new Point(0, 39);
             panel9.Name = "panel9";
-            panel9.Size = new Size(357, 84);
+            panel9.Size = new Size(356, 84);
             panel9.TabIndex = 6;
             // 
             // label7
@@ -338,7 +488,7 @@
             label7.AutoSize = true;
             label7.Font = new Font("Constantia", 12F, FontStyle.Bold);
             label7.ForeColor = SystemColors.ControlLightLight;
-            label7.Location = new Point(34, 34);
+            label7.Location = new Point(32, 31);
             label7.Name = "label7";
             label7.Size = new Size(71, 19);
             label7.TabIndex = 0;
@@ -351,7 +501,7 @@
             txtGenero.BorderStyle = BorderStyle.None;
             txtGenero.Font = new Font("Constantia", 12F, FontStyle.Bold);
             txtGenero.ForeColor = Color.White;
-            txtGenero.Location = new Point(134, 34);
+            txtGenero.Location = new Point(132, 31);
             txtGenero.Name = "txtGenero";
             txtGenero.PlaceholderText = "Género";
             txtGenero.Size = new Size(175, 20);
@@ -362,7 +512,7 @@
             // 
             panel10.Anchor = AnchorStyles.None;
             panel10.BackColor = Color.Black;
-            panel10.Location = new Point(134, 55);
+            panel10.Location = new Point(132, 52);
             panel10.Name = "panel10";
             panel10.Size = new Size(175, 1);
             panel10.TabIndex = 4;
@@ -374,7 +524,7 @@
             label8.ForeColor = SystemColors.ButtonHighlight;
             label8.Location = new Point(0, 0);
             label8.Name = "label8";
-            label8.Size = new Size(357, 39);
+            label8.Size = new Size(356, 39);
             label8.TabIndex = 1;
             label8.Text = "¡Nueva Género!";
             label8.TextAlign = ContentAlignment.MiddleCenter;
@@ -385,11 +535,13 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(0, 59, 103);
             ClientSize = new Size(356, 183);
-            Controls.Add(panel2);
             Controls.Add(panelGeneros);
             Controls.Add(panelMarcas);
+            Controls.Add(panel2);
             Controls.Add(panelCategorias);
             Controls.Add(panelTamanios);
+            Controls.Add(panelTipoDireccion);
+            Controls.Add(panelTipotelefono);
             Name = "frmNuevoTipoAE";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Nuevo";
@@ -399,6 +551,12 @@
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
             panelMarcas.ResumeLayout(false);
+            panelTipoDireccion.ResumeLayout(false);
+            panel13.ResumeLayout(false);
+            panel13.PerformLayout();
+            panelTipotelefono.ResumeLayout(false);
+            panel11.ResumeLayout(false);
+            panel11.PerformLayout();
             panelTamanios.ResumeLayout(false);
             panel5.ResumeLayout(false);
             panel5.PerformLayout();
@@ -441,5 +599,17 @@
         private TextBox txtGenero;
         private Panel panel10;
         private Label label8;
+        private Panel panelTipotelefono;
+        private Panel panel11;
+        private Label label9;
+        private TextBox txtTelefono;
+        private Panel panel12;
+        private Label label10;
+        private Panel panelTipoDireccion;
+        private Panel panel13;
+        private Label label11;
+        private TextBox txtDireccion;
+        private Panel panel14;
+        private Label label12;
     }
 }

@@ -53,8 +53,8 @@
             cboPaginas = new ComboBox();
             txtPaginas = new TextBox();
             dgvDatos = new DataGridView();
-            ColMarcaId = new DataGridViewTextBoxColumn();
-            ColMarca = new DataGridViewTextBoxColumn();
+            ColGeneroId = new DataGridViewTextBoxColumn();
+            ColGenero = new DataGridViewTextBoxColumn();
             panel2.SuspendLayout();
             toolStrip1.SuspendLayout();
             panel3.SuspendLayout();
@@ -185,7 +185,7 @@
             // 
             ordenToolStripMenuItem.Image = (Image)resources.GetObject("ordenToolStripMenuItem.Image");
             ordenToolStripMenuItem.Name = "ordenToolStripMenuItem";
-            ordenToolStripMenuItem.Size = new Size(180, 22);
+            ordenToolStripMenuItem.Size = new Size(155, 22);
             ordenToolStripMenuItem.Text = "Orden(A-Z)";
             ordenToolStripMenuItem.Click += ordenAZToolStripMenuItem_Click;
             // 
@@ -193,7 +193,7 @@
             // 
             ordenZAToolStripMenuItem.Image = (Image)resources.GetObject("ordenZAToolStripMenuItem.Image");
             ordenZAToolStripMenuItem.Name = "ordenZAToolStripMenuItem";
-            ordenZAToolStripMenuItem.Size = new Size(180, 22);
+            ordenZAToolStripMenuItem.Size = new Size(155, 22);
             ordenZAToolStripMenuItem.Text = "Orden(Z-A)";
             ordenZAToolStripMenuItem.Click += ordenZAToolStripMenuItem_Click;
             // 
@@ -236,9 +236,9 @@
             // 
             btnUltimo.FlatStyle = FlatStyle.Flat;
             btnUltimo.Image = Properties.Resources.angulo_doble_derecha__1_;
-            btnUltimo.Location = new Point(592, 6);
+            btnUltimo.Location = new Point(592, 8);
             btnUltimo.Name = "btnUltimo";
-            btnUltimo.Size = new Size(49, 49);
+            btnUltimo.Size = new Size(50, 50);
             btnUltimo.TabIndex = 3;
             btnUltimo.UseVisualStyleBackColor = true;
             btnUltimo.Click += btnUltimo_Click;
@@ -247,9 +247,9 @@
             // 
             btnSiguiente.FlatStyle = FlatStyle.Flat;
             btnSiguiente.Image = Properties.Resources.angulo_pequeno_derecho__1_;
-            btnSiguiente.Location = new Point(535, 8);
+            btnSiguiente.Location = new Point(535, 11);
             btnSiguiente.Name = "btnSiguiente";
-            btnSiguiente.Size = new Size(51, 44);
+            btnSiguiente.Size = new Size(50, 45);
             btnSiguiente.TabIndex = 3;
             btnSiguiente.UseVisualStyleBackColor = true;
             btnSiguiente.Click += btnSiguiente_Click;
@@ -258,9 +258,9 @@
             // 
             btnAnterior.FlatStyle = FlatStyle.Flat;
             btnAnterior.Image = Properties.Resources.angulo_pequeno_izquierdo__1_;
-            btnAnterior.Location = new Point(478, 8);
+            btnAnterior.Location = new Point(478, 11);
             btnAnterior.Name = "btnAnterior";
-            btnAnterior.Size = new Size(51, 44);
+            btnAnterior.Size = new Size(50, 45);
             btnAnterior.TabIndex = 3;
             btnAnterior.UseVisualStyleBackColor = true;
             btnAnterior.Click += btnAnterior_Click;
@@ -269,9 +269,9 @@
             // 
             btnPrimero.FlatStyle = FlatStyle.Flat;
             btnPrimero.Image = Properties.Resources.angulo_doble_izquierda__1_;
-            btnPrimero.Location = new Point(423, 7);
+            btnPrimero.Location = new Point(423, 8);
             btnPrimero.Name = "btnPrimero";
-            btnPrimero.Size = new Size(49, 47);
+            btnPrimero.Size = new Size(50, 50);
             btnPrimero.TabIndex = 3;
             btnPrimero.UseVisualStyleBackColor = true;
             btnPrimero.Click += btnPrimero_Click;
@@ -311,7 +311,7 @@
             dgvDatos.AllowUserToDeleteRows = false;
             dgvDatos.BorderStyle = BorderStyle.None;
             dgvDatos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvDatos.Columns.AddRange(new DataGridViewColumn[] { ColMarcaId, ColMarca });
+            dgvDatos.Columns.AddRange(new DataGridViewColumn[] { ColGeneroId, ColGenero });
             dgvDatos.Dock = DockStyle.Fill;
             dgvDatos.Location = new Point(0, 0);
             dgvDatos.MultiSelect = false;
@@ -322,23 +322,23 @@
             dgvDatos.Size = new Size(678, 411);
             dgvDatos.TabIndex = 9;
             // 
-            // ColMarcaId
+            // ColGeneroId
             // 
-            ColMarcaId.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            ColMarcaId.HeaderText = "GeneroId";
-            ColMarcaId.Name = "ColMarcaId";
-            ColMarcaId.ReadOnly = true;
-            ColMarcaId.Visible = false;
-            ColMarcaId.Width = 150;
+            ColGeneroId.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            ColGeneroId.HeaderText = "GeneroId";
+            ColGeneroId.Name = "ColGeneroId";
+            ColGeneroId.ReadOnly = true;
+            ColGeneroId.Visible = false;
+            ColGeneroId.Width = 150;
             // 
-            // ColMarca
+            // ColGenero
             // 
-            ColMarca.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            ColGenero.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dataGridViewCellStyle1.Font = new Font("Constantia", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            ColMarca.DefaultCellStyle = dataGridViewCellStyle1;
-            ColMarca.HeaderText = "Géneros";
-            ColMarca.Name = "ColMarca";
-            ColMarca.ReadOnly = true;
+            ColGenero.DefaultCellStyle = dataGridViewCellStyle1;
+            ColGenero.HeaderText = "Géneros";
+            ColGenero.Name = "ColGenero";
+            ColGenero.ReadOnly = true;
             // 
             // frmGeneros
             // 
@@ -388,7 +388,7 @@
         private ComboBox cboPaginas;
         private TextBox txtPaginas;
         private DataGridView dgvDatos;
-        private DataGridViewTextBoxColumn ColMarcaId;
-        private DataGridViewTextBoxColumn ColMarca;
+        private DataGridViewTextBoxColumn ColGeneroId;
+        private DataGridViewTextBoxColumn ColGenero;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Kevin2024.Datos.Interfaces;
+using Kevin2024.Entidades.Entidades;
 using Kevin2024.Servicios.Interfaces;
 using System.Data.SqlClient;
 
@@ -21,6 +22,15 @@ namespace Kevin2024.Servicios.Servicios
             {
                 conn.Open();
                 return _repositorio!.Conectar(conn, usuario, clave);
+            }
+        }
+
+        public Usuario? GetUsuario(string usuario, string clave)
+        {
+            using (var conn = new SqlConnection(_cadena))
+            {
+                conn.Open();
+                return _repositorio!.GetUsuario(conn, usuario, clave);
             }
         }
     }

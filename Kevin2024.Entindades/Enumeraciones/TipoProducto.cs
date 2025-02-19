@@ -8,10 +8,7 @@ namespace Kevin2024.Entidades.Enumeraciones
 {
     public enum TipoProducto
     {
-        Comidas = 1,
-        Bebidas = 2,
-        Postres = 3,
-        Aderezos = 4,
-        Todos = 5,
+        Productos = 1,
+        Combos = 2
     }
 }

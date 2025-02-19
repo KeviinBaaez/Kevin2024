@@ -47,6 +47,12 @@
             panelGeneros = new Panel();
             txtGenero = new TextBox();
             label1 = new Label();
+            panelTiposTelefonos = new Panel();
+            txtTelefono = new TextBox();
+            label2 = new Label();
+            panelTiposDirecciones = new Panel();
+            txtDireccion = new TextBox();
+            label3 = new Label();
             panelCategorias.SuspendLayout();
             panelMarcas.SuspendLayout();
             panelTamanios.SuspendLayout();
@@ -54,6 +60,8 @@
             ((System.ComponentModel.ISupportInitialize)errorProvider1).BeginInit();
             PanelBusqueda.SuspendLayout();
             panelGeneros.SuspendLayout();
+            panelTiposTelefonos.SuspendLayout();
+            panelTiposDirecciones.SuspendLayout();
             SuspendLayout();
             // 
             // panelCategorias
@@ -158,9 +166,9 @@
             panel1.Controls.Add(btnCancelar);
             panel1.Controls.Add(btnAceptar);
             panel1.Dock = DockStyle.Bottom;
-            panel1.Location = new Point(0, 76);
+            panel1.Location = new Point(0, 73);
             panel1.Name = "panel1";
-            panel1.Size = new Size(361, 55);
+            panel1.Size = new Size(360, 52);
             panel1.TabIndex = 2;
             // 
             // btnCancelar
@@ -204,7 +212,7 @@
             PanelBusqueda.BackColor = Color.FromArgb(0, 59, 103);
             PanelBusqueda.Controls.Add(txtBusqueda);
             PanelBusqueda.Font = new Font("Constantia", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            PanelBusqueda.Location = new Point(1, 0);
+            PanelBusqueda.Location = new Point(0, 0);
             PanelBusqueda.Name = "PanelBusqueda";
             PanelBusqueda.Size = new Size(358, 73);
             PanelBusqueda.TabIndex = 1;
@@ -252,17 +260,84 @@
             label1.TabIndex = 1;
             label1.Text = "Géneros:";
             // 
+            // panelTiposTelefonos
+            // 
+            panelTiposTelefonos.BackColor = Color.FromArgb(0, 59, 103);
+            panelTiposTelefonos.Controls.Add(txtTelefono);
+            panelTiposTelefonos.Controls.Add(label2);
+            panelTiposTelefonos.Font = new Font("Constantia", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            panelTiposTelefonos.Location = new Point(0, 0);
+            panelTiposTelefonos.Name = "panelTiposTelefonos";
+            panelTiposTelefonos.Size = new Size(358, 76);
+            panelTiposTelefonos.TabIndex = 3;
+            // 
+            // txtTelefono
+            // 
+            txtTelefono.BackColor = Color.Black;
+            txtTelefono.BorderStyle = BorderStyle.FixedSingle;
+            txtTelefono.ForeColor = Color.White;
+            txtTelefono.Location = new Point(118, 28);
+            txtTelefono.Name = "txtTelefono";
+            txtTelefono.PlaceholderText = "Escriba para buscar...";
+            txtTelefono.Size = new Size(217, 27);
+            txtTelefono.TabIndex = 1;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.ForeColor = Color.White;
+            label2.Location = new Point(12, 30);
+            label2.Name = "label2";
+            label2.Size = new Size(97, 19);
+            label2.TabIndex = 1;
+            label2.Text = "T. teléfono:";
+            // 
+            // panelTiposDirecciones
+            // 
+            panelTiposDirecciones.BackColor = Color.FromArgb(0, 59, 103);
+            panelTiposDirecciones.Controls.Add(txtDireccion);
+            panelTiposDirecciones.Controls.Add(label3);
+            panelTiposDirecciones.Font = new Font("Constantia", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            panelTiposDirecciones.Location = new Point(0, 0);
+            panelTiposDirecciones.Name = "panelTiposDirecciones";
+            panelTiposDirecciones.Size = new Size(358, 76);
+            panelTiposDirecciones.TabIndex = 4;
+            // 
+            // txtDireccion
+            // 
+            txtDireccion.BackColor = Color.Black;
+            txtDireccion.BorderStyle = BorderStyle.FixedSingle;
+            txtDireccion.ForeColor = Color.White;
+            txtDireccion.Location = new Point(118, 28);
+            txtDireccion.Name = "txtDireccion";
+            txtDireccion.PlaceholderText = "Escriba para buscar...";
+            txtDireccion.Size = new Size(217, 27);
+            txtDireccion.TabIndex = 1;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.ForeColor = Color.White;
+            label3.Location = new Point(12, 30);
+            label3.Name = "label3";
+            label3.Size = new Size(104, 19);
+            label3.TabIndex = 1;
+            label3.Text = "T. dirección:";
+            // 
             // frmFiltro
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(361, 131);
+            ClientSize = new Size(360, 125);
             Controls.Add(panel1);
             Controls.Add(PanelBusqueda);
             Controls.Add(panelGeneros);
             Controls.Add(panelCategorias);
             Controls.Add(panelMarcas);
             Controls.Add(panelTamanios);
+            Controls.Add(panelTiposDirecciones);
+            Controls.Add(panelTiposTelefonos);
+            FormBorderStyle = FormBorderStyle.None;
             Name = "frmFiltro";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "frmFiltro";
@@ -279,6 +354,10 @@
             PanelBusqueda.PerformLayout();
             panelGeneros.ResumeLayout(false);
             panelGeneros.PerformLayout();
+            panelTiposTelefonos.ResumeLayout(false);
+            panelTiposTelefonos.PerformLayout();
+            panelTiposDirecciones.ResumeLayout(false);
+            panelTiposDirecciones.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -302,5 +381,11 @@
         private TextBox textBox1;
         private Label label1;
         private TextBox txtGenero;
+        private Panel panelTiposTelefonos;
+        private TextBox txtTelefono;
+        private Label label2;
+        private Panel panelTiposDirecciones;
+        private TextBox txtDireccion;
+        private Label label3;
     }
 }

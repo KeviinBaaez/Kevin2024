@@ -6,7 +6,6 @@
         public int ComboId { get; set; }
         public int ProductoId { get; set; }
         public int Cantidad { get; set; }
-
         public Combo? Combo { get; set; }
         public Productos? Producto { get; set; }
     }

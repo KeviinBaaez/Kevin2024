@@ -390,7 +390,7 @@
             FormBorderStyle = FormBorderStyle.None;
             Name = "frmEmpleados";
             Text = "frmPostres";
-            Load += frmPostre_Load;
+            Load += frmEmpleados_Load;
             toolStrip1.ResumeLayout(false);
             toolStrip1.PerformLayout();
             panel3.ResumeLayout(false);
